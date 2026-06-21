@@ -7,7 +7,11 @@ import { BsTagFill } from "react-icons/bs";
 import { FiMenu, FiX, FiSun, FiMoon, FiUser, FiGrid, FiLogOut } from "react-icons/fi";
 import { useSession, signOut } from "@/lib/auth-client";
 
-const navLinks = ["Browse", "Sell", "How it works", "Pricing"];
+const navLinks = [
+  { label: "Browse",       href: "/products" },
+  { label: "Sell",         href: "/dashboard/seller/add-product" },
+  { label: "How it works", href: "/#how-it-works" },
+];
 
 function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
@@ -165,11 +169,11 @@ export function Navbar() {
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((l) => (
               <Link
-                key={l}
-                href="#"
+                key={l.label}
+                href={l.href}
                 className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
               >
-                {l}
+                {l.label}
               </Link>
             ))}
           </nav>
@@ -219,11 +223,11 @@ export function Navbar() {
         <div className="md:hidden border-t border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4 space-y-1 animate-fade-in-up">
           {navLinks.map((l) => (
             <Link
-              key={l}
-              href="#"
+              key={l.label}
+              href={l.href}
               className="block text-gray-700 dark:text-gray-300 font-medium py-2.5 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
             >
-              {l}
+              {l.label}
             </Link>
           ))}
           {!isPending && !user && (

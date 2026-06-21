@@ -36,6 +36,8 @@ export async function POST(request) {
       sellerName: session.user.name || session.user.email,
       price:      Number(body.price),
       stock:      Number(body.stock),
+      status:     "pending",
+      reported:   false,
       createdAt:  new Date(),
       updatedAt:  new Date(),
     };

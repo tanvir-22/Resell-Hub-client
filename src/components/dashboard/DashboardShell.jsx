@@ -8,7 +8,7 @@ import { BsTagFill } from "react-icons/bs";
 import {
   FiHome, FiShoppingBag, FiHeart, FiCreditCard, FiUser,
   FiGrid, FiPlusSquare, FiPackage, FiTrendingUp,
-  FiMenu, FiX, FiLogOut, FiChevronRight,
+  FiMenu, FiX, FiLogOut, FiChevronRight, FiUsers, FiShield,
 } from "react-icons/fi";
 
 /* ── user context ── */
@@ -30,6 +30,14 @@ const SELLER_NAV = [
   { href: "/dashboard/seller/products",    icon: FiPackage,    label: "My Products" },
   { href: "/dashboard/seller/orders",      icon: FiShoppingBag,label: "Manage Orders" },
   { href: "/dashboard/seller/analytics",   icon: FiTrendingUp, label: "Analytics" },
+];
+
+const ADMIN_NAV = [
+  { href: "/dashboard/admin",            icon: FiHome,       label: "Overview" },
+  { href: "/dashboard/admin/users",      icon: FiUsers,      label: "Manage Users" },
+  { href: "/dashboard/admin/products",   icon: FiPackage,    label: "Manage Products" },
+  { href: "/dashboard/admin/orders",     icon: FiShoppingBag,label: "Manage Orders" },
+  { href: "/dashboard/admin/analytics",  icon: FiTrendingUp, label: "Analytics" },
 ];
 
 /* ── sidebar ── */
@@ -71,17 +79,20 @@ function Sidebar({ user, nav, onClose }) {
         <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${
           user.role === "seller"
             ? "bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300"
+            : user.role === "admin"
+            ? "bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300"
             : "bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300"
         }`}>
-          <FiGrid size={11} />
-          {user.role === "seller" ? "Seller Dashboard" : "Buyer Dashboard"}
+          {user.role === "admin" ? <FiShield size={11} /> : <FiGrid size={11} />}
+          {user.role === "seller" ? "Seller Dashboard" : user.role === "admin" ? "Admin Dashboard" : "Buyer Dashboard"}
         </span>
       </div>
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-2 space-y-0.5 overflow-y-auto">
         {nav.map(({ href, icon: Icon, label }) => {
-          const active = pathname === href || (href !== "/dashboard/buyer" && href !== "/dashboard/seller" && pathname.startsWith(href));
+          const overviewHrefs = ["/dashboard/buyer", "/dashboard/seller", "/dashboard/admin"];
+          const active = pathname === href || (!overviewHrefs.includes(href) && pathname.startsWith(href));
           return (
             <Link
               key={href}
@@ -130,7 +141,7 @@ function Sidebar({ user, nav, onClose }) {
 /* ── shell ── */
 export default function DashboardShell({ user, children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const nav = user.role === "seller" ? SELLER_NAV : BUYER_NAV;
+  const nav = user.role === "seller" ? SELLER_NAV : user.role === "admin" ? ADMIN_NAV : BUYER_NAV;
 
   return (
     <UserCtx.Provider value={user}>
