@@ -51,10 +51,10 @@ function StatCounter({ value, suffix, label, isStatic, staticDisplay }) {
 
   return (
     <div ref={ref} className="text-center px-4">
-      <p className="text-3xl font-extrabold text-gray-900 tabular-nums">
+      <p className="text-3xl font-extrabold text-gray-900 dark:text-white tabular-nums">
         {isStatic ? staticDisplay : count}{suffix}
       </p>
-      <p className="text-sm text-gray-500 mt-1">{label}</p>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{label}</p>
     </div>
   );
 }
@@ -296,7 +296,7 @@ export default function Home() {
       {/* ── STATS ── */}
       <section className="relative z-10" style={{ marginTop: "-4rem" }}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 grid grid-cols-2 lg:grid-cols-4 gap-6 divide-x divide-gray-100">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-700 p-6 grid grid-cols-2 lg:grid-cols-4 gap-6 divide-x divide-gray-100 dark:divide-slate-700">
             <StatCounter value={500} suffix="K+" label="Active Listings" />
             <StatCounter value={120} suffix="K+" label="Verified Sellers" />
             <StatCounter value={50} suffix="+" label="Categories" />
@@ -313,10 +313,10 @@ export default function Home() {
       {/* ── CATEGORIES ── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
         <Reveal className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
             Browse by Category
           </h2>
-          <p className="text-gray-500 max-w-xl mx-auto">
+          <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
             From electronics to fashion, find exactly what you&apos;re looking
             for across hundreds of categories.
           </p>
@@ -325,15 +325,15 @@ export default function Home() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {categories.map(({ name, Icon, count, color }, i) => (
             <Reveal key={name} delay={i * 60}>
-              <button className="group flex items-center gap-4 p-4 rounded-2xl border border-gray-100 hover:border-violet-200 hover:shadow-lg transition-all bg-white text-left w-full hover:-translate-y-1">
+              <button className="group flex items-center gap-4 p-4 rounded-2xl border border-gray-100 dark:border-slate-700 hover:border-violet-200 dark:hover:border-violet-700 hover:shadow-lg dark:hover:shadow-violet-900/20 transition-all bg-white dark:bg-slate-800/60 text-left w-full hover:-translate-y-1">
                 <div
                   className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${color} group-hover:scale-110 transition-transform duration-300`}
                 >
                   <Icon size={22} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">{name}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">{count} items</p>
+                  <p className="text-sm font-semibold text-gray-900 dark:text-white">{name}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{count} items</p>
                 </div>
               </button>
             </Reveal>
@@ -341,25 +341,25 @@ export default function Home() {
         </div>
 
         <Reveal delay={200} className="text-center mt-8">
-          <button className="inline-flex items-center gap-2 text-violet-600 font-semibold text-sm hover:text-violet-700 transition-colors border border-violet-200 px-6 py-3 rounded-xl hover:bg-violet-50 hover:scale-105 transition-all">
+          <button className="inline-flex items-center gap-2 text-violet-600 dark:text-violet-400 font-semibold text-sm hover:text-violet-700 dark:hover:text-violet-300 transition-all border border-violet-200 dark:border-violet-800 px-6 py-3 rounded-xl hover:bg-violet-50 dark:hover:bg-violet-900/20 hover:scale-105">
             View all categories <FiArrowRight size={16} />
           </button>
         </Reveal>
       </section>
 
       {/* ── FEATURED LISTINGS ── */}
-      <section className="bg-slate-50 py-20">
+      <section className="bg-slate-50 dark:bg-slate-900/50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal className="flex items-end justify-between mb-12">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-2">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-2">
                 Featured Listings
               </h2>
-              <p className="text-gray-500">
+              <p className="text-gray-500 dark:text-gray-400">
                 Hand-picked deals from verified sellers
               </p>
             </div>
-            <button className="hidden sm:flex items-center gap-2 text-violet-600 font-semibold text-sm hover:text-violet-700 transition-colors">
+            <button className="hidden sm:flex items-center gap-2 text-violet-600 dark:text-violet-400 font-semibold text-sm hover:text-violet-700 dark:hover:text-violet-300 transition-colors">
               View all <FiArrowRight size={16} />
             </button>
           </Reveal>
@@ -367,7 +367,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {listings.map((item, i) => (
               <Reveal key={item.id} delay={i * 80}>
-                <Card className="group rounded-2xl overflow-hidden border border-gray-100 hover:border-violet-200 hover:shadow-xl transition-all cursor-pointer bg-white hover:-translate-y-1">
+                <Card className="group rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-700 hover:border-violet-200 dark:hover:border-violet-700 hover:shadow-xl dark:hover:shadow-violet-900/20 transition-all cursor-pointer bg-white dark:bg-slate-800 hover:-translate-y-1">
                   {/* Image */}
                   <div className="relative overflow-hidden">
                     <img
@@ -399,7 +399,7 @@ export default function Home() {
 
                   {/* Info */}
                   <Card.Content className="p-4">
-                    <h3 className="font-semibold text-gray-900 text-sm mb-2 truncate">
+                    <h3 className="font-semibold text-gray-900 dark:text-white text-sm mb-2 truncate">
                       {item.title}
                     </h3>
                     <div className="flex items-baseline gap-2 mb-3">
@@ -410,7 +410,7 @@ export default function Home() {
                         {item.originalPrice}
                       </span>
                     </div>
-                    <div className="flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                       <div className="flex items-center gap-1">
                         {item.verified && (
                           <MdVerified className="text-blue-500" size={14} />
@@ -441,10 +441,10 @@ export default function Home() {
       {/* ── HOW IT WORKS ── */}
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
             How ResellHub Works
           </h2>
-          <p className="text-gray-500 max-w-xl mx-auto">
+          <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
             Getting started takes less than 5 minutes. Here&apos;s how to buy or
             sell on ResellHub.
           </p>
@@ -468,8 +468,8 @@ export default function Home() {
                   {step}
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{title}</h3>
+              <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
                 {description}
               </p>
             </Reveal>
@@ -515,10 +515,10 @@ export default function Home() {
       {/* ── TESTIMONIALS ── */}
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
             Loved by Our Community
           </h2>
-          <p className="text-gray-500 max-w-xl mx-auto">
+          <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
             Don&apos;t just take our word for it — here&apos;s what real users
             are saying about ResellHub.
           </p>
@@ -527,7 +527,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map(({ name, role, initials, bg, rating, text }, i) => (
             <Reveal key={name} delay={i * 100}>
-              <Card className="border border-gray-100 rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all h-full bg-white">
+              <Card className="border border-gray-100 dark:border-slate-700 rounded-2xl hover:shadow-xl dark:hover:shadow-violet-900/10 hover:-translate-y-1 transition-all h-full bg-white dark:bg-slate-800">
                 <Card.Content className="p-6">
                   <div className="flex mb-4">
                     {Array.from({ length: rating }).map((_, j) => (
@@ -538,7 +538,7 @@ export default function Home() {
                       />
                     ))}
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6">
                     &ldquo;{text}&rdquo;
                   </p>
                   <div className="flex items-center gap-3">
@@ -550,10 +550,10 @@ export default function Home() {
                       </Avatar.Fallback>
                     </Avatar>
                     <div>
-                      <p className="font-semibold text-gray-900 text-sm">
+                      <p className="font-semibold text-gray-900 dark:text-white text-sm">
                         {name}
                       </p>
-                      <p className="text-xs text-gray-400">{role}</p>
+                      <p className="text-xs text-gray-400 dark:text-gray-500">{role}</p>
                     </div>
                   </div>
                 </Card.Content>

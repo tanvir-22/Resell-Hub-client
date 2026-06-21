@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { signUp } from "@/lib/auth-client";
 import { BsTagFill, BsStarFill, BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
-import { FiMail, FiLock, FiArrowRight, FiCheck, FiUser, FiShoppingBag } from "react-icons/fi";
+import { FiMail, FiLock, FiArrowRight, FiCheck, FiUser, FiShoppingBag, FiCamera } from "react-icons/fi";
 import { MdSell } from "react-icons/md";
 
 const inputCls =
@@ -45,9 +45,13 @@ export default function SignupPage() {
   const [agreeTerms, setAgreeTerms]   = useState(false);
   const [loading, setLoading]         = useState(false);
   const [error, setError]             = useState("");
+  const [profileImg, setProfileImg]   = useState(null);
+  const [profileImgUrl, setProfileImgUrl] = useState("");
+  const [imgUploading, setImgUploading]   = useState(false);
 
-  const leftRef  = useRef(null);
-  const rightRef = useRef(null);
+  const leftRef     = useRef(null);
+  const rightRef    = useRef(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -94,6 +98,7 @@ export default function SignupPage() {
       password: form.password,
       name: form.name,
       role: form.role,
+      ...(profileImgUrl ? { image: profileImgUrl } : {}),
     });
 
     if (err) {
@@ -106,6 +111,31 @@ export default function SignupPage() {
   };
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
+
+  const handleImageSelect = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Image must be smaller than 5MB.");
+      return;
+    }
+    setProfileImg(URL.createObjectURL(file));
+    setImgUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("image", file);
+      const res = await fetch(
+        `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+        { method: "POST", body: fd },
+      );
+      const json = await res.json();
+      if (json.success) setProfileImgUrl(json.data.url);
+    } catch {
+      // upload failed — form still works, just no remote URL
+    } finally {
+      setImgUploading(false);
+    }
+  };
 
   return (
     <div className="flex flex-1 bg-white dark:bg-slate-950">
@@ -200,11 +230,58 @@ export default function SignupPage() {
           </div>
 
           {/* heading */}
-          <div className="form-el mb-8">
+          <div className="form-el mb-6">
             <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Create account</h1>
             <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm">
               Join ResellHub and start today — it&apos;s free
             </p>
+          </div>
+
+          {/* ── PROFILE PICTURE ── */}
+          <div className="form-el flex flex-col items-center mb-6">
+            <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 self-start">
+              Profile photo <span className="text-gray-400 dark:text-slate-500 font-normal">(optional)</span>
+            </p>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="w-20 h-20 rounded-full border-2 border-dashed border-gray-300 dark:border-slate-600 flex items-center justify-center overflow-hidden hover:border-violet-500 dark:hover:border-violet-500 transition-colors bg-gray-50 dark:bg-slate-800 group"
+              >
+                {profileImg ? (
+                  <img src={profileImg} alt="Preview" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="flex flex-col items-center gap-1 text-gray-400 dark:text-slate-500">
+                    <FiCamera size={22} />
+                    <span className="text-xs">Upload</span>
+                  </div>
+                )}
+                {imgUploading && (
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-full">
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  </div>
+                )}
+                {profileImg && !imgUploading && (
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 flex items-center justify-center rounded-full transition-all">
+                    <FiCamera size={18} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                )}
+              </button>
+
+              {profileImg && !imgUploading && (
+                <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-violet-600 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900">
+                  <FiCheck size={11} className="text-white" />
+                </div>
+              )}
+            </div>
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageSelect}
+            />
           </div>
 
           {/* ── ROLE SELECTION ── */}

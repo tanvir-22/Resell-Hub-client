@@ -1,0 +1,119 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useUser } from "@/components/dashboard/DashboardShell";
+import { FiPackage, FiShoppingBag, FiDollarSign, FiClock, FiArrowRight, FiPlusSquare } from "react-icons/fi";
+
+function StatCard({ icon: Icon, label, value, sub, color, href }) {
+  return (
+    <Link href={href} className="group flex flex-col gap-3 p-5 rounded-2xl bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 hover:border-violet-200 dark:hover:border-violet-700 hover:shadow-lg transition-all">
+      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${color}`}>
+        <Icon size={22} />
+      </div>
+      <div>
+        <p className="text-2xl font-extrabold text-gray-900 dark:text-white">{value}</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{label}</p>
+        {sub && <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{sub}</p>}
+      </div>
+      <FiArrowRight size={15} className="text-gray-300 dark:text-gray-600 group-hover:text-violet-500 transition-colors" />
+    </Link>
+  );
+}
+
+export default function SellerOverview() {
+  const user = useUser();
+  const [analytics, setAnalytics] = useState(null);
+  const [orders, setOrders]       = useState([]);
+  const [loading, setLoading]     = useState(true);
+
+  useEffect(() => {
+    Promise.all([
+      fetch("/api/analytics").then(r => r.json()),
+      fetch("/api/orders?role=seller").then(r => r.json()),
+    ]).then(([a, o]) => {
+      setAnalytics(a);
+      setOrders(Array.isArray(o) ? o : []);
+      setLoading(false);
+    });
+  }, []);
+
+  return (
+    <div>
+      <div className="flex items-start justify-between mb-8">
+        <div>
+          <h1 className="text-2xl font-extrabold text-gray-900 dark:text-white">
+            Welcome back, {user?.name?.split(" ")[0] || "Seller"} 👋
+          </h1>
+          <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Here's an overview of your store performance.</p>
+        </div>
+        <Link href="/dashboard/seller/add-product" className="hidden sm:flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors">
+          <FiPlusSquare size={16} /> Add Product
+        </Link>
+      </div>
+
+      {/* Stats */}
+      {loading ? (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {[1,2,3,4].map(i => <div key={i} className="h-36 rounded-2xl bg-gray-100 dark:bg-slate-800 animate-pulse" />)}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <StatCard icon={FiPackage}    label="Total Products" value={analytics?.totalProducts ?? 0} color="bg-violet-100 dark:bg-violet-900/40 text-violet-600 dark:text-violet-400"  href="/dashboard/seller/products" />
+          <StatCard icon={FiShoppingBag} label="Total Sales"  value={analytics?.totalSales ?? 0}   color="bg-blue-100   dark:bg-blue-900/40   text-blue-600   dark:text-blue-400"    href="/dashboard/seller/orders" />
+          <StatCard icon={FiDollarSign} label="Total Revenue" value={`$${(analytics?.totalRevenue ?? 0).toFixed(2)}`} color="bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400" href="/dashboard/seller/analytics" />
+          <StatCard icon={FiClock}      label="Pending Orders" value={analytics?.pendingOrders ?? 0} color="bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400"   href="/dashboard/seller/orders" />
+        </div>
+      )}
+
+      {/* Recent orders */}
+      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-6">
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="font-bold text-gray-900 dark:text-white">Recent Orders</h2>
+          <Link href="/dashboard/seller/orders" className="text-sm text-violet-600 dark:text-violet-400 font-medium hover:underline">View all</Link>
+        </div>
+        {loading ? (
+          <div className="space-y-3">{[1,2,3].map(i => <div key={i} className="h-12 rounded-xl bg-gray-100 dark:bg-slate-700 animate-pulse" />)}</div>
+        ) : orders.length === 0 ? (
+          <div className="text-center py-12">
+            <FiShoppingBag size={36} className="mx-auto text-gray-300 dark:text-slate-600 mb-3" />
+            <p className="text-gray-500 dark:text-gray-400 text-sm">No orders yet. Add products to start selling!</p>
+            <Link href="/dashboard/seller/add-product" className="mt-3 inline-flex items-center gap-1.5 text-sm text-violet-600 dark:text-violet-400 font-medium hover:underline">
+              Add your first product <FiArrowRight size={14} />
+            </Link>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-100 dark:border-slate-700">
+                  {["Product","Buyer","Price","Status","Date"].map(h => (
+                    <th key={h} className="pb-3 text-left text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50 dark:divide-slate-700">
+                {orders.slice(0, 6).map(o => (
+                  <tr key={o._id} className="hover:bg-gray-50 dark:hover:bg-slate-700/30 transition-colors">
+                    <td className="py-3 font-medium text-gray-900 dark:text-white max-w-[140px] truncate">{o.productTitle}</td>
+                    <td className="py-3 text-gray-500 dark:text-gray-400">{o.buyerName}</td>
+                    <td className="py-3 text-violet-600 dark:text-violet-400 font-semibold">${o.price}</td>
+                    <td className="py-3">
+                      <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                        o.status === "Delivered" ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300" :
+                        o.status === "Pending"   ? "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300" :
+                        o.status === "Cancelled" ? "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300" :
+                        "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+                      }`}>{o.status}</span>
+                    </td>
+                    <td className="py-3 text-gray-400 dark:text-gray-500">{new Date(o.createdAt).toLocaleDateString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
