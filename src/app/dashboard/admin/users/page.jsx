@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { FiSearch, FiTrash2, FiSlash, FiCheckCircle, FiUser, FiUsers, FiShield } from "react-icons/fi";
+import { getAdminUsers, updateAdminUser, deleteAdminUser } from "@/lib/api/admin";
 
 const ROLE_COLORS = {
   buyer:  "bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300",
@@ -45,8 +46,7 @@ export default function AdminUsers() {
 
   const load = useCallback((q = "") => {
     setLoading(true);
-    fetch(`/api/admin/users${q ? `?search=${encodeURIComponent(q)}` : ""}`)
-      .then(r => r.json())
+    getAdminUsers(q ? { search: q } : {})
       .then(d => { setUsers(Array.isArray(d) ? d : []); setLoading(false); });
   }, []);
 
@@ -58,16 +58,12 @@ export default function AdminUsers() {
   }, [search, load]);
 
   const toggleBlock = async (u) => {
-    const updated = await fetch(`/api/admin/users/${u._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ blocked: !u.blocked }),
-    }).then(r => r.json());
+    const updated = await updateAdminUser(u._id, { blocked: !u.blocked });
     setUsers(prev => prev.map(x => x._id === u._id ? { ...x, blocked: updated.blocked } : x));
   };
 
   const deleteUser = async (id) => {
-    await fetch(`/api/admin/users/${id}`, { method: "DELETE" });
+    await deleteAdminUser(id);
     setUsers(prev => prev.filter(u => u._id !== id));
     setConfirm(null);
   };

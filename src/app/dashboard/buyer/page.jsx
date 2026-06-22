@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUser } from "@/components/dashboard/DashboardShell";
 import { FiShoppingBag, FiHeart, FiCreditCard, FiArrowRight, FiPackage } from "react-icons/fi";
+import { getOrders } from "@/lib/api/orders";
+import { getWishlist } from "@/lib/api/wishlist";
+import { getPayments } from "@/lib/api/payments";
 
 function StatCard({ icon: Icon, label, value, color, href }) {
   return (
@@ -29,9 +32,9 @@ export default function BuyerOverview() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/orders?role=buyer").then(r => r.json()),
-      fetch("/api/wishlist").then(r => r.json()),
-      fetch("/api/payments").then(r => r.json()),
+      getOrders({ role: "buyer" }),
+      getWishlist(),
+      getPayments(),
     ]).then(([o, w, p]) => {
       setOrders(Array.isArray(o) ? o : []);
       setWishlist(Array.isArray(w) ? w : []);

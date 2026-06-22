@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FiHeart, FiTrash2, FiArrowRight, FiRefreshCw } from "react-icons/fi";
+import { getWishlist, removeFromWishlist } from "@/lib/api/wishlist";
 
 export default function BuyerWishlist() {
   const [items, setItems]     = useState([]);
@@ -11,16 +12,14 @@ export default function BuyerWishlist() {
 
   const load = () => {
     setLoading(true);
-    fetch("/api/wishlist")
-      .then(r => r.json())
-      .then(d => { setItems(Array.isArray(d) ? d : []); setLoading(false); });
+    getWishlist().then(d => { setItems(Array.isArray(d) ? d : []); setLoading(false); });
   };
 
   useEffect(load, []);
 
   const remove = async (id) => {
     setRemoving(id);
-    await fetch(`/api/wishlist/${id}`, { method: "DELETE" });
+    await removeFromWishlist(id);
     setItems(prev => prev.filter(i => i._id !== id));
     setRemoving(null);
   };

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FiUsers, FiPackage, FiShoppingBag, FiDollarSign, FiArrowRight, FiAlertTriangle } from "react-icons/fi";
 import StatusBadge from "@/components/dashboard/StatusBadge";
+import { getAdminStats, getAdminOrders } from "@/lib/api/admin";
 
 function StatCard({ icon: Icon, label, value, sub, color, href }) {
   return (
@@ -28,8 +29,8 @@ export default function AdminOverview() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/admin/stats").then(r => r.json()),
-      fetch("/api/admin/orders?").then(r => r.json()),
+      getAdminStats(),
+      getAdminOrders(),
     ]).then(([s, o]) => {
       setStats(s);
       setOrders(Array.isArray(o) ? o.slice(0, 6) : []);

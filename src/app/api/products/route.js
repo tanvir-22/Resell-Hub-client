@@ -11,7 +11,7 @@ export async function GET(request) {
 
     const db = await getDb();
     const filter = {};
-    if (sellerId)                         filter.sellerId = sellerId;
+    if (sellerId)                         filter["sellerInfo.userId"] = sellerId;
     if (category && category !== "all")   filter.category = category;
     if (search)                           filter.title = { $regex: search, $options: "i" };
 
@@ -30,16 +30,26 @@ export async function POST(request) {
     const body = await request.json();
     const db = await getDb();
 
+    const images = Array.isArray(body.images) ? body.images : body.images ? [body.images] : [];
+
     const product = {
-      ...body,
-      sellerId:   session.user.id,
-      sellerName: session.user.name || session.user.email,
-      price:      Number(body.price),
-      stock:      Number(body.stock),
-      status:     "pending",
-      reported:   false,
-      createdAt:  new Date(),
-      updatedAt:  new Date(),
+      title:       body.title,
+      description: body.description || "",
+      category:    body.category,
+      condition:   body.condition,
+      price:       Number(body.price),
+      stock:       Number(body.stock ?? 1),
+      images,
+      sellerInfo: {
+        userId: session.user.id,
+        name:   session.user.name  || "",
+        email:  session.user.email || "",
+        phone:  body.phone || session.user.phone || "",
+      },
+      status:    "pending",
+      reported:  false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
     const result = await db.collection("products").insertOne(product);

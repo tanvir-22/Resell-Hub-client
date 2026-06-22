@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import { FiShoppingBag, FiX, FiRefreshCw, FiSearch } from "react-icons/fi";
+import { getOrders, updateOrder } from "@/lib/api/orders";
 
 const STATUS_FLOW = ["Pending", "Accepted", "Processing", "Shipped", "Delivered"];
 
@@ -37,8 +38,7 @@ export default function BuyerOrders() {
 
   const load = () => {
     setLoading(true);
-    fetch("/api/orders?role=buyer")
-      .then(r => r.json())
+    getOrders({ role: "buyer" })
       .then(d => { setOrders(Array.isArray(d) ? d : []); setLoading(false); });
   };
 
@@ -46,11 +46,7 @@ export default function BuyerOrders() {
 
   const cancel = async (id) => {
     setCancelling(id);
-    await fetch(`/api/orders/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: "Cancelled" }),
-    });
+    await updateOrder(id, { status: "Cancelled" });
     load();
     if (selected?._id === id) setSelected(null);
     setCancelling(null);

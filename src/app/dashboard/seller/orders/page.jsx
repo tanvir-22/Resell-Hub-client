@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import { FiShoppingBag, FiRefreshCw, FiSearch, FiChevronDown, FiUser, FiCalendar, FiDollarSign } from "react-icons/fi";
+import { getOrders, updateOrder } from "@/lib/api/orders";
 
 const STATUS_ACTIONS = {
   Pending:    [{ label: "Accept",  next: "Accepted", cls: "bg-blue-600 hover:bg-blue-700 text-white" }, { label: "Reject", next: "Cancelled", cls: "bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400" }],
@@ -21,8 +22,7 @@ export default function SellerOrders() {
 
   const load = () => {
     setLoading(true);
-    fetch("/api/orders?role=seller")
-      .then(r => r.json())
+    getOrders({ role: "seller" })
       .then(d => { setOrders(Array.isArray(d) ? d : []); setLoading(false); });
   };
 
@@ -30,13 +30,8 @@ export default function SellerOrders() {
 
   const updateStatus = async (id, status) => {
     setUpdating(id);
-    const res = await fetch(`/api/orders/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
-    if (res.ok) {
-      const updated = await res.json();
+    const updated = await updateOrder(id, { status });
+    if (!updated.error) {
       setOrders(prev => prev.map(o => o._id === id ? updated : o));
       if (selected?._id === id) setSelected(updated);
     }

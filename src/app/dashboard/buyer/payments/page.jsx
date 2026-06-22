@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import { FiCreditCard, FiSearch } from "react-icons/fi";
+import { getPayments } from "@/lib/api/payments";
 
 export default function BuyerPayments() {
   const [payments, setPayments] = useState([]);
@@ -10,9 +11,7 @@ export default function BuyerPayments() {
   const [search, setSearch]     = useState("");
 
   useEffect(() => {
-    fetch("/api/payments")
-      .then(r => r.json())
-      .then(d => { setPayments(Array.isArray(d) ? d : []); setLoading(false); });
+    getPayments().then(d => { setPayments(Array.isArray(d) ? d : []); setLoading(false); });
   }, []);
 
   const totalSpent   = payments.filter(p => p.status === "Completed").reduce((s, p) => s + p.amount, 0);

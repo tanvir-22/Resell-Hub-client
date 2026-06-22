@@ -6,6 +6,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
 } from "recharts";
 import { FiDollarSign, FiShoppingBag, FiPackage, FiClock, FiTrendingUp } from "react-icons/fi";
+import { getSellerAnalytics } from "@/lib/api/analytics";
 
 const SAMPLE_MONTHLY = [
   { month: "Jan", revenue: 0, orders: 0 },
@@ -49,8 +50,7 @@ export default function SellerAnalytics() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/analytics")
-      .then(r => r.json())
+    getSellerAnalytics()
       .then(d => { setData(d); setLoading(false); });
   }, []);
 

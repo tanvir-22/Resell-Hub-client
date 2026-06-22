@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { FiSearch, FiCheckCircle, FiXCircle, FiTrash2, FiPackage, FiAlertTriangle, FiFilter } from "react-icons/fi";
 import StatusBadge from "@/components/dashboard/StatusBadge";
+import { getAdminProducts, updateAdminProduct, deleteAdminProduct } from "@/lib/api/admin";
 
 const STATUS_TABS = ["all", "pending", "approved", "rejected"];
 
@@ -36,13 +37,11 @@ export default function AdminProducts() {
 
   const load = useCallback((status, q, rep) => {
     setLoading(true);
-    const p = new URLSearchParams();
-    if (status && status !== "all") p.set("status", status);
-    if (q)   p.set("search",   q);
-    if (rep) p.set("reported", "true");
-    fetch(`/api/admin/products?${p}`)
-      .then(r => r.json())
-      .then(d => { setProducts(Array.isArray(d) ? d : []); setLoading(false); });
+    getAdminProducts({
+      ...(status && status !== "all" ? { status } : {}),
+      ...(q   ? { search:   q }      : {}),
+      ...(rep ? { reported: "true" } : {}),
+    }).then(d => { setProducts(Array.isArray(d) ? d : []); setLoading(false); });
   }, []);
 
   useEffect(() => {
@@ -51,16 +50,12 @@ export default function AdminProducts() {
   }, [tab, search, reported, load]);
 
   const setStatus = async (id, status) => {
-    await fetch(`/api/admin/products/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
+    await updateAdminProduct(id, { status });
     setProducts(prev => prev.map(p => p._id === id ? { ...p, status } : p));
   };
 
-  const deleteProduct = async (id) => {
-    await fetch(`/api/admin/products/${id}`, { method: "DELETE" });
+  const handleDelete = async (id) => {
+    await deleteAdminProduct(id);
     setProducts(prev => prev.filter(p => p._id !== id));
     setConfirm(null);
   };
@@ -135,8 +130,8 @@ export default function AdminProducts() {
             <div key={p._id} className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden">
               {/* Image */}
               <div className="relative aspect-video bg-gray-100 dark:bg-slate-700">
-                {p.image ? (
-                  <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                {p.images?.[0] ? (
+                  <img src={p.images[0]} alt={p.title} className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <FiPackage size={32} className="text-gray-300 dark:text-slate-500" />
@@ -156,7 +151,7 @@ export default function AdminProducts() {
               {/* Info */}
               <div className="p-4">
                 <h3 className="font-semibold text-gray-900 dark:text-white truncate">{p.title}</h3>
-                <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">by {p.sellerName} · {p.category}</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">by {p.sellerInfo?.name || p.sellerName} · {p.category}</p>
                 <div className="flex items-center justify-between mt-1">
                   <span className="text-lg font-extrabold text-violet-600 dark:text-violet-400">${p.price}</span>
                   <span className="text-xs text-gray-400 dark:text-gray-500">{p.condition}</span>
@@ -195,7 +190,7 @@ export default function AdminProducts() {
       {confirm && (
         <ConfirmModal
           msg={`"${confirm.title}" will be permanently removed from the platform.`}
-          onConfirm={() => deleteProduct(confirm.id)}
+          onConfirm={() => handleDelete(confirm.id)}
           onCancel={() => setConfirm(null)}
         />
       )}

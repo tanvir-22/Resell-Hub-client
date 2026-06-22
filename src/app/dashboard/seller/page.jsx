@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUser } from "@/components/dashboard/DashboardShell";
 import { FiPackage, FiShoppingBag, FiDollarSign, FiClock, FiArrowRight, FiPlusSquare } from "react-icons/fi";
+import { getSellerAnalytics } from "@/lib/api/analytics";
+import { getOrders } from "@/lib/api/orders";
 
 function StatCard({ icon: Icon, label, value, sub, color, href }) {
   return (
@@ -29,8 +31,8 @@ export default function SellerOverview() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/analytics").then(r => r.json()),
-      fetch("/api/orders?role=seller").then(r => r.json()),
+      getSellerAnalytics(),
+      getOrders({ role: "seller" }),
     ]).then(([a, o]) => {
       setAnalytics(a);
       setOrders(Array.isArray(o) ? o : []);

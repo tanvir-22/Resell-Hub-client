@@ -4,6 +4,8 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useUser } from "@/components/dashboard/DashboardShell";
 import { FiPlusSquare, FiSearch, FiEdit2, FiTrash2, FiRefreshCw, FiCamera, FiPackage, FiChevronDown } from "react-icons/fi";
+import { getProducts, updateProduct, deleteProduct } from "@/lib/api/products";
+import { uploadImage } from "@/lib/api/upload";
 
 const CATEGORIES = ["all", "Electronics", "Fashion", "Home & Living", "Books", "Sports", "Cameras", "Computers", "Vehicles", "Other"];
 const CONDITIONS = ["Like New", "Used", "Refurbished"];
@@ -11,7 +13,7 @@ const inputCls   = "w-full px-3.5 py-2.5 text-sm rounded-lg border border-gray-2
 
 function EditModal({ product, onClose, onSave }) {
   const [form, setForm]   = useState({ ...product });
-  const [image, setImage] = useState(product.image || null);
+  const [image, setImage] = useState(product.images?.[0] || null);
   const [imgUploading, setImgUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const fileRef = useRef(null);
@@ -23,25 +25,21 @@ function EditModal({ product, onClose, onSave }) {
     setImage(URL.createObjectURL(file));
     setImgUploading(true);
     try {
-      const fd = new FormData();
-      fd.append("image", file);
-      const res  = await fetch(`https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`, { method: "POST", body: fd });
-      const json = await res.json();
-      if (json.success) setForm(f => ({ ...f, image: json.data.url }));
+      const url = await uploadImage(file);
+      // Replace first image, keep the rest unchanged
+      setForm(f => ({
+        ...f,
+        images: [url, ...(Array.isArray(f.images) ? f.images.slice(1) : [])],
+      }));
     } finally { setImgUploading(false); }
   };
 
   const submit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    const res  = await fetch(`/api/products/${product._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-    const data = await res.json();
+    const data = await updateProduct(product._id, form);
     setSaving(false);
-    if (res.ok) onSave(data);
+    if (!data.error) onSave(data);
   };
 
   return (
@@ -130,17 +128,16 @@ export default function SellerProducts() {
   const load = () => {
     setLoading(true);
     if (!user) return;
-    fetch(`/api/products?sellerId=${user.id}`)
-      .then(r => r.json())
+    getProducts({ sellerId: user.id })
       .then(d => { setProducts(Array.isArray(d) ? d : []); setLoading(false); });
   };
 
   useEffect(load, [user]);
 
-  const deleteProduct = async (id) => {
+  const handleDelete = async (id) => {
     if (!confirm("Delete this product?")) return;
     setDeleting(id);
-    await fetch(`/api/products/${id}`, { method: "DELETE" });
+    await deleteProduct(id);
     setProducts(prev => prev.filter(p => p._id !== id));
     setDeleting(null);
   };
@@ -197,8 +194,8 @@ export default function SellerProducts() {
           {visible.map(p => (
             <div key={p._id} className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden group hover:border-violet-200 dark:hover:border-violet-700 hover:shadow-lg transition-all">
               <div className="relative h-40 bg-gray-100 dark:bg-slate-700 overflow-hidden">
-                {p.image ? (
-                  <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                {p.images?.[0] ? (
+                  <img src={p.images[0]} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 ) : (
                   <div className="flex items-center justify-center h-full"><FiPackage size={32} className="text-gray-300 dark:text-slate-500" /></div>
                 )}
@@ -218,7 +215,7 @@ export default function SellerProducts() {
                     <FiEdit2 size={13} /> Edit
                   </button>
                   <button
-                    onClick={() => deleteProduct(p._id)}
+                    onClick={() => handleDelete(p._id)}
                     disabled={deleting === p._id}
                     className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold border border-gray-200 dark:border-slate-600 py-2 rounded-lg hover:border-red-300 dark:hover:border-red-700 hover:text-red-600 dark:hover:text-red-400 text-gray-600 dark:text-gray-300 transition-colors disabled:opacity-60"
                   >

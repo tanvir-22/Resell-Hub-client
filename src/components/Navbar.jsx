@@ -113,7 +113,13 @@ function UserMenu({ user }) {
           {/* Menu items */}
           <div className="py-1.5">
             <Link
-              href="/dashboard/buyer/profile"
+              href={
+                user?.role === "seller"
+                  ? "/dashboard/seller"
+                  : user?.role === "admin"
+                  ? "/dashboard/admin"
+                  : "/dashboard/buyer/profile"
+              }
               onClick={() => setOpen(false)}
               className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-700/60 transition-colors"
             >
@@ -121,7 +127,7 @@ function UserMenu({ user }) {
               Profile
             </Link>
             <Link
-              href={user?.role === "seller" ? "/dashboard/seller" : "/dashboard/buyer"}
+              href="/dashboard"
               onClick={() => setOpen(false)}
               className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-700/60 transition-colors"
             >

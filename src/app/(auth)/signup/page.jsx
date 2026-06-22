@@ -8,6 +8,7 @@ import gsap from "gsap";
 import { signUp } from "@/lib/auth-client";
 import { BsTagFill, BsStarFill, BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { FiMail, FiLock, FiArrowRight, FiCheck, FiUser, FiShoppingBag, FiCamera } from "react-icons/fi";
+import { uploadImage } from "@/lib/api/upload";
 import { MdSell } from "react-icons/md";
 
 const inputCls =
@@ -122,14 +123,8 @@ export default function SignupPage() {
     setProfileImg(URL.createObjectURL(file));
     setImgUploading(true);
     try {
-      const fd = new FormData();
-      fd.append("image", file);
-      const res = await fetch(
-        `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
-        { method: "POST", body: fd },
-      );
-      const json = await res.json();
-      if (json.success) setProfileImgUrl(json.data.url);
+      const url = await uploadImage(file);
+      setProfileImgUrl(url);
     } catch {
       // upload failed — form still works, just no remote URL
     } finally {

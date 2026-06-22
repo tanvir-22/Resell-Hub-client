@@ -21,12 +21,16 @@ export async function PUT(request, { params }) {
 
     const body = await request.json();
     const db = await getDb();
-    const update = { ...body, updatedAt: new Date() };
+
+    // Only allow editing content fields — sellerInfo stays as created
+    const { sellerInfo, status, reported, createdAt, ...editable } = body;
+    const update = { ...editable, updatedAt: new Date() };
     if (update.price) update.price = Number(update.price);
     if (update.stock) update.stock = Number(update.stock);
+    if (update.images && !Array.isArray(update.images)) update.images = [update.images];
 
     const result = await db.collection("products").findOneAndUpdate(
-      { _id: new ObjectId(params.id), sellerId: session.user.id },
+      { _id: new ObjectId(params.id), "sellerInfo.userId": session.user.id },
       { $set: update },
       { returnDocument: "after" },
     );
@@ -46,7 +50,7 @@ export async function DELETE(request, { params }) {
     const db = await getDb();
     const result = await db.collection("products").deleteOne({
       _id: new ObjectId(params.id),
-      sellerId: session.user.id,
+      "sellerInfo.userId": session.user.id,
     });
 
     if (!result.deletedCount) return NextResponse.json({ error: "Not found" }, { status: 404 });

@@ -6,6 +6,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
 } from "recharts";
 import { FiTrendingUp, FiUsers, FiShoppingBag, FiTag } from "react-icons/fi";
+import { getAdminAnalytics } from "@/lib/api/analytics";
 
 const PIE_COLORS = ["#7c3aed", "#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"];
 
@@ -51,8 +52,7 @@ export default function AdminAnalytics() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/admin/analytics")
-      .then(r => r.json())
+    getAdminAnalytics()
       .then(d => { setData(d); setLoading(false); });
   }, []);
 

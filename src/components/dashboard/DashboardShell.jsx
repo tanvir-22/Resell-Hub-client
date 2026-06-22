@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 import { signOut } from "@/lib/auth-client";
 import { BsTagFill } from "react-icons/bs";
 import {
@@ -141,7 +141,18 @@ function Sidebar({ user, nav, onClose }) {
 /* ── shell ── */
 export default function DashboardShell({ user, children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
+  const router   = useRouter();
   const nav = user.role === "seller" ? SELLER_NAV : user.role === "admin" ? ADMIN_NAV : BUYER_NAV;
+
+  // Redirect to the correct role section if the URL segment doesn't match
+  useEffect(() => {
+    const segment = pathname.split("/")[2]; // "buyer" | "seller" | "admin"
+    const roleSegment = user.role === "seller" ? "seller" : user.role === "admin" ? "admin" : "buyer";
+    if (segment && segment !== roleSegment) {
+      router.replace(`/dashboard/${roleSegment}`);
+    }
+  }, [pathname, user.role, router]);
 
   return (
     <UserCtx.Provider value={user}>

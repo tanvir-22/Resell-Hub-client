@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { FiSearch, FiShoppingBag, FiChevronDown } from "react-icons/fi";
 import StatusBadge from "@/components/dashboard/StatusBadge";
+import { getAdminOrders, updateAdminOrder } from "@/lib/api/admin";
 
 const STATUS_TABS = ["all", "Pending", "Accepted", "Processing", "Shipped", "Delivered", "Cancelled"];
 const ALL_STATUSES = ["Pending", "Accepted", "Processing", "Shipped", "Delivered", "Cancelled"];
@@ -17,12 +18,10 @@ export default function AdminOrders() {
 
   const load = useCallback((status, q) => {
     setLoading(true);
-    const p = new URLSearchParams();
-    if (status && status !== "all") p.set("status", status);
-    if (q) p.set("search", q);
-    fetch(`/api/admin/orders?${p}`)
-      .then(r => r.json())
-      .then(d => { setOrders(Array.isArray(d) ? d : []); setLoading(false); });
+    getAdminOrders({
+      ...(status && status !== "all" ? { status } : {}),
+      ...(q ? { search: q } : {}),
+    }).then(d => { setOrders(Array.isArray(d) ? d : []); setLoading(false); });
   }, []);
 
   useEffect(() => {
@@ -32,11 +31,7 @@ export default function AdminOrders() {
 
   const updateStatus = async (id, status) => {
     setUpdating(id);
-    await fetch(`/api/admin/orders/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
+    await updateAdminOrder(id, { status });
     setOrders(prev => prev.map(o => o._id === id ? { ...o, status } : o));
     setUpdating(null);
     setOpenRow(null);

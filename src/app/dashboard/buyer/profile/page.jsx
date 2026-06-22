@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { useUser } from "@/components/dashboard/DashboardShell";
 import { updateUser } from "@/lib/auth-client";
 import { FiCamera, FiSave, FiCheck, FiUser, FiLock, FiPhone, FiMapPin } from "react-icons/fi";
+import { uploadImage } from "@/lib/api/upload";
 
 const inputCls = "w-full px-4 py-3 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all";
 
@@ -35,11 +36,8 @@ export default function BuyerProfile() {
     setProfileImg(URL.createObjectURL(file));
     setImgUploading(true);
     try {
-      const fd = new FormData();
-      fd.append("image", file);
-      const res  = await fetch(`https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`, { method: "POST", body: fd });
-      const json = await res.json();
-      if (json.success) setProfileImgUrl(json.data.url);
+      const url = await uploadImage(file);
+      setProfileImgUrl(url);
     } catch { setError("Image upload failed"); }
     finally { setImgUploading(false); }
   };
@@ -47,7 +45,7 @@ export default function BuyerProfile() {
   const handleSave = async (e) => {
     e.preventDefault();
     setSaving(true); setError("");
-    const { error: err } = await updateUser({ name, image: profileImgUrl || undefined });
+    const { error: err } = await updateUser({ name, image: profileImgUrl || undefined, phone });
     if (err) setError(err.message || "Update failed");
     else { setSaved(true); setTimeout(() => setSaved(false), 3000); }
     setSaving(false);

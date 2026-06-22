@@ -11,7 +11,7 @@ export async function GET(request) {
     const sellerId = session.user.id;
 
     const [products, orders] = await Promise.all([
-      db.collection("products").find({ sellerId }).toArray(),
+      db.collection("products").find({ "sellerInfo.userId": sellerId }).toArray(),
       db.collection("orders").find({ sellerId }).toArray(),
     ]);
 
