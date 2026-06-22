@@ -1,0 +1,82 @@
+"use client";
+import { useState } from "react";
+import { Button } from "@heroui/react";
+import { FiSearch, FiArrowRight } from "react-icons/fi";
+import { MdSell } from "react-icons/md";
+
+const POPULAR_TAGS = ["iPhone 15", "MacBook Pro", "AirPods", "Nike Shoes", "PS5"];
+
+export function HeroSection() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-violet-950 to-slate-900 text-white pt-20 pb-36">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="animate-blob absolute -top-48 -right-48 w-96 h-96 bg-violet-600/25 rounded-full blur-3xl" />
+        <div className="animate-blob animation-delay-2s absolute top-1/2 -left-48 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl" />
+        <div className="animate-blob animation-delay-4s absolute bottom-0 right-1/4 w-72 h-72 bg-fuchsia-600/20 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="animate-fade-in-up delay-100 inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-8 text-sm">
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping-slow absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
+          </span>
+          <span className="text-gray-300">500,000+ items listed this month</span>
+        </div>
+
+        <h1
+          className="animate-fade-in-up delay-200 text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6"
+          style={{ lineHeight: 1.1 }}
+        >
+          The Smartest Way to
+          <br />
+          <span className="hero-gradient-text">Buy &amp; Sell</span> Anything
+        </h1>
+
+        <p className="animate-fade-in-up delay-300 text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-10">
+          Join millions of people buying and selling preloved items. Turn your unwanted stuff into
+          cash — or find amazing deals near you.
+        </p>
+
+        <div className="animate-fade-in-up delay-400 max-w-2xl mx-auto mb-8">
+          <div className="flex items-center bg-white rounded-2xl p-1.5 gap-2 shadow-2xl shadow-violet-900/20">
+            <FiSearch className="text-gray-400 ml-3 flex-shrink-0" size={20} />
+            <input
+              type="text"
+              placeholder="Search for anything... iPhone, Nike shoes, MacBook..."
+              className="flex-1 text-gray-900 text-sm placeholder:text-gray-400 outline-none bg-transparent py-2.5 px-2"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Button className="bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold px-6 py-3 rounded-xl transition-colors whitespace-nowrap shine-btn">
+              Search
+            </Button>
+          </div>
+        </div>
+
+        <div className="animate-fade-in-up delay-500 flex flex-wrap items-center justify-center gap-2 mb-10">
+          <span className="text-gray-500 text-sm">Popular:</span>
+          {POPULAR_TAGS.map((tag) => (
+            <button
+              key={tag}
+              className="bg-white/10 hover:bg-white/20 border border-white/20 rounded-full px-3 py-1 text-gray-300 text-xs transition-all hover:scale-105"
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+
+        <div className="animate-fade-in-up delay-600 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button className="flex items-center justify-center gap-2 bg-white text-violet-700 font-semibold px-8 py-4 rounded-xl hover:bg-gray-50 transition-all shadow-lg w-full sm:w-auto hover:scale-105">
+            Browse Listings <FiArrowRight size={18} />
+          </Button>
+          <Button className="flex items-center justify-center gap-2 bg-transparent border-2 border-white/30 hover:border-white/70 text-white font-semibold px-8 py-4 rounded-xl transition-all w-full sm:w-auto hover:scale-105 hover:bg-white/5">
+            <MdSell size={18} /> Start Selling Free
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
