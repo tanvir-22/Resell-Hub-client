@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
-import { signUp } from "@/lib/auth-client";
+import { signUp, signInWithGoogle } from "@/lib/auth-client";
+import { FcGoogle } from "react-icons/fc";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { FiMail, FiLock, FiArrowRight, FiCheck, FiUser, FiShoppingBag, FiCamera } from "react-icons/fi";
 import { MdSell } from "react-icons/md";
@@ -35,6 +36,7 @@ export default function SignupPage() {
   const [showCfm, setShowCfm]             = useState(false);
   const [agreeTerms, setAgreeTerms]       = useState(false);
   const [loading, setLoading]             = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError]                 = useState("");
   const [profileImg, setProfileImg]       = useState(null);
   const [profileImgUrl, setProfileImgUrl] = useState("");
@@ -48,6 +50,11 @@ export default function SignupPage() {
     });
     return () => ctx.revert();
   }, []);
+
+  const handleGoogleSignIn = async () => {
+    setGoogleLoading(true);
+    await signInWithGoogle("/");
+  };
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
@@ -379,7 +386,27 @@ export default function SignupPage() {
             </div>
           </form>
 
-          <div className="form-el mt-6 text-center">
+          <div className="flex items-center gap-4 my-5">
+            <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
+            <span className="text-xs text-gray-400 dark:text-slate-500">or continue with</span>
+            <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
+          </div>
+
+          <button
+            type="button"
+            onClick={handleGoogleSignIn}
+            disabled={googleLoading}
+            className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-700 transition-all font-medium text-gray-700 dark:text-gray-200 text-sm disabled:opacity-60 disabled:cursor-not-allowed shadow-sm mb-5"
+          >
+            {googleLoading ? (
+              <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+            ) : (
+              <FcGoogle size={20} />
+            )}
+            {googleLoading ? "Redirecting…" : "Continue with Google"}
+          </button>
+
+          <div className="form-el text-center">
             <p className="text-sm text-gray-500 dark:text-gray-400">
               Already have an account?{" "}
               <Link

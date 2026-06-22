@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
-import { signIn } from "@/lib/auth-client";
+import { signIn, signInWithGoogle } from "@/lib/auth-client";
+import { FcGoogle } from "react-icons/fc";
 import { BsStarFill, BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { FiMail, FiLock, FiArrowRight, FiCheck } from "react-icons/fi";
 import { MdVerified } from "react-icons/md";
@@ -19,8 +20,9 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPw, setShowPw]     = useState(false);
   const [remember, setRemember] = useState(false);
-  const [loading, setLoading]   = useState(false);
-  const [error, setError]       = useState("");
+  const [loading, setLoading]       = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [error, setError]           = useState("");
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -32,6 +34,11 @@ export default function LoginPage() {
 
   const shakeError = () =>
     gsap.from(".error-msg", { x: -7, duration: 0.08, repeat: 5, yoyo: true, ease: "none" });
+
+  const handleGoogleSignIn = async () => {
+    setGoogleLoading(true);
+    await signInWithGoogle("/");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -102,18 +109,39 @@ export default function LoginPage() {
       </AuthPanelWrapper>
 
       {/* ── RIGHT FORM ── */}
-      <div className="flex-1 flex items-center justify-center p-6 sm:p-10 animate__animated animate__fadeIn">
-        <div className="w-full max-w-md">
+      <div className="flex-1 flex items-start justify-center p-6 sm:p-10 overflow-y-auto animate__animated animate__fadeIn">
+        <div className="w-full max-w-md py-8">
 
           <div className="form-el lg:hidden flex items-center gap-2 mb-8">
             <AuthLogo />
           </div>
 
-          <div className="form-el mb-8">
+          <div className="form-el mb-6">
             <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Welcome back</h1>
             <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm">
               Sign in to your ResellHub account
             </p>
+          </div>
+
+          {/* Google button — outside GSAP stagger, always visible */}
+          <button
+            type="button"
+            onClick={handleGoogleSignIn}
+            disabled={googleLoading}
+            className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-700 transition-all font-medium text-gray-700 dark:text-gray-200 text-sm disabled:opacity-60 disabled:cursor-not-allowed shadow-sm mb-5"
+          >
+            {googleLoading ? (
+              <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+            ) : (
+              <FcGoogle size={20} />
+            )}
+            {googleLoading ? "Redirecting…" : "Continue with Google"}
+          </button>
+
+          <div className="flex items-center gap-4 mb-5">
+            <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
+            <span className="text-xs text-gray-400 dark:text-slate-500">or sign in with email</span>
+            <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
           </div>
 
           {error && (
@@ -194,13 +222,7 @@ export default function LoginPage() {
             </div>
           </form>
 
-          <div className="form-el flex items-center gap-4 my-6">
-            <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
-            <span className="text-xs text-gray-400 dark:text-slate-500">or</span>
-            <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
-          </div>
-
-          <div className="form-el text-center">
+          <div className="form-el text-center mt-6">
             <p className="text-sm text-gray-500 dark:text-gray-400">
               Don&apos;t have an account?{" "}
               <Link

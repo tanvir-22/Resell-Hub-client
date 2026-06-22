@@ -1,19 +1,16 @@
-function buildUrl(base, params = {}) {
-  const p = new URLSearchParams();
-  Object.entries(params).forEach(([k, v]) => {
-    if (v !== undefined && v !== null && v !== "") p.set(k, String(v));
-  });
-  const qs = p.toString();
-  return qs ? `${base}?${qs}` : base;
-}
+const BASE = process.env.NEXT_PUBLIC_SERVER_URL;
 
-export async function getOrders(params = {}) {
-  const res = await fetch(buildUrl("/api/orders", params));
+export async function getOrders({ email, role } = {}) {
+  const params = new URLSearchParams();
+  if (email) params.set("email", email);
+  if (role) params.set("role", role);
+  const qs = params.toString();
+  const res = await fetch(`${BASE}/api/getorders${qs ? "?" + qs : ""}`);
   return res.json();
 }
 
 export async function createOrder(data) {
-  const res = await fetch("/api/orders", {
+  const res = await fetch(`${BASE}/api/createorder`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -22,8 +19,8 @@ export async function createOrder(data) {
 }
 
 export async function updateOrder(id, data) {
-  const res = await fetch(`/api/orders/${id}`, {
-    method: "PUT",
+  const res = await fetch(`${BASE}/api/updateorder/${id}`, {
+    method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });

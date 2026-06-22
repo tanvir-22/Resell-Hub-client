@@ -19,9 +19,9 @@ export default function BuyerOverview() {
 
   useEffect(() => {
     Promise.all([
-      getOrders({ role: "buyer" }),
+      getOrders({ email: user?.email, role: "buyer" }),
       getWishlist(user?.email),
-      getPayments(),
+      getPayments(user?.email),
     ]).then(([o, w, p]) => {
       setOrders(Array.isArray(o) ? o : []);
       setWishlist(Array.isArray(w) ? w : []);

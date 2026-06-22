@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { BsTagFill } from "react-icons/bs";
-import { FiMenu, FiX, FiSun, FiMoon, FiUser, FiGrid, FiLogOut } from "react-icons/fi";
+import { FiMenu, FiX, FiSun, FiMoon, FiUser, FiGrid, FiLogOut, FiShoppingCart } from "react-icons/fi";
 import { useSession, signOut } from "@/lib/auth-client";
+import { useCart } from "@/context/CartContext";
 
 const navLinks = [
   { label: "Browse",       href: "/products" },
@@ -155,6 +156,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: session, isPending } = useSession();
   const user = session?.user;
+  const { cartCount } = useCart();
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-gray-100 dark:border-slate-800">
@@ -187,6 +189,19 @@ export function Navbar() {
           {/* Desktop actions */}
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
+            {user && (
+              <Link
+                href="/cart"
+                className="relative w-9 h-9 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 border border-gray-200 dark:border-slate-700 transition-all"
+              >
+                <FiShoppingCart size={16} />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-violet-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                    {cartCount > 9 ? "9+" : cartCount}
+                  </span>
+                )}
+              </Link>
+            )}
             {!isPending && (
               user ? (
                 <UserMenu user={user} />

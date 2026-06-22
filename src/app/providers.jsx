@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { CartProvider } from "@/context/CartContext";
 
 export function ThemeProvider({ children }) {
   useEffect(() => {
@@ -13,5 +14,5 @@ export function ThemeProvider({ children }) {
     }
   }, []);
 
-  return children;
+  return <CartProvider>{children}</CartProvider>;
 }

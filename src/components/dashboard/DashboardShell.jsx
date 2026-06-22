@@ -8,7 +8,7 @@ import { BsTagFill } from "react-icons/bs";
 import {
   FiHome, FiShoppingBag, FiHeart, FiCreditCard, FiUser,
   FiGrid, FiPlusSquare, FiPackage, FiTrendingUp,
-  FiMenu, FiX, FiLogOut, FiChevronRight, FiUsers, FiShield,
+  FiMenu, FiX, FiLogOut, FiChevronRight, FiUsers, FiShield, FiShoppingCart,
 } from "react-icons/fi";
 
 /* ── user context ── */

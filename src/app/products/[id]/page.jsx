@@ -20,6 +20,7 @@ import { Navbar } from "@/components/Navbar";
 import { getProduct, getProducts } from "@/lib/api/products";
 import { getWishlist, addToWishlist, removeFromWishlist } from "@/lib/api/wishlist";
 import { useSession } from "@/lib/auth-client";
+import { useCart } from "@/context/CartContext";
 
 const RELATED_COUNT = 4;
 
@@ -28,6 +29,7 @@ export default function ProductDetail() {
   const router = useRouter();
 
   const { data: session } = useSession();
+  const { addToCart } = useCart();
   const [product, setProduct] = useState(null);
   const [relatedp, setRelated] = useState([]);
   const [slide, setSlide] = useState(0);
@@ -80,6 +82,7 @@ export default function ProductDetail() {
   const nextSlide = () => setSlide((i) => (i + 1) % images.length);
 
   const handleAddToCart = () => {
+    addToCart({ ...product, quantity: qty });
     setAddedMsg(true);
     setTimeout(() => setAddedMsg(false), 2000);
   };

@@ -4,15 +4,18 @@ import { useEffect, useState } from "react";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import { FiCreditCard, FiSearch } from "react-icons/fi";
 import { getPayments } from "@/lib/api/payments";
+import { useUser } from "@/components/dashboard/DashboardShell";
 
 export default function BuyerPayments() {
+  const user = useUser();
   const [payments, setPayments] = useState([]);
   const [loading, setLoading]   = useState(true);
   const [search, setSearch]     = useState("");
 
   useEffect(() => {
-    getPayments().then(d => { setPayments(Array.isArray(d) ? d : []); setLoading(false); });
-  }, []);
+    if (!user?.email) return;
+    getPayments(user.email).then(d => { setPayments(Array.isArray(d) ? d : []); setLoading(false); });
+  }, [user?.email]);
 
   const totalSpent   = payments.filter(p => p.status === "Completed").reduce((s, p) => s + p.amount, 0);
   const totalPending = payments.filter(p => p.status === "Pending").reduce((s, p) => s + p.amount, 0);

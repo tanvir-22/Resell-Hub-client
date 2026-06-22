@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import { FiShoppingBag, FiRefreshCw, FiSearch, FiChevronDown, FiUser, FiCalendar, FiDollarSign } from "react-icons/fi";
 import { getOrders, updateOrder } from "@/lib/api/orders";
+import { useUser } from "@/components/dashboard/DashboardShell";
 
 const STATUS_ACTIONS = {
   Pending:    [{ label: "Accept",  next: "Accepted", cls: "bg-blue-600 hover:bg-blue-700 text-white" }, { label: "Reject", next: "Cancelled", cls: "bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400" }],
@@ -12,25 +13,40 @@ const STATUS_ACTIONS = {
   Shipped:    [{ label: "Mark Delivered",  next: "Delivered",  cls: "bg-green-600  hover:bg-green-700  text-white" }],
 };
 
+// Normalize order fields to handle both old and new schema
+function normalize(o) {
+  return {
+    ...o,
+    productTitle: o.productTitle || o.title || "—",
+    price:        o.price ?? o.totalAmount ?? 0,
+    status:       o.status || o.orderStatus || "Pending",
+    productImage: o.productImage || o.images?.[0] || null,
+    buyerName:    o.buyerName || o.buyerInfo?.name || "—",
+  };
+}
+
 export default function SellerOrders() {
-  const [orders, setOrders]   = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter]   = useState("all");
-  const [search, setSearch]   = useState("");
+  const user = useUser();
+  const [orders, setOrders]     = useState([]);
+  const [loading, setLoading]   = useState(true);
+  const [filter, setFilter]     = useState("all");
+  const [search, setSearch]     = useState("");
   const [updating, setUpdating] = useState(null);
   const [selected, setSelected] = useState(null);
 
   const load = () => {
+    if (!user?.email) return;
     setLoading(true);
-    getOrders({ role: "seller" })
-      .then(d => { setOrders(Array.isArray(d) ? d : []); setLoading(false); });
+    getOrders({ email: user.email, role: "seller" })
+      .then(d => { setOrders(Array.isArray(d) ? d.map(normalize) : []); setLoading(false); });
   };
 
-  useEffect(load, []);
+  useEffect(load, [user?.email]);
 
   const updateStatus = async (id, status) => {
     setUpdating(id);
-    const updated = await updateOrder(id, { status });
+    const raw = await updateOrder(id, { status, orderStatus: status });
+    const updated = normalize(raw);
     if (!updated.error) {
       setOrders(prev => prev.map(o => o._id === id ? updated : o));
       if (selected?._id === id) setSelected(updated);

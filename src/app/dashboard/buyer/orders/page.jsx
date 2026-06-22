@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import { FiShoppingBag, FiX, FiRefreshCw, FiSearch } from "react-icons/fi";
 import { getOrders, updateOrder } from "@/lib/api/orders";
+import { useUser } from "@/components/dashboard/DashboardShell";
 
 const STATUS_FLOW = ["Pending", "Accepted", "Processing", "Shipped", "Delivered"];
 
@@ -28,25 +29,42 @@ function TrackProgress({ status }) {
   );
 }
 
+// Normalize order fields to handle both old and new schema
+function normalize(o) {
+  return {
+    ...o,
+    productTitle: o.productTitle || o.title || "—",
+    price:        o.price ?? o.totalAmount ?? 0,
+    status:       o.status || o.orderStatus || "Pending",
+    productImage: o.productImage || o.images?.[0] || null,
+    sellerName:   o.sellerName || o.sellerInfo?.name || "—",
+  };
+}
+
 export default function BuyerOrders() {
-  const [orders, setOrders]   = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter]   = useState("all");
-  const [search, setSearch]   = useState("");
+  const user = useUser();
+  const [orders, setOrders]     = useState([]);
+  const [loading, setLoading]   = useState(true);
+  const [filter, setFilter]     = useState("all");
+  const [search, setSearch]     = useState("");
   const [selected, setSelected] = useState(null);
   const [cancelling, setCancelling] = useState(null);
 
   const load = () => {
+    if (!user?.email) return;
     setLoading(true);
-    getOrders({ role: "buyer" })
-      .then(d => { setOrders(Array.isArray(d) ? d : []); setLoading(false); });
+    getOrders({ email: user.email, role: "buyer" })
+      .then(d => {
+        setOrders(Array.isArray(d) ? d.map(normalize) : []);
+        setLoading(false);
+      });
   };
 
-  useEffect(load, []);
+  useEffect(load, [user?.email]);
 
   const cancel = async (id) => {
     setCancelling(id);
-    await updateOrder(id, { status: "Cancelled" });
+    await updateOrder(id, { status: "Cancelled", orderStatus: "Cancelled" });
     load();
     if (selected?._id === id) setSelected(null);
     setCancelling(null);
