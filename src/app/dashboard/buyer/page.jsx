@@ -20,7 +20,7 @@ export default function BuyerOverview() {
   useEffect(() => {
     Promise.all([
       getOrders({ role: "buyer" }),
-      getWishlist(),
+      getWishlist(user?.email),
       getPayments(),
     ]).then(([o, w, p]) => {
       setOrders(Array.isArray(o) ? o : []);

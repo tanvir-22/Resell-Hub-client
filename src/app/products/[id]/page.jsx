@@ -18,6 +18,8 @@ import {
 } from "react-icons/fi";
 import { Navbar } from "@/components/Navbar";
 import { getProduct, getProducts } from "@/lib/api/products";
+import { getWishlist, addToWishlist, removeFromWishlist } from "@/lib/api/wishlist";
+import { useSession } from "@/lib/auth-client";
 
 const RELATED_COUNT = 4;
 
@@ -25,24 +27,51 @@ export default function ProductDetail() {
   const { id } = useParams();
   const router = useRouter();
 
+  const { data: session } = useSession();
   const [product, setProduct] = useState(null);
   const [relatedp, setRelated] = useState([]);
+  const [slide, setSlide] = useState(0);
+  const [wishlistDocId, setWishlistDocId] = useState(null);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
+  const [qty, setQty] = useState(1);
+  const [addedMsg, setAddedMsg] = useState(false);
+
   useEffect(() => {
-    getProduct(id).then((data) => {
-      setProduct(data);
-    });
-    getProducts().then((data) => {
-      setRelated(data);
-    });
+    getProduct(id).then((data) => setProduct(data));
+    getProducts().then((data) => setRelated(data));
   }, []);
+
+  useEffect(() => {
+    if (!session?.user || !id) return;
+    getWishlist(session.user.email).then((items) => {
+      if (!Array.isArray(items)) return;
+      const match = items.find((item) => item.productId === id);
+      setWishlistDocId(match?._id ?? null);
+    });
+  }, [session?.user, id]);
+
+  const toggleWishlist = async () => {
+    if (!session?.user || !product || wishlistLoading) return;
+    setWishlistLoading(true);
+    if (wishlistDocId) {
+      setWishlistDocId(null);
+      await removeFromWishlist(wishlistDocId, session.user.email);
+    } else {
+      const result = await addToWishlist({
+        productId: id,
+        title: product.title,
+        price: product.price,
+        image: product.images?.[0],
+        seller: product.sellerInfo?.name,
+      }, session.user.email);
+      setWishlistDocId(result._id);
+    }
+    setWishlistLoading(false);
+  };
+
   const related = relatedp
     .filter((p) => p._id !== id && p.category === product?.category)
     .slice(0, RELATED_COUNT);
-
-  const [slide, setSlide] = useState(0);
-  const [saved, setSaved] = useState(false);
-  const [qty, setQty] = useState(1);
-  const [addedMsg, setAddedMsg] = useState(false);
 
   const images = product?.images || [];
 
@@ -114,7 +143,6 @@ export default function ProductDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
           {/* Image slider */}
           <div className="space-y-3">
-            {/* Main image */}
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 dark:bg-slate-800 shadow-lg">
               <img
                 src={images[slide]}
@@ -141,7 +169,6 @@ export default function ProductDetail() {
                       className="text-gray-700 dark:text-gray-300"
                     />
                   </button>
-                  {/* Dots */}
                   <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
                     {images.map((_, i) => (
                       <button
@@ -154,7 +181,6 @@ export default function ProductDetail() {
                 </>
               )}
             </div>
-            {/* Thumbnails */}
             {images.length > 1 && (
               <div className="flex gap-2">
                 {images.map((img, i) => (
@@ -190,14 +216,16 @@ export default function ProductDetail() {
                 </h1>
               </div>
               <button
-                onClick={() => setSaved((s) => !s)}
-                className={`p-2.5 rounded-xl border transition-colors flex-shrink-0 ${
-                  saved
+                onClick={toggleWishlist}
+                disabled={wishlistLoading || !session?.user}
+                className={`p-2.5 rounded-xl border transition-colors flex-shrink-0 disabled:opacity-50 ${
+                  wishlistDocId
                     ? "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-500"
                     : "border-gray-200 dark:border-slate-600 text-gray-400 hover:text-red-500 hover:border-red-200"
                 }`}
+                title={session?.user ? (wishlistDocId ? "Remove from wishlist" : "Add to wishlist") : "Sign in to save"}
               >
-                <FiHeart size={18} fill={saved ? "currentColor" : "none"} />
+                <FiHeart size={18} fill={wishlistDocId ? "currentColor" : "none"} />
               </button>
             </div>
 

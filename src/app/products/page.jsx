@@ -13,6 +13,9 @@ import {
 } from "react-icons/fi";
 import { Navbar } from "@/components/Navbar";
 import { getProducts } from "@/lib/api/products";
+import { getWishlist, addToWishlist, removeFromWishlist } from "@/lib/api/wishlist";
+import { useSession } from "@/lib/auth-client";
+
 const CATEGORIES = [
   "All",
   "Electronics",
@@ -26,8 +29,6 @@ const CATEGORIES = [
 ];
 const CONDITIONS = ["All", "Like New", "Good", "Fair", "Used"];
 
-
-
 const SORT_OPTIONS = [
   { label: "Newest", key: "newest" },
   { label: "Price: Low-High", key: "price_asc" },
@@ -37,6 +38,7 @@ const SORT_OPTIONS = [
 ];
 
 export default function ProductsPage() {
+  const { data: session } = useSession();
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
@@ -44,14 +46,52 @@ export default function ProductsPage() {
   const [sortKey, setSortKey] = useState("newest");
   const [view, setView] = useState("grid");
   const [showFilters, setShowFilters] = useState(false);
+  const [wishlistMap, setWishlistMap] = useState({});
+  const [toggling, setToggling] = useState(new Set());
+
   useEffect(() => {
     getProducts().then((data) => {
-      console.log("type:", typeof data, Array.isArray(data));
-      console.log("keys:", Object.keys(data));
-      console.log("raw:", data);
       setProducts(Array.isArray(data) ? data : (data.products ?? []));
     });
   }, []);
+
+  useEffect(() => {
+    if (!session?.user) return;
+    getWishlist(session.user.email).then((items) => {
+      if (!Array.isArray(items)) return;
+      const map = {};
+      items.forEach((item) => { map[item.productId] = item._id; });
+      setWishlistMap(map);
+    });
+  }, [session?.user]);
+
+  const toggleWishlist = async (e, p) => {
+    e.preventDefault();
+    if (!session?.user) return;
+    const productId = p._id;
+    if (toggling.has(productId)) return;
+    setToggling((prev) => new Set(prev).add(productId));
+
+    if (wishlistMap[productId]) {
+      const docId = wishlistMap[productId];
+      setWishlistMap((prev) => { const n = { ...prev }; delete n[productId]; return n; });
+      await removeFromWishlist(docId, session.user.email);
+    } else {
+      const optimisticId = "pending-" + productId;
+      setWishlistMap((prev) => ({ ...prev, [productId]: optimisticId }));
+      const saved = await addToWishlist({
+        productId,
+        title: p.title,
+        price: p.price,
+        image: p.images?.[0],
+        seller: p.sellerInfo?.name,
+      }, session.user.email);
+      setWishlistMap((prev) => ({ ...prev, [productId]: saved._id }));
+    }
+
+    setToggling((prev) => { const n = new Set(prev); n.delete(productId); return n; });
+  };
+
   const filtered = useMemo(() => {
     let list = [...products];
     if (search)
@@ -69,7 +109,7 @@ export default function ProductsPage() {
     if (sortKey === "saves") list.sort((a, b) => b.saves - a.saves);
     return list;
   }, [search, category, condition, sortKey, products]);
-  console.log(filtered);
+
   const activeFilters = [
     category !== "All" && { label: category, clear: () => setCategory("All") },
     condition !== "All" && {
@@ -118,7 +158,6 @@ export default function ProductsPage() {
         {/* Filter bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
           <div className="flex items-center gap-2 flex-wrap">
-            {/* Category */}
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -128,7 +167,6 @@ export default function ProductsPage() {
                 <option key={c}>{c}</option>
               ))}
             </select>
-            {/* Condition */}
             <select
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
@@ -138,7 +176,6 @@ export default function ProductsPage() {
                 <option key={c}>{c}</option>
               ))}
             </select>
-            {/* Sort */}
             <select
               value={sortKey}
               onChange={(e) => setSortKey(e.target.value)}
@@ -151,7 +188,6 @@ export default function ProductsPage() {
               ))}
             </select>
 
-            {/* Active filter chips */}
             {activeFilters.map((f) => (
               <button
                 key={f.label}
@@ -200,7 +236,6 @@ export default function ProductsPage() {
           ))}
         </div>
 
-        {/* Grid */}
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center py-24 text-center">
             <FiSearch
@@ -251,10 +286,14 @@ export default function ProductsPage() {
                       {p.condition}
                     </span>
                   </div>
-                  <button className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 dark:bg-slate-800/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow">
+                  <button
+                    onClick={(e) => toggleWishlist(e, p)}
+                    className={`absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 dark:bg-slate-800/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow ${toggling.has(p._id) ? "opacity-60" : ""}`}
+                  >
                     <FiHeart
                       size={14}
-                      className="text-gray-600 dark:text-gray-300"
+                      fill={wishlistMap[p._id] ? "currentColor" : "none"}
+                      className={wishlistMap[p._id] ? "text-rose-500" : "text-gray-600 dark:text-gray-300"}
                     />
                   </button>
                 </div>
@@ -305,9 +344,22 @@ export default function ProductsPage() {
                         {p.title}
                       </h3>
                     </div>
-                    <span className="text-xl font-extrabold text-gray-900 dark:text-white whitespace-nowrap">
-                      ${p.price.toLocaleString()}
-                    </span>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <span className="text-xl font-extrabold text-gray-900 dark:text-white whitespace-nowrap">
+                        ${p.price.toLocaleString()}
+                      </span>
+                      <button
+                        onClick={(e) => toggleWishlist(e, p)}
+                        disabled={toggling.has(p._id)}
+                        className="w-8 h-8 rounded-full border border-gray-200 dark:border-slate-600 flex items-center justify-center hover:border-rose-300 transition-colors disabled:opacity-50"
+                      >
+                        <FiHeart
+                          size={14}
+                          fill={wishlistMap[p._id] ? "currentColor" : "none"}
+                          className={wishlistMap[p._id] ? "text-rose-500" : "text-gray-400"}
+                        />
+                      </button>
+                    </div>
                   </div>
                   <div className="flex items-center gap-3 mt-2">
                     <span

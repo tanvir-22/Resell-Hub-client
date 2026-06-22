@@ -4,22 +4,23 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FiHeart, FiTrash2, FiArrowRight, FiRefreshCw } from "react-icons/fi";
 import { getWishlist, removeFromWishlist } from "@/lib/api/wishlist";
+import { useSession } from "@/lib/auth-client";
 
 export default function BuyerWishlist() {
+  const { data: session } = useSession();
   const [items, setItems]     = useState([]);
   const [loading, setLoading] = useState(true);
   const [removing, setRemoving] = useState(null);
 
-  const load = () => {
+  useEffect(() => {
+    if (!session?.user) return;
     setLoading(true);
-    getWishlist().then(d => { setItems(Array.isArray(d) ? d : []); setLoading(false); });
-  };
-
-  useEffect(load, []);
+    getWishlist(session.user.email).then(d => { setItems(Array.isArray(d) ? d : []); setLoading(false); });
+  }, [session?.user]);
 
   const remove = async (id) => {
     setRemoving(id);
-    await removeFromWishlist(id);
+    await removeFromWishlist(id, session.user.email);
     setItems(prev => prev.filter(i => i._id !== id));
     setRemoving(null);
   };
