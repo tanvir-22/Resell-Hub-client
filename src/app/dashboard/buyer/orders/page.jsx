@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import { FiShoppingBag, FiX, FiRefreshCw, FiSearch } from "react-icons/fi";
+import toast from "react-hot-toast";
 import { getOrders, updateOrder } from "@/lib/api/orders";
 import { useUser } from "@/components/dashboard/DashboardShell";
 
@@ -65,6 +66,7 @@ export default function BuyerOrders() {
   const cancel = async (id) => {
     setCancelling(id);
     await updateOrder(id, { status: "Cancelled", orderStatus: "Cancelled" });
+    toast.success("Order cancelled");
     load();
     if (selected?._id === id) setSelected(null);
     setCancelling(null);

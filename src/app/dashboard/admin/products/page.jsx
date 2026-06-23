@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { FiSearch, FiCheckCircle, FiXCircle, FiTrash2, FiPackage, FiAlertTriangle, FiFilter } from "react-icons/fi";
 import StatusBadge from "@/components/dashboard/StatusBadge";
+import toast from "react-hot-toast";
 import { getAdminProducts, updateAdminProduct, deleteAdminProduct } from "@/lib/api/admin";
 
 const STATUS_TABS = ["all", "pending", "approved", "rejected"];
@@ -52,12 +53,14 @@ export default function AdminProducts() {
   const setStatus = async (id, status) => {
     await updateAdminProduct(id, { status });
     setProducts(prev => prev.map(p => p._id === id ? { ...p, status } : p));
+    toast.success(status === "approved" ? "Product approved" : "Product rejected");
   };
 
   const handleDelete = async (id) => {
     await deleteAdminProduct(id);
     setProducts(prev => prev.filter(p => p._id !== id));
     setConfirm(null);
+    toast.success("Product deleted");
   };
 
   const PRODUCT_STATUS_COLORS = {
@@ -126,7 +129,9 @@ export default function AdminProducts() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-          {products.map(p => (
+          {products.map(p => {
+            const s = p.status || "pending";
+            return (
             <div key={p._id} className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden">
               {/* Image */}
               <div className="relative aspect-video bg-gray-100 dark:bg-slate-700">
@@ -138,8 +143,8 @@ export default function AdminProducts() {
                   </div>
                 )}
                 <div className="absolute top-2 left-2 flex gap-1.5 flex-wrap">
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${PRODUCT_STATUS_COLORS[p.status] || PRODUCT_STATUS_COLORS.pending}`}>
-                    {p.status || "pending"}
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${PRODUCT_STATUS_COLORS[s] || PRODUCT_STATUS_COLORS.pending}`}>
+                    {s}
                   </span>
                   {p.reported && (
                     <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 flex items-center gap-1">
@@ -159,7 +164,7 @@ export default function AdminProducts() {
               </div>
               {/* Actions */}
               <div className="flex border-t border-gray-100 dark:border-slate-700">
-                {(p.status === "pending" || p.status === "rejected") && (
+                {(s === "pending" || s === "rejected") && (
                   <button
                     onClick={() => setStatus(p._id, "approved")}
                     className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-green-700 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors"
@@ -167,7 +172,7 @@ export default function AdminProducts() {
                     <FiCheckCircle size={15} /> Approve
                   </button>
                 )}
-                {(p.status === "pending" || p.status === "approved") && (
+                {(s === "pending" || s === "approved") && (
                   <button
                     onClick={() => setStatus(p._id, "rejected")}
                     className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors border-l border-gray-100 dark:border-slate-700"
@@ -183,7 +188,8 @@ export default function AdminProducts() {
                 </button>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       )}
 

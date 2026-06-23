@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import { FiShoppingBag, FiRefreshCw, FiSearch, FiChevronDown, FiUser, FiCalendar, FiDollarSign } from "react-icons/fi";
+import toast from "react-hot-toast";
 import { getOrders, updateOrder } from "@/lib/api/orders";
 import { useUser } from "@/components/dashboard/DashboardShell";
 
@@ -47,9 +48,12 @@ export default function SellerOrders() {
     setUpdating(id);
     const raw = await updateOrder(id, { status, orderStatus: status });
     const updated = normalize(raw);
-    if (!updated.error) {
+    if (updated.error) {
+      toast.error("Failed to update order");
+    } else {
       setOrders(prev => prev.map(o => o._id === id ? updated : o));
       if (selected?._id === id) setSelected(updated);
+      toast.success(`Order marked as ${status}`);
     }
     setUpdating(null);
   };

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 import { CartProvider } from "@/context/CartContext";
 
 export function ThemeProvider({ children }) {
@@ -14,5 +15,22 @@ export function ThemeProvider({ children }) {
     }
   }, []);
 
-  return <CartProvider>{children}</CartProvider>;
+  return (
+    <CartProvider>
+      {children}
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            borderRadius: "12px",
+            fontWeight: "500",
+            fontSize: "14px",
+          },
+          success: { iconTheme: { primary: "#059669", secondary: "#fff" } },
+          error:   { iconTheme: { primary: "#ef4444", secondary: "#fff" } },
+        }}
+      />
+    </CartProvider>
+  );
 }

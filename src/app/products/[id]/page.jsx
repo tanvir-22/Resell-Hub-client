@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -132,10 +133,16 @@ function ReviewsSection({ productId, session }) {
       comment,
     });
 
-    if (!ok) { setMsg({ type: "error", text: data.message || "Failed to submit." }); setSubmitting(false); return; }
+    if (!ok) {
+      setMsg({ type: "error", text: data.message || "Failed to submit." });
+      toast.error(data.message || "Failed to submit review");
+      setSubmitting(false);
+      return;
+    }
     setReviews((p) => [data, ...p]);
     setRating(0); setComment("");
     setMsg({ type: "success", text: "Review submitted — thank you!" });
+    toast.success("Review submitted — thank you!");
     setSubmitting(false);
   };
 
@@ -230,8 +237,8 @@ export default function ProductDetail() {
   const [addedMsg, setAddedMsg] = useState(false);
 
   useEffect(() => {
-    getProduct(id).then(setProduct);
-    getProducts().then(setRelated);
+    getProduct(id).then(data => setProduct(data || null));
+    getProducts().then(data => setRelated(Array.isArray(data) ? data : []));
   }, []);
 
   useEffect(() => {
@@ -259,22 +266,6 @@ export default function ProductDetail() {
     setWishlistLoading(false);
   };
 
-  const handleAddToCart = () => {
-    addToCart({ ...product, quantity: qty });
-    setAddedMsg(true);
-    setTimeout(() => setAddedMsg(false), 2000);
-  };
-
-  const images  = product?.images || [];
-  const related = relatedp.filter((p) => p._id !== id && p.category === product?.category).slice(0, RELATED_COUNT);
-
-  const conditionStyle = {
-    "Like New":    "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
-    "Good":        "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
-    "Used":        "bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300",
-    "Refurbished": "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
-  };
-
   /* ─── loading / not found ─── */
   if (!product) {
     return (
@@ -293,6 +284,29 @@ export default function ProductDetail() {
       </div>
     );
   }
+
+  /* ─── product is guaranteed non-null below this line ─── */
+  const handleAddToCart = () => {
+    if (!(Number(product.stock) > 0)) {
+      toast.error("This item is out of stock");
+      return;
+    }
+    addToCart({ ...product, quantity: qty });
+    setAddedMsg(true);
+    setTimeout(() => setAddedMsg(false), 2000);
+  };
+
+  const images  = Array.isArray(product.images) ? product.images : [];
+  const related = Array.isArray(relatedp)
+    ? relatedp.filter((p) => p && p._id !== id && p.category === product.category).slice(0, RELATED_COUNT)
+    : [];
+
+  const conditionStyle = {
+    "Like New":    "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
+    "Good":        "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
+    "Used":        "bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300",
+    "Refurbished": "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
@@ -456,7 +470,7 @@ export default function ProductDetail() {
               <div className="space-y-3">
                 <button
                   onClick={handleAddToCart}
-                  disabled={product.stock === 0}
+                  disabled={!(Number(product.stock) > 0)}
                   className="w-full flex items-center justify-center gap-2 py-3.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold rounded-2xl transition-all shadow-lg shadow-emerald-600/30 text-sm active:scale-[0.98]"
                 >
                   <FiShoppingBag size={18} />
@@ -615,13 +629,13 @@ export default function ProductDetail() {
                 >
                   <div className="aspect-square overflow-hidden bg-gray-50 dark:bg-slate-700">
                     <img
-                      src={p.images?.[0]} alt={p.title}
+                      src={p?.images?.[0]} alt={p?.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                   <div className="p-3">
-                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white line-clamp-2 leading-snug mb-1">{p.title}</h3>
-                    <p className="text-base font-extrabold text-emerald-600 dark:text-emerald-400">${p.price.toLocaleString()}</p>
+                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white line-clamp-2 leading-snug mb-1">{p?.title}</h3>
+                    <p className="text-base font-extrabold text-emerald-600 dark:text-emerald-400">${p?.price?.toLocaleString?.() ?? p?.price}</p>
                   </div>
                 </Link>
               ))}

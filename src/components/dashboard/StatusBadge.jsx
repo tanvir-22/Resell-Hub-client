@@ -6,6 +6,9 @@
   Delivered:  "bg-green-100 dark:bg-green-900/30 text-green-700  dark:text-green-300",
   Cancelled:  "bg-red-100   dark:bg-red-900/30   text-red-700   dark:text-red-300",
   Completed:  "bg-green-100 dark:bg-green-900/30 text-green-700  dark:text-green-300",
+  success:    "bg-green-100 dark:bg-green-900/30 text-green-700  dark:text-green-300",
+  pending:    "bg-amber-100 dark:bg-amber-900/30 text-amber-700  dark:text-amber-300",
+  failed:     "bg-red-100   dark:bg-red-900/30   text-red-700   dark:text-red-300",
   Refunded:   "bg-gray-100  dark:bg-gray-700/30  text-gray-600  dark:text-gray-300",
   Failed:     "bg-red-100   dark:bg-red-900/30   text-red-700   dark:text-red-300",
 };

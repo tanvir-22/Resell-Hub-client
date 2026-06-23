@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { FiSearch, FiTrash2, FiSlash, FiCheckCircle, FiUser, FiUsers, FiShield } from "react-icons/fi";
+import toast from "react-hot-toast";
 import { getAdminUsers, updateAdminUser, deleteAdminUser } from "@/lib/api/admin";
 
 const ROLE_COLORS = {
@@ -60,12 +61,14 @@ export default function AdminUsers() {
   const toggleBlock = async (u) => {
     const updated = await updateAdminUser(u._id, { blocked: !u.blocked });
     setUsers(prev => prev.map(x => x._id === u._id ? { ...x, blocked: updated.blocked } : x));
+    toast.success(u.blocked ? "User unblocked" : "User blocked");
   };
 
   const deleteUser = async (id) => {
     await deleteAdminUser(id);
     setUsers(prev => prev.filter(u => u._id !== id));
     setConfirm(null);
+    toast.success("User deleted");
   };
 
   return (

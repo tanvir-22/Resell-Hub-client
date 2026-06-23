@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { FiSearch, FiShoppingBag, FiChevronDown } from "react-icons/fi";
 import StatusBadge from "@/components/dashboard/StatusBadge";
+import toast from "react-hot-toast";
 import { getAdminOrders, updateAdminOrder } from "@/lib/api/admin";
 
 const STATUS_TABS = ["all", "Pending", "Accepted", "Processing", "Shipped", "Delivered", "Cancelled"];
@@ -44,6 +45,7 @@ export default function AdminOrders() {
     setUpdating(id);
     await updateAdminOrder(id, { status });
     setOrders(prev => prev.map(o => o._id === id ? normalize({ ...o, orderStatus: status }) : o));
+    toast.success(`Order marked as ${status}`);
     setUpdating(null);
     setOpenRow(null);
   };

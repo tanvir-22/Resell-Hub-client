@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, useRef } from "react";
+import toast from "react-hot-toast";
 import { useSession } from "@/lib/auth-client";
 
 const CartCtx = createContext(null);
@@ -42,6 +43,12 @@ export function CartProvider({ children }) {
   }, [cartItems]);
 
   const addToCart = (product) => {
+    if (!(Number(product.stock) > 0)) {
+      toast.error("This item is out of stock");
+      return;
+    }
+    const isExisting = cartItems.some((i) => i._id === product._id);
+    toast.success(isExisting ? "Quantity updated" : "Added to cart", { duration: 1500 });
     setCartItems((prev) => {
       const existing = prev.find((i) => i._id === product._id);
       if (existing) {
@@ -54,6 +61,7 @@ export function CartProvider({ children }) {
   };
 
   const removeFromCart = (productId) => {
+    toast("Removed from cart", { icon: "🗑️", duration: 1500 });
     setCartItems((prev) => prev.filter((i) => i._id !== productId));
   };
 

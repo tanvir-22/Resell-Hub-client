@@ -13,6 +13,7 @@ import {
   FiList,
 } from "react-icons/fi";
 import { Navbar } from "@/components/Navbar";
+import toast from "react-hot-toast";
 import { getProducts } from "@/lib/api/products";
 import { getWishlist, addToWishlist, removeFromWishlist } from "@/lib/api/wishlist";
 import { useSession } from "@/lib/auth-client";
@@ -85,6 +86,7 @@ function ProductsPageInner() {
       const docId = wishlistMap[productId];
       setWishlistMap((prev) => { const n = { ...prev }; delete n[productId]; return n; });
       await removeFromWishlist(docId, session.user.email);
+      toast("Removed from wishlist", { icon: "🤍", duration: 1500 });
     } else {
       const optimisticId = "pending-" + productId;
       setWishlistMap((prev) => ({ ...prev, [productId]: optimisticId }));
@@ -96,6 +98,7 @@ function ProductsPageInner() {
         seller: p.sellerInfo?.name,
       }, session.user.email);
       setWishlistMap((prev) => ({ ...prev, [productId]: saved._id }));
+      toast.success("Saved to wishlist", { duration: 1500 });
     }
 
     setToggling((prev) => { const n = new Set(prev); n.delete(productId); return n; });

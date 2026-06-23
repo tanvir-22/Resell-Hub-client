@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FiHeart, FiTrash2, FiArrowRight, FiRefreshCw } from "react-icons/fi";
+import toast from "react-hot-toast";
 import { getWishlist, removeFromWishlist } from "@/lib/api/wishlist";
 import { useSession } from "@/lib/auth-client";
 
@@ -23,6 +24,7 @@ export default function BuyerWishlist() {
     await removeFromWishlist(id, session.user.email);
     setItems(prev => prev.filter(i => i._id !== id));
     setRemoving(null);
+    toast("Removed from wishlist", { icon: "🤍", duration: 1500 });
   };
 
   return (

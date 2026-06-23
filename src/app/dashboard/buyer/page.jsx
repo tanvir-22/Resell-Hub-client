@@ -10,6 +10,15 @@ import { getPayments } from "@/lib/api/payments";
 import { StatCard } from "@/components/ui/StatCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 
+function normalizeOrder(o) {
+  return {
+    ...o,
+    productTitle: o.productTitle || o.title || "—",
+    price:        o.price ?? o.totalAmount ?? 0,
+    status:       o.status || o.orderStatus || "Pending",
+  };
+}
+
 export default function BuyerOverview() {
   const user = useUser();
   const [orders, setOrders]     = useState([]);
@@ -18,24 +27,25 @@ export default function BuyerOverview() {
   const [loading, setLoading]   = useState(true);
 
   useEffect(() => {
+    if (!user?.email) return;
     Promise.all([
-      getOrders({ email: user?.email, role: "buyer" }),
-      getWishlist(user?.email),
-      getPayments(user?.email),
+      getOrders({ email: user.email, role: "buyer" }),
+      getWishlist(user.email),
+      getPayments(user.email),
     ]).then(([o, w, p]) => {
-      setOrders(Array.isArray(o) ? o : []);
+      setOrders(Array.isArray(o) ? o.map(normalizeOrder) : []);
       setWishlist(Array.isArray(w) ? w : []);
       setPayments(Array.isArray(p) ? p : []);
       setLoading(false);
     });
-  }, []);
+  }, [user?.email]);
 
   const pendingOrders = orders.filter(
-    (o) => o.status === "Pending" || o.status === "Accepted",
+    (o) => !["Delivered", "Cancelled"].includes(o.status),
   ).length;
   const totalSpent = payments
-    .filter((p) => p.status === "Completed")
-    .reduce((s, p) => s + p.amount, 0);
+    .filter((p) => p.paymentStatus === "success" && p.orderStatus !== "Cancelled")
+    .reduce((s, p) => s + (p.amount ?? p.totalAmount ?? 0), 0);
 
   return (
     <div>

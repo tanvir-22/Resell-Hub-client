@@ -1,11 +1,11 @@
-﻿"use client";
+"use client";
 
 import { useState, useRef } from "react";
+import toast from "react-hot-toast";
 import { useUser } from "@/components/dashboard/DashboardShell";
 import { updateUser, changePassword } from "@/lib/auth-client";
-import { FiCamera, FiSave, FiCheck, FiUser, FiLock, FiPhone, FiMapPin } from "react-icons/fi";
+import { FiCamera, FiSave, FiUser, FiLock, FiPhone, FiMapPin } from "react-icons/fi";
 import { uploadImage } from "@/lib/api/upload";
-import { Spinner } from "@heroui/react";
 
 const inputCls = "w-full px-4 py-3 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all";
 
@@ -15,76 +15,70 @@ export default function BuyerProfile() {
   const [name, setName]         = useState(user?.name || "");
   const [phone, setPhone]       = useState(user?.phone || "");
   const [address, setAddress]   = useState(user?.address || "");
-  const [profileImg, setProfileImg] = useState(null);
+  const [profileImg, setProfileImg]     = useState(null);
   const [profileImgUrl, setProfileImgUrl] = useState(user?.image || "");
   const [imgUploading, setImgUploading]   = useState(false);
   const [saving, setSaving]     = useState(false);
-  const [saved, setSaved]       = useState(false);
-  const [error, setError]       = useState("");
 
   const [curPw, setCurPw]   = useState("");
   const [newPw, setNewPw]   = useState("");
   const [cfmPw, setCfmPw]   = useState("");
   const [pwSaving, setPwSaving] = useState(false);
-  const [pwMsg, setPwMsg]   = useState("");
 
   const fileRef = useRef(null);
 
   const handleImageSelect = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 5 * 1024 * 1024) { setError("Image must be under 5MB"); return; }
+    if (file.size > 5 * 1024 * 1024) { toast.error("Image must be under 5MB"); return; }
     setProfileImg(URL.createObjectURL(file));
     setImgUploading(true);
     try {
       const url = await uploadImage(file);
       setProfileImgUrl(url);
-    } catch { setError("Image upload failed"); }
-    finally { setImgUploading(false); }
+      toast.success("Photo uploaded");
+    } catch {
+      toast.error("Image upload failed");
+    } finally {
+      setImgUploading(false);
+    }
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
-    setSaving(true); setError("");
-    const { error: err } = await updateUser({ name, image: profileImgUrl || undefined, phone });
-    if (err) setError(err.message || "Update failed");
-    else { setSaved(true); setTimeout(() => setSaved(false), 3000); }
+    setSaving(true);
+    const { error } = await updateUser({ name, image: profileImgUrl || undefined, phone });
     setSaving(false);
+    if (error) toast.error(error.message || "Update failed");
+    else toast.success("Profile saved!");
   };
 
   const handlePasswordChange = async (e) => {
     e.preventDefault();
-    if (!curPw) { setPwMsg("Please enter your current password."); return; }
-    if (newPw.length < 8) { setPwMsg("New password must be at least 8 characters."); return; }
-    if (newPw !== cfmPw) { setPwMsg("Passwords don't match."); return; }
+    if (!curPw)          { toast.error("Enter your current password"); return; }
+    if (newPw.length < 8){ toast.error("New password must be at least 8 characters"); return; }
+    if (newPw !== cfmPw) { toast.error("Passwords don't match"); return; }
 
     setPwSaving(true);
-    setPwMsg("");
-
     const { error } = await changePassword({
       currentPassword: curPw,
       newPassword: newPw,
       revokeOtherSessions: false,
     });
-
     setPwSaving(false);
 
     if (error) {
       const msg = error.message || "";
       if (msg.toLowerCase().includes("invalid") || msg.toLowerCase().includes("incorrect")) {
-        setPwMsg("Current password is incorrect.");
-      } else if (msg.toLowerCase().includes("too short") || msg.toLowerCase().includes("minimum")) {
-        setPwMsg("New password is too short.");
+        toast.error("Current password is incorrect");
       } else {
-        setPwMsg(error.message || "Failed to update password. Please try again.");
+        toast.error(error.message || "Failed to update password");
       }
       return;
     }
 
-    setPwMsg("success");
-    setCurPw("");
-    setNewPw("");
-    setCfmPw("");
+    toast.success("Password updated successfully!");
+    setCurPw(""); setNewPw(""); setCfmPw("");
   };
 
   const initials = user?.name
@@ -98,7 +92,7 @@ export default function BuyerProfile() {
         <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Manage your personal information.</p>
       </div>
 
-      {/* Avatar section */}
+      {/* Avatar */}
       <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-6 mb-5">
         <div className="flex items-center gap-5">
           <div className="relative">
@@ -114,7 +108,9 @@ export default function BuyerProfile() {
               onClick={() => fileRef.current?.click()}
               className="absolute bottom-0 right-0 w-7 h-7 bg-emerald-600 hover:bg-emerald-700 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-800 transition-colors"
             >
-              {imgUploading ? <div className="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin" /> : <FiCamera size={13} className="text-white" />}
+              {imgUploading
+                ? <div className="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin" />
+                : <FiCamera size={13} className="text-white" />}
             </button>
           </div>
           <div>
@@ -133,7 +129,6 @@ export default function BuyerProfile() {
         <h2 className="font-bold text-gray-900 dark:text-white mb-5 flex items-center gap-2">
           <FiUser size={17} className="text-emerald-500" /> Personal Information
         </h2>
-        {error && <p className="text-red-600 dark:text-red-400 text-sm mb-4 bg-red-50 dark:bg-red-900/20 p-3 rounded-xl">{error}</p>}
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Full Name</label>
@@ -160,46 +155,38 @@ export default function BuyerProfile() {
           type="submit" disabled={saving}
           className="mt-5 flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-6 py-3 rounded-xl transition-all disabled:opacity-70 hover:scale-[1.02]"
         >
-          {saved ? <><FiCheck size={16} /> Saved!</> : saving ? "Saving..." : <><FiSave size={16} /> Save Changes</>}
+          {saving
+            ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Saving…</>
+            : <><FiSave size={16} /> Save Changes</>}
         </button>
       </form>
 
-      {/* Password change */}
+      {/* Password form */}
       <form onSubmit={handlePasswordChange} className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-6">
         <h2 className="font-bold text-gray-900 dark:text-white mb-5 flex items-center gap-2">
           <FiLock size={17} className="text-emerald-500" /> Change Password
         </h2>
-        {pwMsg && (
-          <p className={`text-sm mb-4 p-3 rounded-xl ${pwMsg === "success" ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300" : "bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400"}`}>
-            {pwMsg === "success" ? "Password updated successfully!" : pwMsg}
-          </p>
-        )}
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Current Password</label>
-            <input type="password" value={curPw} onChange={e => { setCurPw(e.target.value); setPwMsg(""); }} placeholder="••••••••" className={inputCls} />
+            <input type="password" value={curPw} onChange={e => setCurPw(e.target.value)} placeholder="••••••••" className={inputCls} />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">New Password</label>
-            <input type="password" value={newPw} onChange={e => { setNewPw(e.target.value); setPwMsg(""); }} placeholder="Min. 8 characters" className={inputCls} />
+            <input type="password" value={newPw} onChange={e => setNewPw(e.target.value)} placeholder="Min. 8 characters" className={inputCls} />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Confirm New Password</label>
-            <input type="password" value={cfmPw} onChange={e => { setCfmPw(e.target.value); setPwMsg(""); }} placeholder="••••••••" className={inputCls} />
+            <input type="password" value={cfmPw} onChange={e => setCfmPw(e.target.value)} placeholder="••••••••" className={inputCls} />
           </div>
         </div>
         <button
           type="submit" disabled={pwSaving || !curPw || !newPw || !cfmPw}
           className="mt-5 flex items-center gap-2 bg-gray-900 dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-100 text-white dark:text-gray-900 text-sm font-semibold px-6 py-3 rounded-xl transition-all disabled:opacity-50"
         >
-          {pwSaving ? (
-            <>
-              <Spinner size="sm" classNames={{ circle1: "border-b-white dark:border-b-gray-900", circle2: "border-b-white/60 dark:border-b-gray-900/60" }} />
-              Updating…
-            </>
-          ) : (
-            <><FiLock size={15} /> Update Password</>
-          )}
+          {pwSaving
+            ? <><div className="w-4 h-4 border-2 border-white/30 dark:border-gray-900/30 border-t-white dark:border-t-gray-900 rounded-full animate-spin" /> Updating…</>
+            : <><FiLock size={15} /> Update Password</>}
         </button>
       </form>
     </div>

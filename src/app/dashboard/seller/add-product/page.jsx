@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { FiCamera, FiCheck, FiArrowLeft, FiX, FiPlus } from "react-icons/fi";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import { uploadImage } from "@/lib/api/upload";
 import { createProduct } from "@/lib/api/products";
 import { useSession } from "@/lib/auth-client";
@@ -84,7 +85,13 @@ export default function AddProduct() {
         phone: form.phone  || user?.phone || "",
       },
     });
-    if (data.error) { setError(data.error || "Failed to create product"); setSaving(false); return; }
+    if (data.error) {
+      setError(data.error || "Failed to create product");
+      toast.error("Failed to publish product");
+      setSaving(false);
+      return;
+    }
+    toast.success("Product submitted for review!");
     router.push("/dashboard/seller/products");
   };
 

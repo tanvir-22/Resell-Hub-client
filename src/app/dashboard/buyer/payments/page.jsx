@@ -17,8 +17,8 @@ export default function BuyerPayments() {
     getPayments(user.email).then(d => { setPayments(Array.isArray(d) ? d : []); setLoading(false); });
   }, [user?.email]);
 
-  const totalSpent   = payments.filter(p => p.status === "Completed").reduce((s, p) => s + p.amount, 0);
-  const totalPending = payments.filter(p => p.status === "Pending").reduce((s, p) => s + p.amount, 0);
+  const totalSpent   = payments.filter(p => p.paymentStatus === "success" && p.orderStatus !== "Cancelled").reduce((s, p) => s + p.amount, 0);
+  const totalPending = payments.filter(p => p.paymentStatus === "pending" && p.orderStatus !== "Cancelled").reduce((s, p) => s + p.amount, 0);
 
   const visible = payments.filter(p =>
     !search || p.orderId?.toLowerCase().includes(search.toLowerCase())
@@ -73,7 +73,7 @@ export default function BuyerPayments() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100 dark:border-slate-700">
-                  {["Transaction ID", "Amount", "Date", "Status"].map(h => (
+                  {["Transaction ID", "Amount", "Date", "Payment", "Order"].map(h => (
                     <th key={h} className="pb-3 text-left text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">{h}</th>
                   ))}
                 </tr>
@@ -84,7 +84,8 @@ export default function BuyerPayments() {
                     <td className="py-3 font-mono text-xs text-gray-500 dark:text-gray-400">{p._id.slice(-8).toUpperCase()}</td>
                     <td className="py-3 font-bold text-gray-900 dark:text-white">${Number(p.amount).toFixed(2)}</td>
                     <td className="py-3 text-gray-500 dark:text-gray-400">{new Date(p.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</td>
-                    <td className="py-3"><StatusBadge status={p.status} /></td>
+                    <td className="py-3"><StatusBadge status={p.paymentStatus} /></td>
+                    <td className="py-3">{p.orderStatus ? <StatusBadge status={p.orderStatus} /> : <span className="text-gray-300 dark:text-gray-600 text-xs">—</span>}</td>
                   </tr>
                 ))}
               </tbody>

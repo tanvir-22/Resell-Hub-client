@@ -13,6 +13,7 @@ import {
   FiPackage,
   FiChevronDown,
 } from "react-icons/fi";
+import toast from "react-hot-toast";
 import { getSellerProducts, updateProduct, deleteProduct } from "@/lib/api/products";
 import { uploadImage } from "@/lib/api/upload";
 
@@ -62,7 +63,9 @@ function EditModal({ product, onClose, onSave }) {
     setSaving(true);
     const data = await updateProduct(product._id, form);
     setSaving(false);
-    if (!data.error) onSave(data);
+    if (data.error) { toast.error("Failed to update product"); return; }
+    toast.success("Product updated");
+    onSave(data);
   };
 
   return (
@@ -245,6 +248,7 @@ export default function SellerProducts() {
     await deleteProduct(id);
     setProducts((prev) => prev.filter((p) => p._id !== id));
     setDeleting(null);
+    toast.success("Product deleted");
   };
 
   const visible = products.filter((p) => {
