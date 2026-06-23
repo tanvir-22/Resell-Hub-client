@@ -6,6 +6,7 @@ import { FeaturedListings } from "@/components/home/FeaturedListings";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { WhyResellHub } from "@/components/home/WhyResellHub";
 import { Testimonials } from "@/components/home/Testimonials";
+import { SustainabilitySection } from "@/components/home/SustainabilitySection";
 import { CTASection } from "@/components/home/CTASection";
 import { SiteFooter } from "@/components/home/SiteFooter";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <HowItWorks />
       <WhyResellHub />
       <Testimonials />
+      <SustainabilitySection />
       <CTASection />
       <SiteFooter />
     </div>
