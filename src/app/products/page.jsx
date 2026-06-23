@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
   FiSearch,
@@ -15,6 +16,7 @@ import { Navbar } from "@/components/Navbar";
 import { getProducts } from "@/lib/api/products";
 import { getWishlist, addToWishlist, removeFromWishlist } from "@/lib/api/wishlist";
 import { useSession } from "@/lib/auth-client";
+import { SectionLoader } from "@/components/ui/PageLoader";
 
 const CATEGORIES = [
   "All",
@@ -37,11 +39,15 @@ const SORT_OPTIONS = [
   { label: "Most Saved", key: "saves" },
 ];
 
-export default function ProductsPage() {
+function ProductsPageInner() {
   const { data: session } = useSession();
+  const searchParams = useSearchParams();
   const [products, setProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState(
+    () => searchParams.get("category") || "All"
+  );
   const [condition, setCondition] = useState("All");
   const [sortKey, setSortKey] = useState("newest");
   const [view, setView] = useState("grid");
@@ -50,8 +56,10 @@ export default function ProductsPage() {
   const [toggling, setToggling] = useState(new Set());
 
   useEffect(() => {
+    setLoadingProducts(true);
     getProducts().then((data) => {
       setProducts(Array.isArray(data) ? data : (data.products ?? []));
+      setLoadingProducts(false);
     });
   }, []);
 
@@ -236,7 +244,9 @@ export default function ProductsPage() {
           ))}
         </div>
 
-        {filtered.length === 0 ? (
+        {loadingProducts ? (
+          <SectionLoader label="Loading listings…" />
+        ) : filtered.length === 0 ? (
           <div className="flex flex-col items-center py-24 text-center">
             <FiSearch
               size={40}
@@ -388,5 +398,13 @@ export default function ProductsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<SectionLoader label="Loading listings…" />}>
+      <ProductsPageInner />
+    </Suspense>
   );
 }

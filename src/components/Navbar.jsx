@@ -9,9 +9,11 @@ import { useSession, signOut } from "@/lib/auth-client";
 import { useCart } from "@/context/CartContext";
 
 const navLinks = [
-  { label: "Browse",       href: "/products" },
-  { label: "Sell",         href: "/dashboard/seller/add-product" },
-  { label: "How it works", href: "/#how-it-works" },
+  { label: "Home",       href: "/"           },
+  { label: "Products",   href: "/products"   },
+  { label: "Categories", href: "/categories" },
+  { label: "About",      href: "/about"      },
+  { label: "Contact",    href: "/contact"    },
 ];
 
 function ThemeToggle() {

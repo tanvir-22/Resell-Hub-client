@@ -22,9 +22,10 @@ export async function PUT(request, { params }) {
     const body = await request.json();
     const db = await getDb();
 
-    // Only allow editing content fields — sellerInfo stays as created
+    // Only allow editing content fields — sellerInfo and status stay server-controlled.
+    // Reset to "pending" so the admin re-reviews any content changes.
     const { sellerInfo, status, reported, createdAt, ...editable } = body;
-    const update = { ...editable, updatedAt: new Date() };
+    const update = { ...editable, status: "pending", updatedAt: new Date() };
     if (update.price) update.price = Number(update.price);
     if (update.stock) update.stock = Number(update.stock);
     if (update.images && !Array.isArray(update.images)) update.images = [update.images];

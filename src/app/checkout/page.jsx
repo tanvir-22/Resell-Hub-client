@@ -9,6 +9,7 @@ import { FiArrowLeft, FiLock, FiTag, FiShoppingCart, FiArrowRight } from "react-
 import { BsTagFill } from "react-icons/bs";
 import { useCart } from "@/context/CartContext";
 import { useSession } from "@/lib/auth-client";
+import { PageLoader } from "@/components/ui/PageLoader";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.trim());
 
@@ -227,14 +228,7 @@ export default function CheckoutPage() {
   }, [isPending, session?.user, cartItems.length]);
 
   if (isPending || !session?.user || !clientSecret) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-4 border-violet-600/20 border-t-violet-600 rounded-full animate-spin" />
-          <p className="text-sm text-gray-400 dark:text-gray-500">Preparing checkout…</p>
-        </div>
-      </div>
-    );
+    return <PageLoader label="Preparing checkout…" />;
   }
 
   const itemCount = cartItems.reduce((s, i) => s + i.quantity, 0);

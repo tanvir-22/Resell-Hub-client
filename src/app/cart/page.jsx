@@ -11,6 +11,7 @@ import { BsStripe } from "react-icons/bs";
 import { useCart } from "@/context/CartContext";
 import { useSession } from "@/lib/auth-client";
 import { Navbar } from "@/components/Navbar";
+import { PageLoader } from "@/components/ui/PageLoader";
 
 export default function CartPage() {
   const { cartItems, removeFromCart, updateQuantity, clearCart, cartTotal } = useCart();
@@ -20,7 +21,8 @@ export default function CartPage() {
     if (!isPending && !session?.user) router.replace("/login");
   }, [isPending, session?.user]);
 
-  if (isPending || !session?.user) return null;
+  if (isPending) return <PageLoader label="Loading cart…" />;
+  if (!session?.user) return null;
 
   const itemCount = cartItems.reduce((s, i) => s + i.quantity, 0);
 

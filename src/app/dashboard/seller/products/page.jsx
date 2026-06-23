@@ -358,6 +358,15 @@ export default function SellerProducts() {
                 <span className="absolute top-2 left-2 text-xs font-semibold bg-white/90 dark:bg-slate-800/90 text-gray-700 dark:text-gray-300 px-2 py-0.5 rounded-lg">
                   {p.condition}
                 </span>
+                <span className={`absolute top-2 right-2 text-xs font-bold px-2 py-0.5 rounded-lg ${
+                  p.status === "approved"
+                    ? "bg-green-100 text-green-700 dark:bg-green-900/60 dark:text-green-400"
+                    : p.status === "rejected"
+                    ? "bg-red-100 text-red-700 dark:bg-red-900/60 dark:text-red-400"
+                    : "bg-amber-100 text-amber-700 dark:bg-amber-900/60 dark:text-amber-400"
+                }`}>
+                  {p.status === "approved" ? "Approved" : p.status === "rejected" ? "Rejected" : "Pending"}
+                </span>
               </div>
               <div className="p-4">
                 <p className="font-semibold text-gray-900 dark:text-white text-sm truncate">

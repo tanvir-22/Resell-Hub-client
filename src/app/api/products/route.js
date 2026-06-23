@@ -11,7 +11,14 @@ export async function GET(request) {
 
     const db = await getDb();
     const filter = {};
-    if (sellerId)                         filter["sellerInfo.userId"] = sellerId;
+    if (sellerId) {
+      // Seller fetching their own products — show all statuses so they can
+      // see pending and rejected listings in their dashboard.
+      filter["sellerInfo.userId"] = sellerId;
+    } else {
+      // Public browse — only show admin-approved products.
+      filter.status = "approved";
+    }
     if (category && category !== "all")   filter.category = category;
     if (search)                           filter.title = { $regex: search, $options: "i" };
 
