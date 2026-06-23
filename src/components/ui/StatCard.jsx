@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
 
@@ -9,7 +9,7 @@ import { FiArrowRight } from "react-icons/fi";
  * variant="gradient"→ colored gradient bg, white icon (admin style)
  *
  * color prop:
- *   card variant    → icon box className  (e.g. "bg-violet-100 text-violet-600 ...")
+ *   card variant    → icon box className  (e.g. "bg-emerald-100 text-emerald-600 ...")
  *   gradient variant→ container className (e.g. "bg-gradient-to-br from-blue-500 to-blue-700")
  */
 export function StatCard({
@@ -31,7 +31,7 @@ export function StatCard({
       className={`group ${isCol ? "flex flex-col gap-3" : "flex items-center gap-4"} p-5 rounded-2xl transition-all ${
         isGradient
           ? `${color} hover:-translate-y-0.5`
-          : "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 hover:border-violet-200 dark:hover:border-violet-700 hover:shadow-lg"
+          : "bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-700 hover:shadow-lg"
       }`}
     >
       <div
@@ -72,7 +72,7 @@ export function StatCard({
         className={`flex-shrink-0 ${isCol ? "" : "ml-auto"} ${
           isGradient
             ? "text-white/60 group-hover:text-white"
-            : "text-gray-300 dark:text-gray-600 group-hover:text-violet-500"
+            : "text-gray-300 dark:text-gray-600 group-hover:text-emerald-500"
         } transition-colors`}
       />
     </Link>

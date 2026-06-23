@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import { FiSearch, FiTrash2, FiSlash, FiCheckCircle, FiUser, FiUsers, FiShield } from "react-icons/fi";
@@ -6,7 +6,7 @@ import { getAdminUsers, updateAdminUser, deleteAdminUser } from "@/lib/api/admin
 
 const ROLE_COLORS = {
   buyer:  "bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300",
-  seller: "bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300",
+  seller: "bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300",
   admin:  "bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300",
 };
 
@@ -17,7 +17,7 @@ function Avatar({ user }) {
   return user.image ? (
     <img src={user.image} alt="" className="w-9 h-9 rounded-full object-cover flex-shrink-0" />
   ) : (
-    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
       {initials}
     </div>
   );
@@ -78,7 +78,7 @@ export default function AdminUsers() {
       {/* Stats row */}
       <div className="grid grid-cols-3 gap-4 mb-6">
         {[
-          { label: "Total",   icon: FiUsers,      value: users.length,                               color: "text-violet-600 dark:text-violet-400", bg: "bg-violet-50 dark:bg-violet-900/20" },
+          { label: "Total",   icon: FiUsers,      value: users.length,                               color: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-50 dark:bg-emerald-900/20" },
           { label: "Active",  icon: FiCheckCircle,value: users.filter(u => !u.blocked).length,        color: "text-green-600  dark:text-green-400",  bg: "bg-green-50  dark:bg-green-900/20"  },
           { label: "Blocked", icon: FiSlash,       value: users.filter(u =>  u.blocked).length,        color: "text-red-600    dark:text-red-400",    bg: "bg-red-50    dark:bg-red-900/20"    },
         ].map(({ label, icon: Icon, value, color, bg }) => (
@@ -101,7 +101,7 @@ export default function AdminUsers() {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search by name or email…"
-          className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 text-sm"
+          className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 text-sm"
         />
       </div>
 

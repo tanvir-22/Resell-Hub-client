@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import {
@@ -32,7 +32,7 @@ const CustomPieTip = ({ active, payload }) => {
   return (
     <div className="bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-xl px-3 py-2 shadow-xl text-xs">
       <p className="font-semibold text-gray-700 dark:text-gray-300">{name}</p>
-      <p className="text-violet-600 dark:text-violet-400 font-bold">${Number(value).toFixed(0)} revenue</p>
+      <p className="text-emerald-600 dark:text-emerald-400 font-bold">${Number(value).toFixed(0)} revenue</p>
     </div>
   );
 };

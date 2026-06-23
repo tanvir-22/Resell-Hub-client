@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -39,7 +39,7 @@ export default function SellerOverview() {
         </div>
         <Link
           href="/dashboard/seller/add-product"
-          className="hidden sm:flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors"
+          className="hidden sm:flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors"
         >
           <FiPlusSquare size={16} /> Add Product
         </Link>
@@ -53,7 +53,7 @@ export default function SellerOverview() {
         </div>
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <StatCard icon={FiPackage}     label="Total Products" value={analytics?.totalProducts ?? 0}                           color="bg-violet-100 dark:bg-violet-900/40 text-violet-600 dark:text-violet-400" href="/dashboard/seller/products" layout="col" />
+          <StatCard icon={FiPackage}     label="Total Products" value={analytics?.totalProducts ?? 0}                           color="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400" href="/dashboard/seller/products" layout="col" />
           <StatCard icon={FiShoppingBag} label="Total Sales"    value={analytics?.totalSales ?? 0}                              color="bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400"       href="/dashboard/seller/orders"   layout="col" />
           <StatCard icon={FiDollarSign}  label="Total Revenue"  value={`$${(analytics?.totalRevenue ?? 0).toFixed(2)}`}         color="bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400"   href="/dashboard/seller/analytics" layout="col" />
           <StatCard icon={FiClock}       label="Pending Orders" value={analytics?.pendingOrders ?? 0}                           color="bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400"   href="/dashboard/seller/orders"   layout="col" />
@@ -63,7 +63,7 @@ export default function SellerOverview() {
       <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-6">
         <div className="flex items-center justify-between mb-5">
           <h2 className="font-bold text-gray-900 dark:text-white">Recent Orders</h2>
-          <Link href="/dashboard/seller/orders" className="text-sm text-violet-600 dark:text-violet-400 font-medium hover:underline">
+          <Link href="/dashboard/seller/orders" className="text-sm text-emerald-600 dark:text-emerald-400 font-medium hover:underline">
             View all
           </Link>
         </div>
@@ -98,7 +98,7 @@ export default function SellerOverview() {
                   <tr key={o._id} className="hover:bg-gray-50 dark:hover:bg-slate-700/30 transition-colors">
                     <td className="py-3 font-medium text-gray-900 dark:text-white max-w-[140px] truncate">{o.productTitle}</td>
                     <td className="py-3 text-gray-500 dark:text-gray-400">{o.buyerName}</td>
-                    <td className="py-3 text-violet-600 dark:text-violet-400 font-semibold">${o.price}</td>
+                    <td className="py-3 text-emerald-600 dark:text-emerald-400 font-semibold">${o.price}</td>
                     <td className="py-3">
                       <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
                         o.status === "Delivered" ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300" :

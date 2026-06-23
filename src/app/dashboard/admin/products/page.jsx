@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
@@ -81,7 +81,7 @@ export default function AdminProducts() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search products…"
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 text-sm"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 text-sm"
           />
         </div>
         <button
@@ -104,7 +104,7 @@ export default function AdminProducts() {
             onClick={() => setTab(s)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors capitalize ${
               tab === s
-                ? "bg-violet-600 text-white"
+                ? "bg-emerald-600 text-white"
                 : "bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600"
             }`}
           >
@@ -153,7 +153,7 @@ export default function AdminProducts() {
                 <h3 className="font-semibold text-gray-900 dark:text-white truncate">{p.title}</h3>
                 <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">by {p.sellerInfo?.name || p.sellerName} · {p.category}</p>
                 <div className="flex items-center justify-between mt-1">
-                  <span className="text-lg font-extrabold text-violet-600 dark:text-violet-400">${p.price}</span>
+                  <span className="text-lg font-extrabold text-emerald-600 dark:text-emerald-400">${p.price}</span>
                   <span className="text-xs text-gray-400 dark:text-gray-500">{p.condition}</span>
                 </div>
               </div>

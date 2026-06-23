@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -47,7 +47,7 @@ export default function PaymentSuccess() {
         <div className="flex gap-3">
           <Link
             href="/dashboard/buyer/orders"
-            className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
           >
             <FiShoppingBag size={16} /> View Orders
           </Link>

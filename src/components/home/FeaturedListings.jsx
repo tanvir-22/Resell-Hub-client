@@ -1,56 +1,50 @@
-"use client";
-import { useState } from "react";
+﻿"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
 import { Reveal } from "./Reveal";
 import { ProductCard } from "./ProductCard";
+import { getProducts } from "@/lib/api/products";
 
-const listings = [
-  {
-    id: 1, title: "iPhone 15 Pro Max 256GB",
-    price: "$750", originalPrice: "$1,199",
-    condition: "Like New", conditionColor: "success",
-    image: "https://placehold.co/400x300/7c3aed/ffffff?text=iPhone+15+Pro",
-    seller: "TechDeals Pro", verified: true, rating: "4.9", saves: 47,
-  },
-  {
-    id: 2, title: "MacBook Pro M3 14-inch",
-    price: "$1,200", originalPrice: "$1,999",
-    condition: "Good", conditionColor: "primary",
-    image: "https://placehold.co/400x300/3b82f6/ffffff?text=MacBook+Pro+M3",
-    seller: "AppleHub Store", verified: true, rating: "4.8", saves: 89,
-  },
-  {
-    id: 3, title: "Sony PlayStation 5 Bundle",
-    price: "$380", originalPrice: "$499",
-    condition: "Like New", conditionColor: "success",
-    image: "https://placehold.co/400x300/1e40af/ffffff?text=PlayStation+5",
-    seller: "GameVault", verified: false, rating: "4.7", saves: 123,
-  },
-  {
-    id: 4, title: "Canon EOS R6 Mark II",
-    price: "$1,600", originalPrice: "$2,499",
-    condition: "Good", conditionColor: "primary",
-    image: "https://placehold.co/400x300/ea580c/ffffff?text=Canon+EOS+R6",
-    seller: "LensWorld", verified: true, rating: "5.0", saves: 56,
-  },
-  {
-    id: 5, title: "Nike Air Jordan 1 Retro OG",
-    price: "$185", originalPrice: "$280",
-    condition: "Good", conditionColor: "primary",
-    image: "https://placehold.co/400x300/dc2626/ffffff?text=Air+Jordan+1",
-    seller: "SneakerHub", verified: true, rating: "4.6", saves: 34,
-  },
-  {
-    id: 6, title: "DJI Mavic 3 Pro Drone",
-    price: "$1,400", originalPrice: "$2,199",
-    condition: "Like New", conditionColor: "success",
-    image: "https://placehold.co/400x300/0891b2/ffffff?text=DJI+Mavic+3",
-    seller: "FlyHigh Drones", verified: true, rating: "4.9", saves: 78,
-  },
-];
+const CONDITION_COLOR = {
+  "Like New":    "success",
+  "Good":        "primary",
+  "Used":        "default",
+  "Refurbished": "secondary",
+};
+
+function toCardShape(p) {
+  return {
+    id:             p._id,
+    href:           `/products/${p._id}`,
+    title:          p.title,
+    price:          `$${Number(p.price).toLocaleString()}`,
+    condition:      p.condition,
+    conditionColor: CONDITION_COLOR[p.condition] ?? "default",
+    image:          p.images?.[0] ?? null,
+    seller:         p.sellerInfo?.name ?? "—",
+    verified:       Boolean(p.verified),
+    rating:         p.rating != null ? String(p.rating) : null,
+    saves:          p.saves ?? 0,
+  };
+}
 
 export function FeaturedListings() {
-  const [saved, setSaved] = useState({});
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading]   = useState(true);
+  const [saved, setSaved]       = useState({});
+
+  useEffect(() => {
+    getProducts()
+      .then((data) => {
+        const list = Array.isArray(data) ? data : [];
+        setProducts(list.slice(0, 6).map(toCardShape));
+      })
+      .catch(() => setProducts([]))
+      .finally(() => setLoading(false));
+  }, []);
+
   const toggleSave = (id) => setSaved((p) => ({ ...p, [id]: !p[id] }));
 
   return (
@@ -61,20 +55,63 @@ export function FeaturedListings() {
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-2">
               Featured Listings
             </h2>
-            <p className="text-gray-500 dark:text-gray-400">Hand-picked deals from verified sellers</p>
+            <p className="text-gray-500 dark:text-gray-400">
+              Hand-picked deals from verified sellers
+            </p>
           </div>
-          <button className="hidden sm:flex items-center gap-2 text-violet-600 dark:text-violet-400 font-semibold text-sm hover:text-violet-700 dark:hover:text-violet-300 transition-colors">
+          <Link
+            href="/products"
+            className="hidden sm:flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors"
+          >
             View all <FiArrowRight size={16} />
-          </button>
+          </Link>
         </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {listings.map((item, i) => (
-            <Reveal key={item.id} delay={i * 80}>
-              <ProductCard item={item} saved={saved[item.id]} onToggleSave={toggleSave} />
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-20 gap-4">
+            <div className="w-10 h-10 rounded-full border-4 border-emerald-200 border-t-emerald-600 animate-spin" />
+            <p className="text-sm text-gray-400 dark:text-gray-500">
+              Loading listings…
+            </p>
+          </div>
+        ) : products.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-gray-400 dark:text-gray-500 mb-4">
+              No approved listings yet.
+            </p>
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm hover:underline"
+            >
+              Browse all products <FiArrowRight size={14} />
+            </Link>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {products.map((item, i) => (
+                <Reveal key={item.id} delay={i * 80}>
+                  <Link href={item.href} className="block h-full">
+                    <ProductCard
+                      item={item}
+                      saved={saved[item.id]}
+                      onToggleSave={(id) => { toggleSave(id); }}
+                    />
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+
+            <Reveal delay={100} className="text-center mt-10 sm:hidden">
+              <Link
+                href="/products"
+                className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm hover:underline"
+              >
+                View all listings <FiArrowRight size={14} />
+              </Link>
             </Reveal>
-          ))}
-        </div>
+          </>
+        )}
       </div>
     </section>
   );

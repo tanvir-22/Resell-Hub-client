@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import {
   FiSmartphone, FiShoppingBag, FiHome, FiBook,
   FiActivity, FiCamera, FiMonitor, FiTruck, FiArrowRight,
@@ -32,7 +32,7 @@ export function CategoriesSection() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {categories.map(({ name, Icon, count, color }, i) => (
           <Reveal key={name} delay={i * 60}>
-            <button className="group flex items-center gap-4 p-4 rounded-2xl border border-gray-100 dark:border-slate-700 hover:border-violet-200 dark:hover:border-violet-700 hover:shadow-lg dark:hover:shadow-violet-900/20 transition-all bg-white dark:bg-slate-800/60 text-left w-full hover:-translate-y-1">
+            <button className="group flex items-center gap-4 p-4 rounded-2xl border border-gray-100 dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-700 hover:shadow-lg dark:hover:shadow-emerald-900/20 transition-all bg-white dark:bg-slate-800/60 text-left w-full hover:-translate-y-1">
               <div
                 className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${color} group-hover:scale-110 transition-transform duration-300`}
               >
@@ -48,7 +48,7 @@ export function CategoriesSection() {
       </div>
 
       <Reveal delay={200} className="text-center mt-8">
-        <button className="inline-flex items-center gap-2 text-violet-600 dark:text-violet-400 font-semibold text-sm hover:text-violet-700 dark:hover:text-violet-300 transition-all border border-violet-200 dark:border-violet-800 px-6 py-3 rounded-xl hover:bg-violet-50 dark:hover:bg-violet-900/20 hover:scale-105">
+        <button className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm hover:text-emerald-700 dark:hover:text-emerald-300 transition-all border border-emerald-200 dark:border-emerald-800 px-6 py-3 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:scale-105">
           View all categories <FiArrowRight size={16} />
         </button>
       </Reveal>

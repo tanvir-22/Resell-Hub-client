@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { FiXCircle, FiShoppingCart } from "react-icons/fi";
@@ -21,7 +21,7 @@ export default function PaymentCancel() {
         <div className="flex gap-3">
           <Link
             href="/cart"
-            className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
           >
             <FiShoppingCart size={16} /> Back to Cart
           </Link>

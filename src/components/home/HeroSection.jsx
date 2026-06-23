@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState } from "react";
 import { Button } from "@heroui/react";
 import { FiSearch, FiArrowRight } from "react-icons/fi";
@@ -10,11 +10,11 @@ export function HeroSection() {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-violet-950 to-slate-900 text-white pt-20 pb-36">
+    <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 text-white pt-20 pb-36">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="animate-blob absolute -top-48 -right-48 w-96 h-96 bg-violet-600/25 rounded-full blur-3xl" />
+        <div className="animate-blob absolute -top-48 -right-48 w-96 h-96 bg-emerald-600/25 rounded-full blur-3xl" />
         <div className="animate-blob animation-delay-2s absolute top-1/2 -left-48 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl" />
-        <div className="animate-blob animation-delay-4s absolute bottom-0 right-1/4 w-72 h-72 bg-fuchsia-600/20 rounded-full blur-3xl" />
+        <div className="animate-blob animation-delay-4s absolute bottom-0 right-1/4 w-72 h-72 bg-teal-600/20 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -41,7 +41,7 @@ export function HeroSection() {
         </p>
 
         <div className="animate-fade-in-up delay-400 max-w-2xl mx-auto mb-8">
-          <div className="flex items-center bg-white rounded-2xl p-1.5 gap-2 shadow-2xl shadow-violet-900/20">
+          <div className="flex items-center bg-white rounded-2xl p-1.5 gap-2 shadow-2xl shadow-emerald-900/20">
             <FiSearch className="text-gray-400 ml-3 flex-shrink-0" size={20} />
             <input
               type="text"
@@ -50,7 +50,7 @@ export function HeroSection() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <Button className="bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold px-6 py-3 rounded-xl transition-colors whitespace-nowrap shine-btn">
+            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-6 py-3 rounded-xl transition-colors whitespace-nowrap shine-btn">
               Search
             </Button>
           </div>
@@ -69,7 +69,7 @@ export function HeroSection() {
         </div>
 
         <div className="animate-fade-in-up delay-600 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button className="flex items-center justify-center gap-2 bg-white text-violet-700 font-semibold px-8 py-4 rounded-xl hover:bg-gray-50 transition-all shadow-lg w-full sm:w-auto hover:scale-105">
+          <Button className="flex items-center justify-center gap-2 bg-white text-emerald-700 font-semibold px-8 py-4 rounded-xl hover:bg-gray-50 transition-all shadow-lg w-full sm:w-auto hover:scale-105">
             Browse Listings <FiArrowRight size={18} />
           </Button>
           <Button className="flex items-center justify-center gap-2 bg-transparent border-2 border-white/30 hover:border-white/70 text-white font-semibold px-8 py-4 rounded-xl transition-all w-full sm:w-auto hover:scale-105 hover:bg-white/5">

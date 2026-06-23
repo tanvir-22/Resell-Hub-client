@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import { FiSearch, FiShoppingBag, FiChevronDown } from "react-icons/fi";
@@ -7,6 +7,17 @@ import { getAdminOrders, updateAdminOrder } from "@/lib/api/admin";
 
 const STATUS_TABS = ["all", "Pending", "Accepted", "Processing", "Shipped", "Delivered", "Cancelled"];
 const ALL_STATUSES = ["Pending", "Accepted", "Processing", "Shipped", "Delivered", "Cancelled"];
+
+function normalize(o) {
+  return {
+    ...o,
+    productTitle: o.productTitle || o.title || "—",
+    price:        o.price ?? o.totalAmount ?? 0,
+    status:       o.status || o.orderStatus || "Pending",
+    buyerName:    o.buyerName || o.buyerInfo?.name || "—",
+    sellerName:   o.sellerName || o.sellerInfo?.name || "—",
+  };
+}
 
 export default function AdminOrders() {
   const [orders, setOrders]   = useState([]);
@@ -21,7 +32,7 @@ export default function AdminOrders() {
     getAdminOrders({
       ...(status && status !== "all" ? { status } : {}),
       ...(q ? { search: q } : {}),
-    }).then(d => { setOrders(Array.isArray(d) ? d : []); setLoading(false); });
+    }).then(d => { setOrders(Array.isArray(d) ? d.map(normalize) : []); setLoading(false); });
   }, []);
 
   useEffect(() => {
@@ -32,7 +43,7 @@ export default function AdminOrders() {
   const updateStatus = async (id, status) => {
     setUpdating(id);
     await updateAdminOrder(id, { status });
-    setOrders(prev => prev.map(o => o._id === id ? { ...o, status } : o));
+    setOrders(prev => prev.map(o => o._id === id ? normalize({ ...o, orderStatus: status }) : o));
     setUpdating(null);
     setOpenRow(null);
   };
@@ -57,8 +68,8 @@ export default function AdminOrders() {
             onClick={() => setTab(s)}
             className={`flex flex-col items-center py-2.5 px-2 rounded-xl border text-sm transition-colors ${
               tab === s
-                ? "bg-violet-600 border-violet-600 text-white"
-                : "bg-white dark:bg-slate-800 border-gray-100 dark:border-slate-700 text-gray-700 dark:text-gray-300 hover:border-violet-300"
+                ? "bg-emerald-600 border-emerald-600 text-white"
+                : "bg-white dark:bg-slate-800 border-gray-100 dark:border-slate-700 text-gray-700 dark:text-gray-300 hover:border-emerald-300"
             }`}
           >
             <span className="font-extrabold text-lg leading-none">{counts[s] ?? 0}</span>
@@ -71,7 +82,7 @@ export default function AdminOrders() {
       <div className="flex gap-3 mb-5">
         <button
           onClick={() => setTab("all")}
-          className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${tab === "all" ? "bg-violet-600 text-white" : "bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300"}`}
+          className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${tab === "all" ? "bg-emerald-600 text-white" : "bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300"}`}
         >
           All
         </button>
@@ -81,7 +92,7 @@ export default function AdminOrders() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search by product or buyer…"
-            className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 text-sm"
+            className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 text-sm"
           />
         </div>
       </div>
@@ -132,7 +143,7 @@ export default function AdminOrders() {
                                 onClick={() => updateStatus(o._id, s)}
                                 className={`w-full text-left px-3 py-2 text-xs font-medium transition-colors ${
                                   o.status === s
-                                    ? "bg-violet-600 text-white"
+                                    ? "bg-emerald-600 text-white"
                                     : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700"
                                 }`}
                               >

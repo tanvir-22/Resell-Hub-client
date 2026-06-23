@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -48,14 +48,14 @@ export default function BuyerWishlist() {
           </div>
           <p className="font-semibold text-gray-700 dark:text-gray-300 mb-1">Your wishlist is empty</p>
           <p className="text-gray-400 dark:text-gray-500 text-sm mb-6">Browse listings and save items you love.</p>
-          <Link href="/" className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors">
+          <Link href="/" className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors">
             Browse Listings <FiArrowRight size={15} />
           </Link>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map(item => (
-            <div key={item._id} className="group bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden hover:border-violet-200 dark:hover:border-violet-700 hover:shadow-lg transition-all">
+            <div key={item._id} className="group bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden hover:border-emerald-200 dark:hover:border-emerald-700 hover:shadow-lg transition-all">
               <div className="relative h-44 bg-gray-100 dark:bg-slate-700">
                 {item.image ? (
                   <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -76,14 +76,14 @@ export default function BuyerWishlist() {
               </div>
               <div className="p-4">
                 <p className="font-semibold text-gray-900 dark:text-white text-sm truncate mb-1">{item.title}</p>
-                <p className="text-violet-600 dark:text-violet-400 font-bold text-lg">${item.price}</p>
+                <p className="text-emerald-600 dark:text-emerald-400 font-bold text-lg">${item.price}</p>
                 {item.seller && (
                   <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">By {item.seller}</p>
                 )}
                 <div className="mt-3 flex gap-2">
                   <Link
                     href="/"
-                    className="flex-1 text-center text-xs font-semibold bg-violet-600 hover:bg-violet-700 text-white py-2 rounded-lg transition-colors"
+                    className="flex-1 text-center text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg transition-colors"
                   >
                     View Product
                   </Link>

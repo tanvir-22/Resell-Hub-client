@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -56,7 +56,7 @@ export default function BuyerOverview() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <StatCard icon={FiShoppingBag} label="Total Orders"   value={orders.length}              color="bg-violet-100 dark:bg-violet-900/40 text-violet-600 dark:text-violet-400" href="/dashboard/buyer/orders" />
+          <StatCard icon={FiShoppingBag} label="Total Orders"   value={orders.length}              color="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400" href="/dashboard/buyer/orders" />
           <StatCard icon={FiPackage}     label="Active Orders"  value={pendingOrders}              color="bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400"   href="/dashboard/buyer/orders" />
           <StatCard icon={FiHeart}       label="Wishlist Items" value={wishlist.length}            color="bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400"       href="/dashboard/buyer/wishlist" />
           <StatCard icon={FiCreditCard}  label="Total Spent"    value={`$${totalSpent.toFixed(2)}`} color="bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400"  href="/dashboard/buyer/payments" />
@@ -66,7 +66,7 @@ export default function BuyerOverview() {
       <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-bold text-gray-900 dark:text-white">Recent Orders</h2>
-          <Link href="/dashboard/buyer/orders" className="text-sm text-violet-600 dark:text-violet-400 font-medium hover:underline">
+          <Link href="/dashboard/buyer/orders" className="text-sm text-emerald-600 dark:text-emerald-400 font-medium hover:underline">
             View all
           </Link>
         </div>
@@ -100,7 +100,7 @@ export default function BuyerOverview() {
                 {orders.slice(0, 5).map((o) => (
                   <tr key={o._id} className="hover:bg-gray-50 dark:hover:bg-slate-700/30 transition-colors">
                     <td className="py-3 font-medium text-gray-900 dark:text-white max-w-[180px] truncate">{o.productTitle}</td>
-                    <td className="py-3 text-violet-600 dark:text-violet-400 font-semibold">${o.price}</td>
+                    <td className="py-3 text-emerald-600 dark:text-emerald-400 font-semibold">${o.price}</td>
                     <td className="py-3">
                       <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
                         o.status === "Delivered" ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300" :

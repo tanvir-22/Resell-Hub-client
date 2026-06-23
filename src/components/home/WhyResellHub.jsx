@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 import { Card } from "@heroui/react";
 import { FiShield, FiZap, FiTrendingUp } from "react-icons/fi";
 import { MdVerified } from "react-icons/md";
 import { Reveal } from "./Reveal";
 
 const features = [
-  { Icon: FiShield,     title: "Buyer Protection",  desc: "Full refund guaranteed if item isn't as described.",       textColor: "text-violet-600",  bgColor: "bg-violet-50"  },
+  { Icon: FiShield,     title: "Buyer Protection",  desc: "Full refund guaranteed if item isn't as described.",       textColor: "text-emerald-600",  bgColor: "bg-emerald-50"  },
   { Icon: FiZap,        title: "Instant Listings",  desc: "Our smart tool makes listing any item blazing fast.",      textColor: "text-amber-600",   bgColor: "bg-amber-50"   },
   { Icon: MdVerified,   title: "Verified Sellers",  desc: "Shop from identity-verified sellers with proven reviews.", textColor: "text-blue-600",    bgColor: "bg-blue-50"    },
   { Icon: FiTrendingUp, title: "Price Insights",    desc: "AI-powered price suggestions for max competitiveness.",    textColor: "text-emerald-600", bgColor: "bg-emerald-50" },
@@ -13,7 +13,7 @@ const features = [
 
 export function WhyResellHub() {
   return (
-    <section className="bg-gradient-to-br from-slate-900 to-violet-950 py-24">
+    <section className="bg-gradient-to-br from-slate-900 to-emerald-950 py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">

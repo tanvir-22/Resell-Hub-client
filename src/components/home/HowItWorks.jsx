@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { FiMessageSquare, FiShield } from "react-icons/fi";
 import { MdSell } from "react-icons/md";
 import { Reveal } from "./Reveal";
@@ -37,7 +37,7 @@ export function HowItWorks() {
         {steps.map(({ step, Icon, title, description }, i) => (
           <Reveal key={step} delay={i * 150} className="flex flex-col items-center text-center">
             <div className="relative mb-6 animate-float" style={{ animationDelay: `${i * 0.5}s` }}>
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white flex items-center justify-center shadow-lg shadow-violet-200">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 text-white flex items-center justify-center shadow-lg shadow-emerald-200">
                 <Icon size={32} />
               </div>
               <div className="absolute -top-3 -right-3 w-7 h-7 bg-amber-400 rounded-full flex items-center justify-center text-xs font-bold text-amber-900 shadow">

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
@@ -131,7 +131,7 @@ function ProductsPageInner() {
       <Navbar />
 
       {/* Hero search */}
-      <div className="bg-gradient-to-br from-violet-600 to-fuchsia-600 py-12 px-4">
+      <div className="bg-gradient-to-br from-emerald-600 to-teal-600 py-12 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2">
             Browse Listings
@@ -169,7 +169,7 @@ function ProductsPageInner() {
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="px-3 py-2 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/30"
+              className="px-3 py-2 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
             >
               {CATEGORIES.map((c) => (
                 <option key={c}>{c}</option>
@@ -178,7 +178,7 @@ function ProductsPageInner() {
             <select
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
-              className="px-3 py-2 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/30"
+              className="px-3 py-2 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
             >
               {CONDITIONS.map((c) => (
                 <option key={c}>{c}</option>
@@ -187,7 +187,7 @@ function ProductsPageInner() {
             <select
               value={sortKey}
               onChange={(e) => setSortKey(e.target.value)}
-              className="px-3 py-2 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/30"
+              className="px-3 py-2 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
             >
               {SORT_OPTIONS.map((o) => (
                 <option key={o.key} value={o.key}>
@@ -200,7 +200,7 @@ function ProductsPageInner() {
               <button
                 key={f.label}
                 onClick={f.clear}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full text-xs font-medium hover:bg-violet-200 dark:hover:bg-violet-900/50 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-full text-xs font-medium hover:bg-emerald-200 dark:hover:bg-emerald-900/50 transition-colors"
               >
                 {f.label} <FiX size={11} />
               </button>
@@ -213,13 +213,13 @@ function ProductsPageInner() {
             <div className="flex bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-xl overflow-hidden">
               <button
                 onClick={() => setView("grid")}
-                className={`p-2 ${view === "grid" ? "bg-violet-600 text-white" : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-700"} transition-colors`}
+                className={`p-2 ${view === "grid" ? "bg-emerald-600 text-white" : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-700"} transition-colors`}
               >
                 <FiGrid size={16} />
               </button>
               <button
                 onClick={() => setView("list")}
-                className={`p-2 ${view === "list" ? "bg-violet-600 text-white" : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-700"} transition-colors`}
+                className={`p-2 ${view === "list" ? "bg-emerald-600 text-white" : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-700"} transition-colors`}
               >
                 <FiList size={16} />
               </button>
@@ -235,8 +235,8 @@ function ProductsPageInner() {
               onClick={() => setCategory(c)}
               className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium transition-colors flex-shrink-0 ${
                 category === c
-                  ? "bg-violet-600 text-white shadow-md shadow-violet-600/25"
-                  : "bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 hover:border-violet-300 dark:hover:border-violet-600"
+                  ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/25"
+                  : "bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 hover:border-emerald-300 dark:hover:border-emerald-600"
               }`}
             >
               {c}
@@ -264,7 +264,7 @@ function ProductsPageInner() {
                 setCategory("All");
                 setCondition("All");
               }}
-              className="mt-4 px-5 py-2 bg-violet-600 text-white rounded-xl text-sm font-medium hover:bg-violet-700 transition-colors"
+              className="mt-4 px-5 py-2 bg-emerald-600 text-white rounded-xl text-sm font-medium hover:bg-emerald-700 transition-colors"
             >
               Clear filters
             </button>
@@ -275,7 +275,7 @@ function ProductsPageInner() {
               <Link
                 key={p._id}
                 href={`/products/${p._id}`}
-                className="group bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden hover:shadow-xl hover:shadow-violet-600/10 hover:-translate-y-1 transition-all duration-200"
+                className="group bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden hover:shadow-xl hover:shadow-emerald-600/10 hover:-translate-y-1 transition-all duration-200"
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-gray-100 dark:bg-slate-700">
                   <img
@@ -308,7 +308,7 @@ function ProductsPageInner() {
                   </button>
                 </div>
                 <div className="p-3">
-                  <p className="text-xs text-violet-600 dark:text-violet-400 font-medium mb-0.5">
+                  <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium mb-0.5">
                     {p.category}
                   </p>
                   <h3 className="text-sm font-semibold text-gray-900 dark:text-white line-clamp-2 leading-snug">
@@ -335,7 +335,7 @@ function ProductsPageInner() {
               <Link
                 key={p._id}
                 href={`/products/${p._id}`}
-                className="flex gap-4 bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-4 hover:shadow-lg hover:shadow-violet-600/10 hover:-translate-x-0.5 transition-all duration-200 group"
+                className="flex gap-4 bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-4 hover:shadow-lg hover:shadow-emerald-600/10 hover:-translate-x-0.5 transition-all duration-200 group"
               >
                 <div className="w-28 h-20 rounded-xl overflow-hidden bg-gray-100 dark:bg-slate-700 flex-shrink-0">
                   <img
@@ -347,7 +347,7 @@ function ProductsPageInner() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <p className="text-xs text-violet-600 dark:text-violet-400 font-medium">
+                      <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
                         {p.category}
                       </p>
                       <h3 className="font-semibold text-gray-900 dark:text-white line-clamp-1 mt-0.5">

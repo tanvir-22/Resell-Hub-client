@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -8,7 +8,7 @@ import { uploadImage } from "@/lib/api/upload";
 import { createProduct } from "@/lib/api/products";
 import { useSession } from "@/lib/auth-client";
 
-const inputCls = "w-full px-4 py-3 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all";
+const inputCls = "w-full px-4 py-3 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all";
 
 const CATEGORIES = ["Electronics", "Fashion", "Home & Living", "Books", "Sports", "Cameras", "Computers", "Vehicles", "Other"];
 const CONDITIONS = ["Like New", "Good", "Used", "Refurbished"];
@@ -152,9 +152,9 @@ export default function AddProduct() {
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
-                className="aspect-square rounded-xl border-2 border-dashed border-gray-200 dark:border-slate-600 flex flex-col items-center justify-center gap-1.5 text-gray-400 dark:text-slate-500 hover:border-violet-400 dark:hover:border-violet-500 hover:text-violet-500 dark:hover:text-violet-400 transition-colors group"
+                className="aspect-square rounded-xl border-2 border-dashed border-gray-200 dark:border-slate-600 flex flex-col items-center justify-center gap-1.5 text-gray-400 dark:text-slate-500 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors group"
               >
-                <div className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-slate-700 group-hover:bg-violet-100 dark:group-hover:bg-violet-900/30 flex items-center justify-center transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-slate-700 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-900/30 flex items-center justify-center transition-colors">
                   {images.length === 0 ? <FiCamera size={20} /> : <FiPlus size={20} />}
                 </div>
                 <span className="text-xs font-medium">{images.length === 0 ? "Add photo" : "Add more"}</span>
@@ -225,7 +225,7 @@ export default function AddProduct() {
           <button
             type="submit"
             disabled={saving || images.some(i => i.uploading)}
-            className="flex-1 bg-violet-600 hover:bg-violet-700 text-white font-semibold py-3.5 rounded-xl transition-all hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed text-sm"
+            className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 rounded-xl transition-all hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed text-sm"
           >
             {saving ? "Publishing..." : "Publish Product"}
           </button>

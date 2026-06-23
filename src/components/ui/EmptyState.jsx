@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
 
 export function EmptyState({
@@ -21,7 +21,7 @@ export function EmptyState({
       {actionHref && actionLabel && (
         <Link
           href={actionHref}
-          className="mt-4 inline-flex items-center gap-1.5 text-sm text-violet-600 dark:text-violet-400 font-medium hover:underline"
+          className="mt-4 inline-flex items-center gap-1.5 text-sm text-emerald-600 dark:text-emerald-400 font-medium hover:underline"
         >
           {actionLabel} <FiArrowRight size={14} />
         </Link>

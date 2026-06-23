@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import {
@@ -17,7 +17,7 @@ const contactInfo = [
     label: "Email Us",
     value: "support@resellhub.com",
     sub: "We reply within 24 hours",
-    color: "bg-violet-50 dark:bg-violet-900/20 text-violet-600 dark:text-violet-400",
+    color: "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400",
   },
   {
     icon: FiPhone,
@@ -53,7 +53,7 @@ const subjects = [
 ];
 
 const inputCls =
-  "w-full px-4 py-3 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-shadow";
+  "w-full px-4 py-3 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-shadow";
 
 export default function ContactPage() {
   const [form, setForm] = useState({
@@ -85,7 +85,7 @@ export default function ContactPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-violet-600 to-fuchsia-600 py-16 px-4 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-emerald-600 to-teal-600 py-16 px-4 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-80 h-80 bg-white rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-60 h-60 bg-white rounded-full blur-3xl" />
@@ -155,7 +155,7 @@ export default function ContactPage() {
                       key={label}
                       href={href}
                       aria-label={label}
-                      className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-slate-700 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-violet-100 dark:hover:bg-violet-900/30 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+                      className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-slate-700 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
                     >
                       <Icon size={17} />
                     </a>
@@ -166,11 +166,11 @@ export default function ContactPage() {
 
             {/* FAQ teaser */}
             <Reveal delay={280}>
-              <div className="bg-violet-50 dark:bg-violet-900/20 rounded-2xl border border-violet-100 dark:border-violet-800 p-5">
-                <p className="font-bold text-violet-700 dark:text-violet-300 text-sm mb-1">
+              <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border border-emerald-100 dark:border-emerald-800 p-5">
+                <p className="font-bold text-emerald-700 dark:text-emerald-300 text-sm mb-1">
                   Common questions?
                 </p>
-                <p className="text-xs text-violet-600/70 dark:text-violet-400/70 leading-relaxed">
+                <p className="text-xs text-emerald-600/70 dark:text-emerald-400/70 leading-relaxed">
                   Before reaching out, check our Help Center — most questions
                   about payments, orders, and listings are answered there.
                 </p>
@@ -197,7 +197,7 @@ export default function ContactPage() {
                     </p>
                     <button
                       onClick={() => setSent(false)}
-                      className="mt-6 text-sm font-semibold text-violet-600 dark:text-violet-400 hover:underline"
+                      className="mt-6 text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
                     >
                       Send another message
                     </button>
@@ -281,7 +281,7 @@ export default function ContactPage() {
                     <button
                       type="submit"
                       disabled={sending}
-                      className="shine-btn w-full flex items-center justify-center gap-2 bg-violet-600 hover:bg-violet-700 disabled:opacity-70 text-white font-semibold py-3.5 rounded-xl transition-colors text-sm"
+                      className="shine-btn w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-70 text-white font-semibold py-3.5 rounded-xl transition-colors text-sm"
                     >
                       {sending ? (
                         <>

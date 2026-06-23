@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
@@ -61,7 +61,7 @@ function UserAvatar({ user, className = "w-9 h-9 text-sm" }) {
   }
 
   return (
-    <div className={`${className} rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center text-white font-bold flex-shrink-0`}>
+    <div className={`${className} rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold flex-shrink-0`}>
       {initials}
     </div>
   );
@@ -94,7 +94,7 @@ function UserMenu({ user }) {
         className="flex items-center gap-2 p-1 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800 transition-all group"
         aria-label="User menu"
       >
-        <div className="ring-2 ring-violet-500/30 group-hover:ring-violet-500/60 rounded-full transition-all">
+        <div className="ring-2 ring-emerald-500/30 group-hover:ring-emerald-500/60 rounded-full transition-all">
           <UserAvatar user={user} />
         </div>
         <span className="hidden sm:block text-sm font-medium text-gray-700 dark:text-gray-300 max-w-[120px] truncate pr-1">
@@ -167,11 +167,11 @@ export function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
               <BsTagFill className="text-white" size={14} />
             </div>
             <span className="text-xl font-bold text-gray-900 dark:text-white">
-              Resell<span className="text-violet-600">Hub</span>
+              Resell<span className="text-emerald-600">Hub</span>
             </span>
           </Link>
 
@@ -181,7 +181,7 @@ export function Navbar() {
               <Link
                 key={l.label}
                 href={l.href}
-                className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+                className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
               >
                 {l.label}
               </Link>
@@ -198,7 +198,7 @@ export function Navbar() {
               >
                 <FiShoppingCart size={16} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-violet-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-emerald-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                     {cartCount > 9 ? "9+" : cartCount}
                   </span>
                 )}
@@ -217,7 +217,7 @@ export function Navbar() {
                   </Link>
                   <Link
                     href="/signup"
-                    className="text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white px-5 py-2.5 rounded-lg transition-colors shine-btn"
+                    className="text-sm font-semibold bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg transition-colors shine-btn"
                   >
                     Sign up free
                   </Link>
@@ -248,7 +248,7 @@ export function Navbar() {
             <Link
               key={l.label}
               href={l.href}
-              className="block text-gray-700 dark:text-gray-300 font-medium py-2.5 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+              className="block text-gray-700 dark:text-gray-300 font-medium py-2.5 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
             >
               {l.label}
             </Link>
@@ -263,7 +263,7 @@ export function Navbar() {
               </Link>
               <Link
                 href="/signup"
-                className="flex-1 text-sm font-semibold bg-violet-600 text-white py-2.5 rounded-lg hover:bg-violet-700 transition-colors text-center"
+                className="flex-1 text-sm font-semibold bg-emerald-600 text-white py-2.5 rounded-lg hover:bg-emerald-700 transition-colors text-center"
               >
                 Sign up
               </Link>

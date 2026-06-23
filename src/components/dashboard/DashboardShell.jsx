@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -60,11 +60,11 @@ function Sidebar({ user, nav, onClose }) {
       {/* Logo */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-slate-700">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
             <BsTagFill className="text-white" size={14} />
           </div>
           <span className="text-lg font-bold text-gray-900 dark:text-white">
-            Resell<span className="text-violet-600">Hub</span>
+            Resell<span className="text-emerald-600">Hub</span>
           </span>
         </Link>
         {onClose && (
@@ -78,7 +78,7 @@ function Sidebar({ user, nav, onClose }) {
       <div className="px-5 pt-4 pb-2">
         <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${
           user.role === "seller"
-            ? "bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300"
+            ? "bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300"
             : user.role === "admin"
             ? "bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300"
             : "bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300"
@@ -100,7 +100,7 @@ function Sidebar({ user, nav, onClose }) {
               onClick={onClose}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group ${
                 active
-                  ? "bg-violet-600 text-white shadow-md shadow-violet-600/25"
+                  ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/25"
                   : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-gray-900 dark:hover:text-white"
               }`}
             >
@@ -118,7 +118,7 @@ function Sidebar({ user, nav, onClose }) {
           {user.image ? (
             <img src={user.image} alt="" className="w-9 h-9 rounded-full object-cover flex-shrink-0" />
           ) : (
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
               {initials}
             </div>
           )}
@@ -187,11 +187,11 @@ export default function DashboardShell({ user, children }) {
               <FiMenu size={22} />
             </button>
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-violet-600 rounded-lg flex items-center justify-center">
+              <div className="w-7 h-7 bg-emerald-600 rounded-lg flex items-center justify-center">
                 <BsTagFill className="text-white" size={12} />
               </div>
               <span className="text-base font-bold text-gray-900 dark:text-white">
-                Resell<span className="text-violet-600">Hub</span>
+                Resell<span className="text-emerald-600">Hub</span>
               </span>
             </Link>
             <div className="w-9" />

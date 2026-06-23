@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { FiTwitter, FiFacebook, FiInstagram, FiLinkedin } from "react-icons/fi";
 import { BsTagFill } from "react-icons/bs";
 
@@ -16,11 +16,11 @@ export function SiteFooter() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           <div className="col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
                 <BsTagFill className="text-white" size={14} />
               </div>
               <span className="text-white font-bold text-xl">
-                Resell<span className="text-violet-400">Hub</span>
+                Resell<span className="text-emerald-400">Hub</span>
               </span>
             </div>
             <p className="text-sm leading-relaxed text-gray-400 max-w-xs mb-6">
@@ -32,7 +32,7 @@ export function SiteFooter() {
                 <button
                   key={i}
                   aria-label="Social link"
-                  className="w-9 h-9 bg-white/5 hover:bg-violet-600/60 border border-white/10 rounded-lg flex items-center justify-center transition-all hover:scale-110 hover:border-violet-500"
+                  className="w-9 h-9 bg-white/5 hover:bg-emerald-600/60 border border-white/10 rounded-lg flex items-center justify-center transition-all hover:scale-110 hover:border-emerald-500"
                 >
                   <Icon size={15} />
                 </button>

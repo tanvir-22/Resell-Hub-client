@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import StatusBadge from "@/components/dashboard/StatusBadge";
@@ -16,12 +16,12 @@ function TrackProgress({ status }) {
       {STATUS_FLOW.map((s, i) => (
         <div key={s} className="flex items-center flex-1 last:flex-none">
           <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 transition-colors ${
-            i <= idx ? "bg-violet-600 text-white" : "bg-gray-200 dark:bg-slate-600 text-gray-400"
+            i <= idx ? "bg-emerald-600 text-white" : "bg-gray-200 dark:bg-slate-600 text-gray-400"
           }`}>
             {i + 1}
           </div>
           {i < STATUS_FLOW.length - 1 && (
-            <div className={`flex-1 h-0.5 mx-1 ${i < idx ? "bg-violet-600" : "bg-gray-200 dark:bg-slate-600"}`} />
+            <div className={`flex-1 h-0.5 mx-1 ${i < idx ? "bg-emerald-600" : "bg-gray-200 dark:bg-slate-600"}`} />
           )}
         </div>
       ))}
@@ -91,14 +91,14 @@ export default function BuyerOrders() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search orders..."
-            className="w-full pl-9 pr-4 py-2.5 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+            className="w-full pl-9 pr-4 py-2.5 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
         </div>
         <div className="flex gap-2 flex-wrap">
           {["all", "Pending", "Accepted", "Shipped", "Delivered", "Cancelled"].map(s => (
             <button key={s} onClick={() => setFilter(s)}
               className={`px-3 py-2 text-xs font-semibold rounded-lg transition-colors ${
-                filter === s ? "bg-violet-600 text-white" : "bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 text-gray-600 dark:text-gray-300 hover:border-violet-300"
+                filter === s ? "bg-emerald-600 text-white" : "bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 text-gray-600 dark:text-gray-300 hover:border-emerald-300"
               }`}>
               {s === "all" ? "All" : s}
             </button>
@@ -122,16 +122,16 @@ export default function BuyerOrders() {
               onClick={() => setSelected(o._id === selected?._id ? null : o)}
               className={`cursor-pointer p-4 rounded-2xl border transition-all bg-white dark:bg-slate-800 ${
                 selected?._id === o._id
-                  ? "border-violet-500 shadow-md shadow-violet-100 dark:shadow-violet-900/20"
-                  : "border-gray-100 dark:border-slate-700 hover:border-violet-200 dark:hover:border-violet-700"
+                  ? "border-emerald-500 shadow-md shadow-emerald-100 dark:shadow-emerald-900/20"
+                  : "border-gray-100 dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-700"
               }`}
             >
               <div className="flex items-start gap-4">
                 {o.productImage ? (
                   <img src={o.productImage} alt="" className="w-16 h-16 rounded-xl object-cover flex-shrink-0 bg-gray-100" />
                 ) : (
-                  <div className="w-16 h-16 rounded-xl bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center flex-shrink-0">
-                    <FiShoppingBag size={24} className="text-violet-500" />
+                  <div className="w-16 h-16 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
+                    <FiShoppingBag size={24} className="text-emerald-500" />
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
@@ -139,7 +139,7 @@ export default function BuyerOrders() {
                     <p className="font-semibold text-gray-900 dark:text-white text-sm truncate">{o.productTitle}</p>
                     <StatusBadge status={o.status} />
                   </div>
-                  <p className="text-violet-600 dark:text-violet-400 font-bold mt-1">${o.price}</p>
+                  <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-1">${o.price}</p>
                   <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{new Date(o.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</p>
                   {o.status !== "Cancelled" && o.status !== "Delivered" && (
                     <TrackProgress status={o.status} />

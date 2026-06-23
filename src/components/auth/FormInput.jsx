@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 import { forwardRef } from "react";
 
 const inputCls =
-  "w-full py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all text-sm";
+  "w-full py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm";
 
 export const FormInput = forwardRef(function FormInput(
   { label, leftIcon: LeftIcon, rightElement, wrapperClassName = "", ...props },

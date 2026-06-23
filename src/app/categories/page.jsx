@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -71,7 +71,7 @@ const CATEGORIES = [
     name: "Cameras",
     Icon: FiCamera,
     count: "1,800+",
-    color: "from-purple-500 to-violet-600",
+    color: "from-purple-500 to-emerald-600",
     bg: "bg-purple-50 dark:bg-purple-900/20",
     text: "text-purple-600 dark:text-purple-400",
     border: "border-purple-100 dark:border-purple-800",
@@ -114,7 +114,7 @@ export default function CategoriesPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-violet-600 to-fuchsia-600 py-16 px-4 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-emerald-600 to-teal-600 py-16 px-4 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-72 h-72 bg-white rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl" />
@@ -154,7 +154,7 @@ export default function CategoriesPage() {
             { label: "New Today", value: "340+" },
           ].map(({ label, value }) => (
             <div key={label} className="text-center">
-              <span className="font-extrabold text-violet-600 dark:text-violet-400 text-lg">
+              <span className="font-extrabold text-emerald-600 dark:text-emerald-400 text-lg">
                 {value}
               </span>
               <span className="text-gray-400 text-sm ml-2">{label}</span>
@@ -214,7 +214,7 @@ export default function CategoriesPage() {
 
                       <FiArrowRight
                         size={18}
-                        className="text-gray-300 dark:text-slate-600 group-hover:text-violet-500 dark:group-hover:text-violet-400 group-hover:translate-x-1 transition-all flex-shrink-0 mt-1"
+                        className="text-gray-300 dark:text-slate-600 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 group-hover:translate-x-1 transition-all flex-shrink-0 mt-1"
                       />
                     </div>
                   </div>
@@ -226,7 +226,7 @@ export default function CategoriesPage() {
 
         {/* Bottom CTA */}
         <Reveal delay={200}>
-          <div className="mt-16 text-center bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-3xl p-10 text-white relative overflow-hidden">
+          <div className="mt-16 text-center bg-gradient-to-br from-emerald-600 to-teal-600 rounded-3xl p-10 text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
             <div className="relative">
               <h3 className="text-2xl sm:text-3xl font-extrabold mb-3">
@@ -238,7 +238,7 @@ export default function CategoriesPage() {
               </p>
               <Link
                 href="/products"
-                className="inline-flex items-center gap-2 bg-white text-violet-700 font-bold px-6 py-3 rounded-xl hover:bg-violet-50 transition-colors text-sm shadow-lg"
+                className="inline-flex items-center gap-2 bg-white text-emerald-700 font-bold px-6 py-3 rounded-xl hover:bg-emerald-50 transition-colors text-sm shadow-lg"
               >
                 Browse All Listings <FiArrowRight size={15} />
               </Link>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -8,6 +8,17 @@ import { getAdminStats, getAdminOrders } from "@/lib/api/admin";
 import { StatCard } from "@/components/ui/StatCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 
+function normalize(o) {
+  return {
+    ...o,
+    productTitle: o.productTitle || o.title || "—",
+    price:        o.price ?? o.totalAmount ?? 0,
+    status:       o.status || o.orderStatus || "Pending",
+    buyerName:    o.buyerName || o.buyerInfo?.name || "—",
+    sellerName:   o.sellerName || o.sellerInfo?.name || "—",
+  };
+}
+
 export default function AdminOverview() {
   const [stats, setStats]     = useState(null);
   const [orders, setOrders]   = useState([]);
@@ -16,7 +27,7 @@ export default function AdminOverview() {
   useEffect(() => {
     Promise.all([getAdminStats(), getAdminOrders()]).then(([s, o]) => {
       setStats(s);
-      setOrders(Array.isArray(o) ? o.slice(0, 6) : []);
+      setOrders(Array.isArray(o) ? o.slice(0, 6).map(normalize) : []);
       setLoading(false);
     });
   }, []);
@@ -39,7 +50,7 @@ export default function AdminOverview() {
       ) : (
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
           <StatCard icon={FiUsers}       label="Total Users"    value={stats?.users}    color="bg-gradient-to-br from-blue-500   to-blue-700"   href="/dashboard/admin/users"     variant="gradient" />
-          <StatCard icon={FiPackage}     label="Total Products" value={stats?.products} color="bg-gradient-to-br from-violet-500 to-violet-700" href="/dashboard/admin/products"  variant="gradient" />
+          <StatCard icon={FiPackage}     label="Total Products" value={stats?.products} color="bg-gradient-to-br from-emerald-500 to-emerald-700" href="/dashboard/admin/products"  variant="gradient" />
           <StatCard icon={FiShoppingBag} label="Total Orders"   value={stats?.orders}   color="bg-gradient-to-br from-amber-500  to-amber-700"  href="/dashboard/admin/orders"    variant="gradient" />
           <StatCard icon={FiDollarSign}  label="Total Revenue"  value={`$${(stats?.revenue ?? 0).toFixed(2)}`} sub="Delivered orders" color="bg-gradient-to-br from-green-500 to-green-700" href="/dashboard/admin/analytics" variant="gradient" />
         </div>
@@ -50,7 +61,7 @@ export default function AdminOverview() {
           <h2 className="font-bold text-gray-900 dark:text-white">Recent Orders</h2>
           <Link
             href="/dashboard/admin/orders"
-            className="text-sm text-violet-600 dark:text-violet-400 font-medium hover:underline flex items-center gap-1"
+            className="text-sm text-emerald-600 dark:text-emerald-400 font-medium hover:underline flex items-center gap-1"
           >
             View all <FiArrowRight size={13} />
           </Link>
@@ -110,11 +121,11 @@ export default function AdminOverview() {
             <p className="text-red-700 dark:text-red-400 text-xs">Moderate flagged listings</p>
           </div>
         </Link>
-        <Link href="/dashboard/admin/analytics" className="flex items-center gap-3 p-4 bg-violet-50 dark:bg-violet-900/20 border border-violet-200 dark:border-violet-800 rounded-2xl hover:bg-violet-100 dark:hover:bg-violet-900/30 transition-colors">
-          <FiDollarSign size={20} className="text-violet-600 dark:text-violet-400 flex-shrink-0" />
+        <Link href="/dashboard/admin/analytics" className="flex items-center gap-3 p-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-2xl hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors">
+          <FiDollarSign size={20} className="text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
           <div>
-            <p className="font-semibold text-violet-900 dark:text-violet-300 text-sm">View Analytics</p>
-            <p className="text-violet-700 dark:text-violet-400 text-xs">Platform growth &amp; trends</p>
+            <p className="font-semibold text-emerald-900 dark:text-emerald-300 text-sm">View Analytics</p>
+            <p className="text-emerald-700 dark:text-emerald-400 text-xs">Platform growth &amp; trends</p>
           </div>
         </Link>
       </div>

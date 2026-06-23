@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -165,7 +165,7 @@ function CheckoutForm({ userEmail, cartTotal }) {
       <button
         type="submit"
         disabled={!stripe || submitting}
-        className="w-full flex items-center justify-center gap-2.5 py-3.5 bg-violet-600 hover:bg-violet-700 text-white font-bold rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg shadow-violet-600/30 text-sm"
+        className="w-full flex items-center justify-center gap-2.5 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg shadow-emerald-600/30 text-sm"
       >
         {submitting ? (
           <>
@@ -241,18 +241,18 @@ export default function CheckoutPage() {
       <header className="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-gray-100 dark:border-slate-800">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
               <BsTagFill className="text-white" size={14} />
             </div>
             <span className="text-lg font-bold text-gray-900 dark:text-white">
-              Resell<span className="text-violet-600">Hub</span>
+              Resell<span className="text-emerald-600">Hub</span>
             </span>
           </Link>
 
           <div className="hidden sm:flex items-center gap-2 text-sm">
             <span className="text-gray-400 dark:text-gray-500 line-through">Cart</span>
             <span className="text-gray-300 dark:text-gray-600 mx-1">›</span>
-            <span className="font-semibold text-violet-600 dark:text-violet-400">Checkout</span>
+            <span className="font-semibold text-emerald-600 dark:text-emerald-400">Checkout</span>
             <span className="text-gray-300 dark:text-gray-600 mx-1">›</span>
             <span className="text-gray-400 dark:text-gray-500">Confirmation</span>
           </div>
@@ -268,7 +268,7 @@ export default function CheckoutPage() {
 
         {/* back + summary line */}
         <div className="flex items-center gap-4 mb-8">
-          <Link href="/cart" className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors font-medium">
+          <Link href="/cart" className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
             <FiArrowLeft size={15} /> Back to cart
           </Link>
           <div className="h-4 w-px bg-gray-200 dark:bg-slate-700" />
@@ -285,9 +285,9 @@ export default function CheckoutPage() {
           {/* ── left: order summary ── */}
           <div className="lg:col-span-2 space-y-4">
             <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden">
-              <div className="px-5 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600">
+              <div className="px-5 py-4 bg-gradient-to-r from-emerald-600 to-teal-600">
                 <h2 className="font-bold text-white text-sm">Order Summary</h2>
-                <p className="text-violet-200 text-xs mt-0.5">{itemCount} {itemCount === 1 ? "item" : "items"}</p>
+                <p className="text-emerald-200 text-xs mt-0.5">{itemCount} {itemCount === 1 ? "item" : "items"}</p>
               </div>
 
               <div className="divide-y divide-gray-50 dark:divide-slate-700">
@@ -312,7 +312,7 @@ export default function CheckoutPage() {
 
               <div className="px-5 py-4 bg-gray-50 dark:bg-slate-700/30 border-t border-gray-100 dark:border-slate-700 flex justify-between items-center">
                 <span className="font-bold text-gray-900 dark:text-white text-sm">Total</span>
-                <span className="text-xl font-extrabold text-violet-600 dark:text-violet-400">${cartTotal.toLocaleString()}</span>
+                <span className="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">${cartTotal.toLocaleString()}</span>
               </div>
             </div>
 

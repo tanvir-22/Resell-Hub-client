@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import StatusBadge from "@/components/dashboard/StatusBadge";
@@ -34,7 +34,7 @@ export default function BuyerPayments() {
       {/* Summary cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         {[
-          { label: "Total Transactions", value: payments.length,         color: "bg-violet-100 dark:bg-violet-900/40 text-violet-600 dark:text-violet-400" },
+          { label: "Total Transactions", value: payments.length,         color: "bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400" },
           { label: "Total Spent",        value: `$${totalSpent.toFixed(2)}`,   color: "bg-green-100  dark:bg-green-900/40  text-green-600  dark:text-green-400"  },
           { label: "Pending Amount",     value: `$${totalPending.toFixed(2)}`, color: "bg-amber-100  dark:bg-amber-900/40  text-amber-600  dark:text-amber-400"  },
         ].map(({ label, value, color }) => (
@@ -54,7 +54,7 @@ export default function BuyerPayments() {
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search by order ID..."
-              className="w-full pl-8 pr-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+              className="w-full pl-8 pr-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
         </div>

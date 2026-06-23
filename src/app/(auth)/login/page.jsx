@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import "animate.css";
 import Link from "next/link";
@@ -85,7 +85,7 @@ export default function LoginPage() {
 
         <div className="lp-el animate-float bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-9 h-9 rounded-full bg-violet-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+            <div className="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
               SJ
             </div>
             <div>
@@ -192,7 +192,7 @@ export default function LoginPage() {
               >
                 <div
                   className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all ${
-                    remember ? "bg-violet-600 border-violet-600" : "border-gray-300 dark:border-slate-600"
+                    remember ? "bg-emerald-600 border-emerald-600" : "border-gray-300 dark:border-slate-600"
                   }`}
                 >
                   {remember && <FiCheck size={10} className="text-white" />}
@@ -201,7 +201,7 @@ export default function LoginPage() {
               </label>
               <Link
                 href="#"
-                className="text-sm text-violet-600 hover:text-violet-700 dark:hover:text-violet-400 font-medium transition-colors"
+                className="text-sm text-emerald-600 hover:text-emerald-700 dark:hover:text-emerald-400 font-medium transition-colors"
               >
                 Forgot password?
               </Link>
@@ -211,7 +211,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-violet-600 hover:bg-violet-700 text-white font-semibold py-3.5 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 shine-btn shadow-lg shadow-violet-600/20"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 shine-btn shadow-lg shadow-emerald-600/20"
               >
                 {loading ? (
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -227,7 +227,7 @@ export default function LoginPage() {
               Don&apos;t have an account?{" "}
               <Link
                 href="/signup"
-                className="text-violet-600 hover:text-violet-700 dark:hover:text-violet-400 font-semibold transition-colors"
+                className="text-emerald-600 hover:text-emerald-700 dark:hover:text-emerald-400 font-semibold transition-colors"
               >
                 Sign up free
               </Link>

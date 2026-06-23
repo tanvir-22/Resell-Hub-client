@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import "animate.css";
 import Link from "next/link";
@@ -131,8 +131,8 @@ export default function SignupPage() {
         <ul className="lp-el space-y-3.5 mb-10">
           {LEFT_FEATURES.map((feat) => (
             <li key={feat} className="flex items-center gap-3">
-              <div className="w-5 h-5 rounded-full bg-violet-600/30 border border-violet-500/50 flex items-center justify-center flex-shrink-0">
-                <FiCheck size={10} className="text-violet-400" />
+              <div className="w-5 h-5 rounded-full bg-emerald-600/30 border border-emerald-500/50 flex items-center justify-center flex-shrink-0">
+                <FiCheck size={10} className="text-emerald-400" />
               </div>
               <span className="text-gray-300 text-sm">{feat}</span>
             </li>
@@ -193,7 +193,7 @@ export default function SignupPage() {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="w-20 h-20 rounded-full border-2 border-dashed border-gray-300 dark:border-slate-600 flex items-center justify-center overflow-hidden hover:border-violet-500 dark:hover:border-violet-500 transition-colors bg-gray-50 dark:bg-slate-800 group"
+                className="w-20 h-20 rounded-full border-2 border-dashed border-gray-300 dark:border-slate-600 flex items-center justify-center overflow-hidden hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors bg-gray-50 dark:bg-slate-800 group"
               >
                 {profileImg ? (
                   <img src={profileImg} alt="Preview" className="w-full h-full object-cover" />
@@ -215,7 +215,7 @@ export default function SignupPage() {
                 )}
               </button>
               {profileImg && !imgUploading && (
-                <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-violet-600 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900">
+                <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900">
                   <FiCheck size={11} className="text-white" />
                 </div>
               )}
@@ -243,14 +243,14 @@ export default function SignupPage() {
                   onClick={() => selectRole(value)}
                   className={`relative p-4 rounded-2xl border-2 text-left transition-all hover:scale-[1.02] ${
                     form.role === value
-                      ? "border-violet-600 bg-violet-50 dark:bg-violet-950/40 shadow-md shadow-violet-100 dark:shadow-violet-900/20"
-                      : "border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-violet-300 dark:hover:border-violet-700"
+                      ? "border-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 shadow-md shadow-emerald-100 dark:shadow-emerald-900/20"
+                      : "border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-emerald-300 dark:hover:border-emerald-700"
                   }`}
                 >
                   <div
                     className={`absolute top-3 right-3 w-5 h-5 rounded-full flex items-center justify-center transition-all duration-200 ${
                       form.role === value
-                        ? "bg-violet-600 scale-100 opacity-100"
+                        ? "bg-emerald-600 scale-100 opacity-100"
                         : "bg-gray-200 dark:bg-slate-700 scale-75 opacity-0"
                     }`}
                   >
@@ -259,7 +259,7 @@ export default function SignupPage() {
                   <div
                     className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-colors ${
                       form.role === value
-                        ? "bg-violet-100 dark:bg-violet-900/50 text-violet-600"
+                        ? "bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600"
                         : "bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400"
                     }`}
                   >
@@ -353,18 +353,18 @@ export default function SignupPage() {
               >
                 <div
                   className={`mt-0.5 w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all ${
-                    agreeTerms ? "bg-violet-600 border-violet-600" : "border-gray-300 dark:border-slate-600"
+                    agreeTerms ? "bg-emerald-600 border-emerald-600" : "border-gray-300 dark:border-slate-600"
                   }`}
                 >
                   {agreeTerms && <FiCheck size={10} className="text-white" />}
                 </div>
                 <span className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                   I agree to ResellHub&apos;s{" "}
-                  <Link href="#" className="text-violet-600 hover:text-violet-700 dark:hover:text-violet-400 font-medium" onClick={(e) => e.stopPropagation()}>
+                  <Link href="#" className="text-emerald-600 hover:text-emerald-700 dark:hover:text-emerald-400 font-medium" onClick={(e) => e.stopPropagation()}>
                     Terms of Service
                   </Link>
                   {" "}&amp;{" "}
-                  <Link href="#" className="text-violet-600 hover:text-violet-700 dark:hover:text-violet-400 font-medium" onClick={(e) => e.stopPropagation()}>
+                  <Link href="#" className="text-emerald-600 hover:text-emerald-700 dark:hover:text-emerald-400 font-medium" onClick={(e) => e.stopPropagation()}>
                     Privacy Policy
                   </Link>
                 </span>
@@ -375,7 +375,7 @@ export default function SignupPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-violet-600 hover:bg-violet-700 text-white font-semibold py-3.5 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 shine-btn shadow-lg shadow-violet-600/20"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 shine-btn shadow-lg shadow-emerald-600/20"
               >
                 {loading ? (
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -411,7 +411,7 @@ export default function SignupPage() {
               Already have an account?{" "}
               <Link
                 href="/login"
-                className="text-violet-600 hover:text-violet-700 dark:hover:text-violet-400 font-semibold transition-colors"
+                className="text-emerald-600 hover:text-emerald-700 dark:hover:text-emerald-400 font-semibold transition-colors"
               >
                 Sign in
               </Link>

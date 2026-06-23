@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import {
@@ -7,6 +7,7 @@ import {
 } from "recharts";
 import { FiDollarSign, FiShoppingBag, FiPackage, FiClock, FiTrendingUp } from "react-icons/fi";
 import { getSellerAnalytics } from "@/lib/api/analytics";
+import { useUser } from "@/components/dashboard/DashboardShell";
 
 const SAMPLE_MONTHLY = [
   { month: "Jan", revenue: 0, orders: 0 },
@@ -46,13 +47,15 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export default function SellerAnalytics() {
+  const user = useUser();
   const [data, setData]     = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getSellerAnalytics()
+    if (!user?.id) return;
+    getSellerAnalytics(user.id)
       .then(d => { setData(d); setLoading(false); });
-  }, []);
+  }, [user?.id]);
 
   const monthly    = data?.monthly?.length    ? data.monthly    : SAMPLE_MONTHLY;
   const topProducts = data?.topProducts?.length ? data.topProducts : [];
@@ -72,7 +75,7 @@ export default function SellerAnalytics() {
         </div>
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <StatCard icon={FiPackage}    label="Total Products"  value={data?.totalProducts  ?? 0} color="bg-gradient-to-br from-violet-500 to-violet-700" />
+          <StatCard icon={FiPackage}    label="Total Products"  value={data?.totalProducts  ?? 0} color="bg-gradient-to-br from-emerald-500 to-emerald-700" />
           <StatCard icon={FiShoppingBag} label="Total Sales"   value={data?.totalSales     ?? 0} color="bg-gradient-to-br from-blue-500   to-blue-700"   />
           <StatCard icon={FiDollarSign} label="Total Revenue"  value={`$${(data?.totalRevenue ?? 0).toFixed(2)}`} color="bg-gradient-to-br from-green-500  to-green-700"  />
           <StatCard icon={FiClock}      label="Pending Orders" value={data?.pendingOrders  ?? 0} color="bg-gradient-to-br from-amber-500  to-amber-700"  />
@@ -144,12 +147,12 @@ export default function SellerAnalytics() {
                       <p className="text-sm font-medium text-gray-900 dark:text-white truncate mb-1">{p.name}</p>
                       <div className="h-1.5 bg-gray-100 dark:bg-slate-700 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full"
+                          className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"
                           style={{ width: `${(p.revenue / max) * 100}%` }}
                         />
                       </div>
                     </div>
-                    <span className="text-sm font-bold text-violet-600 dark:text-violet-400 flex-shrink-0">${p.revenue.toFixed(0)}</span>
+                    <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 flex-shrink-0">${p.revenue.toFixed(0)}</span>
                   </div>
                 );
               })}

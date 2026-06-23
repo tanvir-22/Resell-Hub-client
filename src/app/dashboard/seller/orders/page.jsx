@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import StatusBadge from "@/components/dashboard/StatusBadge";
@@ -9,7 +9,7 @@ import { useUser } from "@/components/dashboard/DashboardShell";
 const STATUS_ACTIONS = {
   Pending:    [{ label: "Accept",  next: "Accepted", cls: "bg-blue-600 hover:bg-blue-700 text-white" }, { label: "Reject", next: "Cancelled", cls: "bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400" }],
   Accepted:   [{ label: "Mark Processing", next: "Processing", cls: "bg-indigo-600 hover:bg-indigo-700 text-white" }],
-  Processing: [{ label: "Mark Shipped",    next: "Shipped",    cls: "bg-violet-600 hover:bg-violet-700 text-white" }],
+  Processing: [{ label: "Mark Shipped",    next: "Shipped",    cls: "bg-emerald-600 hover:bg-emerald-700 text-white" }],
   Shipped:    [{ label: "Mark Delivered",  next: "Delivered",  cls: "bg-green-600  hover:bg-green-700  text-white" }],
 };
 
@@ -82,7 +82,7 @@ export default function SellerOrders() {
           ].map(({ key, label, count }) => (
             <button key={key} onClick={() => setFilter(key)}
               className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-sm font-medium transition-colors ${
-                filter === key ? "bg-violet-600 text-white shadow-md shadow-violet-600/25" : "bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 text-gray-600 dark:text-gray-300 hover:border-violet-300 dark:hover:border-violet-700"
+                filter === key ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/25" : "bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 text-gray-600 dark:text-gray-300 hover:border-emerald-300 dark:hover:border-emerald-700"
               }`}>
               {label} <span className={`px-1.5 py-0.5 rounded-md text-xs ${filter === key ? "bg-white/20" : "bg-gray-100 dark:bg-slate-700"}`}>{count}</span>
             </button>
@@ -93,7 +93,7 @@ export default function SellerOrders() {
       {/* Search */}
       <div className="relative mb-5">
         <FiSearch size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
-        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by product or buyer..." className="w-full sm:w-80 pl-9 pr-4 py-2.5 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500" />
+        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by product or buyer..." className="w-full sm:w-80 pl-9 pr-4 py-2.5 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
@@ -111,15 +111,15 @@ export default function SellerOrders() {
               key={o._id}
               onClick={() => setSelected(o._id === selected?._id ? null : o)}
               className={`cursor-pointer p-4 rounded-2xl border transition-all bg-white dark:bg-slate-800 ${
-                selected?._id === o._id ? "border-violet-500 shadow-md shadow-violet-100 dark:shadow-violet-900/20" : "border-gray-100 dark:border-slate-700 hover:border-violet-200 dark:hover:border-violet-700"
+                selected?._id === o._id ? "border-emerald-500 shadow-md shadow-emerald-100 dark:shadow-emerald-900/20" : "border-gray-100 dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-700"
               }`}
             >
               <div className="flex items-start gap-4">
                 {o.productImage ? (
                   <img src={o.productImage} alt="" className="w-14 h-14 rounded-xl object-cover flex-shrink-0 bg-gray-100" />
                 ) : (
-                  <div className="w-14 h-14 rounded-xl bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center flex-shrink-0">
-                    <FiShoppingBag size={22} className="text-violet-500" />
+                  <div className="w-14 h-14 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
+                    <FiShoppingBag size={22} className="text-emerald-500" />
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
@@ -130,7 +130,7 @@ export default function SellerOrders() {
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                     Buyer: <span className="text-gray-700 dark:text-gray-300 font-medium">{o.buyerName}</span>
                   </p>
-                  <p className="text-violet-600 dark:text-violet-400 font-bold mt-1">${o.price}</p>
+                  <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-1">${o.price}</p>
                 </div>
               </div>
 

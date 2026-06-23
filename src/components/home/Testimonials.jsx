@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { Card, Avatar } from "@heroui/react";
 import { BsStarFill } from "react-icons/bs";
 import { Reveal } from "./Reveal";
@@ -6,7 +6,7 @@ import { Reveal } from "./Reveal";
 const testimonials = [
   {
     name: "Sarah Johnson", role: "Regular Seller · 200+ sales",
-    initials: "SJ", bg: "bg-violet-600", rating: 5,
+    initials: "SJ", bg: "bg-emerald-600", rating: 5,
     text: "I've sold over 200 items on ResellHub. The process is seamless and buyers are genuine — best platform I've used!",
   },
   {
@@ -37,7 +37,7 @@ export function Testimonials() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {testimonials.map(({ name, role, initials, bg, rating, text }, i) => (
           <Reveal key={name} delay={i * 100}>
-            <Card className="border border-gray-100 dark:border-slate-700 rounded-2xl hover:shadow-xl dark:hover:shadow-violet-900/10 hover:-translate-y-1 transition-all h-full bg-white dark:bg-slate-800">
+            <Card className="border border-gray-100 dark:border-slate-700 rounded-2xl hover:shadow-xl dark:hover:shadow-emerald-900/10 hover:-translate-y-1 transition-all h-full bg-white dark:bg-slate-800">
               <Card.Content className="p-6">
                 <div className="flex mb-4">
                   {Array.from({ length: rating }).map((_, j) => (

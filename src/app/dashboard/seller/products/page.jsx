@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
@@ -30,7 +30,7 @@ const CATEGORIES = [
 ];
 const CONDITIONS = ["Like New", "Used", "Refurbished"];
 const inputCls =
-  "w-full px-3.5 py-2.5 text-sm rounded-lg border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500";
+  "w-full px-3.5 py-2.5 text-sm rounded-lg border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500";
 
 function EditModal({ product, onClose, onSave }) {
   const [form, setForm] = useState({ ...product });
@@ -106,7 +106,7 @@ function EditModal({ product, onClose, onSave }) {
                 </div>
               )}
             </div>
-            <div className="absolute bottom-2 right-2 bg-violet-600 text-white text-xs font-semibold px-2 py-1 rounded-lg flex items-center gap-1">
+            <div className="absolute bottom-2 right-2 bg-emerald-600 text-white text-xs font-semibold px-2 py-1 rounded-lg flex items-center gap-1">
               <FiCamera size={11} /> Change
             </div>
           </div>
@@ -201,7 +201,7 @@ function EditModal({ product, onClose, onSave }) {
             <button
               type="submit"
               disabled={saving}
-              className="flex-1 bg-violet-600 hover:bg-violet-700 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors disabled:opacity-70"
+              className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors disabled:opacity-70"
             >
               {saving ? "Saving..." : "Save Changes"}
             </button>
@@ -267,7 +267,7 @@ export default function SellerProducts() {
         </div>
         <Link
           href="/dashboard/seller/add-product"
-          className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors"
+          className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors"
         >
           <FiPlusSquare size={16} /> Add New
         </Link>
@@ -284,14 +284,14 @@ export default function SellerProducts() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search products..."
-            className="w-full pl-9 pr-4 py-2.5 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+            className="w-full pl-9 pr-4 py-2.5 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
         </div>
         <div className="relative">
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="appearance-none pl-3 pr-8 py-2.5 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-violet-500"
+            className="appearance-none pl-3 pr-8 py-2.5 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>
@@ -317,8 +317,8 @@ export default function SellerProducts() {
         </div>
       ) : visible.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700">
-          <div className="w-16 h-16 rounded-full bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center mb-4">
-            <FiPackage size={28} className="text-violet-500" />
+          <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mb-4">
+            <FiPackage size={28} className="text-emerald-500" />
           </div>
           <p className="font-semibold text-gray-700 dark:text-gray-300 mb-1">
             No products found
@@ -328,7 +328,7 @@ export default function SellerProducts() {
           </p>
           <Link
             href="/dashboard/seller/add-product"
-            className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
+            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
           >
             <FiPlusSquare size={15} /> Add First Product
           </Link>
@@ -338,7 +338,7 @@ export default function SellerProducts() {
           {visible.map((p) => (
             <div
               key={p._id}
-              className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden group hover:border-violet-200 dark:hover:border-violet-700 hover:shadow-lg transition-all"
+              className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden group hover:border-emerald-200 dark:hover:border-emerald-700 hover:shadow-lg transition-all"
             >
               <div className="relative h-40 bg-gray-100 dark:bg-slate-700 overflow-hidden">
                 {p.images?.[0] ? (
@@ -373,7 +373,7 @@ export default function SellerProducts() {
                   {p.title}
                 </p>
                 <div className="flex items-center justify-between mt-1">
-                  <span className="text-violet-600 dark:text-violet-400 font-bold">
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold">
                     ${p.price}
                   </span>
                   <span className="text-xs text-gray-400 dark:text-gray-500">
@@ -386,7 +386,7 @@ export default function SellerProducts() {
                 <div className="flex gap-2 mt-3">
                   <button
                     onClick={() => setEditing(p)}
-                    className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold border border-gray-200 dark:border-slate-600 py-2 rounded-lg hover:border-violet-300 dark:hover:border-violet-700 hover:text-violet-600 dark:hover:text-violet-400 text-gray-600 dark:text-gray-300 transition-colors"
+                    className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold border border-gray-200 dark:border-slate-600 py-2 rounded-lg hover:border-emerald-300 dark:hover:border-emerald-700 hover:text-emerald-600 dark:hover:text-emerald-400 text-gray-600 dark:text-gray-300 transition-colors"
                   >
                     <FiEdit2 size={13} /> Edit
                   </button>

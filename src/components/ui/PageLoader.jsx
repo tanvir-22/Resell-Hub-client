@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Spinner } from "@heroui/react";
 
@@ -9,8 +9,8 @@ export function PageLoader({ label = "Loading..." }) {
         <Spinner
           size="lg"
           classNames={{
-            circle1: "border-b-violet-600",
-            circle2: "border-b-violet-400",
+            circle1: "border-b-emerald-600",
+            circle2: "border-b-emerald-400",
           }}
         />
         <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">{label}</p>
@@ -25,8 +25,8 @@ export function SectionLoader({ label = "Loading..." }) {
       <Spinner
         size="md"
         classNames={{
-          circle1: "border-b-violet-600",
-          circle2: "border-b-violet-400",
+          circle1: "border-b-emerald-600",
+          circle2: "border-b-emerald-400",
         }}
       />
       {label && (

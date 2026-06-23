@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect } from "react";
 import Link from "next/link";
@@ -40,8 +40,8 @@ export default function CartPage() {
         <div className="max-w-5xl mx-auto px-4 py-6 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-extrabold text-gray-900 dark:text-white flex items-center gap-3">
-              <span className="w-9 h-9 rounded-xl bg-violet-100 dark:bg-violet-900/40 flex items-center justify-center">
-                <FiShoppingCart size={18} className="text-violet-600 dark:text-violet-400" />
+              <span className="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center">
+                <FiShoppingCart size={18} className="text-emerald-600 dark:text-emerald-400" />
               </span>
               Your Cart
             </h1>
@@ -64,8 +64,8 @@ export default function CartPage() {
         {cartItems.length === 0 ? (
           /* Empty state */
           <div className="flex flex-col items-center justify-center py-28 bg-white dark:bg-slate-800 rounded-3xl border border-gray-100 dark:border-slate-700">
-            <div className="w-20 h-20 rounded-2xl bg-violet-50 dark:bg-violet-900/20 border border-violet-100 dark:border-violet-800/40 flex items-center justify-center mb-5">
-              <FiShoppingCart size={32} className="text-violet-500" />
+            <div className="w-20 h-20 rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800/40 flex items-center justify-center mb-5">
+              <FiShoppingCart size={32} className="text-emerald-500" />
             </div>
             <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-1">Your cart is empty</h2>
             <p className="text-gray-400 dark:text-gray-500 text-sm mb-7 text-center max-w-xs">
@@ -73,7 +73,7 @@ export default function CartPage() {
             </p>
             <Link
               href="/products"
-              className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold px-6 py-3 rounded-xl transition-all hover:scale-105 shadow-lg shadow-violet-600/20"
+              className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-6 py-3 rounded-xl transition-all hover:scale-105 shadow-lg shadow-emerald-600/20"
             >
               Browse Listings <FiArrowRight size={15} />
             </Link>
@@ -86,7 +86,7 @@ export default function CartPage() {
               {cartItems.map((item) => (
                 <div
                   key={item._id}
-                  className="group flex gap-4 bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-4 hover:border-violet-200 dark:hover:border-violet-700/50 hover:shadow-md transition-all duration-200"
+                  className="group flex gap-4 bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-4 hover:border-emerald-200 dark:hover:border-emerald-700/50 hover:shadow-md transition-all duration-200"
                 >
                   {/* Image */}
                   <div className="w-24 h-24 rounded-xl overflow-hidden bg-gray-100 dark:bg-slate-700 flex-shrink-0 ring-1 ring-gray-200 dark:ring-slate-600">
@@ -108,7 +108,7 @@ export default function CartPage() {
                         {item.sellerInfo?.name || "Seller"}
                       </p>
                     </div>
-                    <p className="text-violet-600 dark:text-violet-400 font-bold mt-2 text-sm">
+                    <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-2 text-sm">
                       ${item.price.toLocaleString()} <span className="text-gray-400 dark:text-gray-500 font-normal">each</span>
                     </p>
 
@@ -161,9 +161,9 @@ export default function CartPage() {
             <div className="space-y-4">
               <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden sticky top-6">
                 {/* Summary header */}
-                <div className="px-5 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600">
+                <div className="px-5 py-4 bg-gradient-to-r from-emerald-600 to-teal-600">
                   <h2 className="font-bold text-white text-base">Order Summary</h2>
-                  <p className="text-violet-200 text-xs mt-0.5">{itemCount} {itemCount === 1 ? "item" : "items"}</p>
+                  <p className="text-emerald-200 text-xs mt-0.5">{itemCount} {itemCount === 1 ? "item" : "items"}</p>
                 </div>
 
                 {/* Line items */}
@@ -203,7 +203,7 @@ export default function CartPage() {
                   <button
                     onClick={handleCheckout}
                     disabled={cartItems.length === 0}
-                    className="w-full flex items-center justify-center gap-2.5 py-3.5 bg-violet-600 hover:bg-violet-700 text-white font-bold rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg shadow-violet-600/30 text-sm"
+                    className="w-full flex items-center justify-center gap-2.5 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg shadow-emerald-600/30 text-sm"
                   >
                     <>
                       <FiLock size={14} />
@@ -225,7 +225,7 @@ export default function CartPage() {
               {/* Continue shopping */}
               <Link
                 href="/products"
-                className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 font-medium transition-colors py-2"
+                className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors py-2"
               >
                 ← Continue Shopping
               </Link>

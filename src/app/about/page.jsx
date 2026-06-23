@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import {
   FiShield, FiZap, FiUsers, FiStar,
   FiArrowRight, FiHeart, FiAward, FiGlobe,
@@ -25,7 +25,7 @@ const values = [
     icon: FiUsers,
     title: "Community First",
     desc: "We build tools that empower both buyers and sellers to connect and transact with confidence.",
-    color: "bg-violet-50 dark:bg-violet-900/20 text-violet-600 dark:text-violet-400",
+    color: "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400",
   },
   {
     icon: FiZap,
@@ -42,7 +42,7 @@ const values = [
 ];
 
 const team = [
-  { name: "Tanvir Ahmed",    role: "Founder & CEO",         initials: "TA", color: "from-violet-500 to-fuchsia-600" },
+  { name: "Tanvir Ahmed",    role: "Founder & CEO",         initials: "TA", color: "from-emerald-500 to-teal-600" },
   { name: "Sara Rahman",     role: "Head of Product",       initials: "SR", color: "from-blue-500 to-cyan-600"      },
   { name: "Karim Hossain",  role: "Lead Engineer",         initials: "KH", color: "from-green-500 to-teal-600"    },
   { name: "Nadia Islam",     role: "Head of Operations",   initials: "NI", color: "from-rose-500 to-pink-600"     },
@@ -54,7 +54,7 @@ export default function AboutPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-violet-600 to-fuchsia-600 py-20 px-4">
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-600 to-teal-600 py-20 px-4">
         <div className="absolute top-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
         <div className="relative max-w-3xl mx-auto text-center">
@@ -82,8 +82,8 @@ export default function AboutPage() {
             <Reveal key={label} delay={i * 80}>
               <div className="text-center">
                 <div className="flex justify-center mb-3">
-                  <div className="w-12 h-12 rounded-xl bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center">
-                    <Icon size={20} className="text-violet-600 dark:text-violet-400" />
+                  <div className="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                    <Icon size={20} className="text-emerald-600 dark:text-emerald-400" />
                   </div>
                 </div>
                 <p className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">
@@ -102,7 +102,7 @@ export default function AboutPage() {
         <section className="grid md:grid-cols-2 gap-12 items-center">
           <Reveal>
             <div>
-              <span className="text-xs font-bold text-violet-600 dark:text-violet-400 uppercase tracking-widest">
+              <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
                 Our Mission
               </span>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mt-2 mb-5 leading-tight">
@@ -135,7 +135,7 @@ export default function AboutPage() {
                   key={label}
                   className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm"
                 >
-                  <p className="text-2xl font-extrabold text-violet-600 dark:text-violet-400">
+                  <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">
                     {value}
                   </p>
                   <p className="text-xs text-gray-400 dark:text-gray-500 mt-1 font-medium">
@@ -150,7 +150,7 @@ export default function AboutPage() {
         {/* Values */}
         <section>
           <Reveal className="text-center mb-12">
-            <span className="text-xs font-bold text-violet-600 dark:text-violet-400 uppercase tracking-widest">
+            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
               What We Stand For
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mt-2">
@@ -178,7 +178,7 @@ export default function AboutPage() {
         {/* Team */}
         <section>
           <Reveal className="text-center mb-12">
-            <span className="text-xs font-bold text-violet-600 dark:text-violet-400 uppercase tracking-widest">
+            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
               The People
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mt-2">
@@ -207,7 +207,7 @@ export default function AboutPage() {
 
         {/* CTA */}
         <Reveal>
-          <div className="text-center bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-3xl p-12 text-white relative overflow-hidden">
+          <div className="text-center bg-gradient-to-br from-emerald-600 to-teal-600 rounded-3xl p-12 text-white relative overflow-hidden">
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl" />
             </div>
@@ -221,7 +221,7 @@ export default function AboutPage() {
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   href="/signup"
-                  className="inline-flex items-center gap-2 bg-white text-violet-700 font-bold px-6 py-3 rounded-xl hover:bg-violet-50 transition-colors text-sm shadow-lg"
+                  className="inline-flex items-center gap-2 bg-white text-emerald-700 font-bold px-6 py-3 rounded-xl hover:bg-emerald-50 transition-colors text-sm shadow-lg"
                 >
                   Get Started Free <FiArrowRight size={15} />
                 </Link>
