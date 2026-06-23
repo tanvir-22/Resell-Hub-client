@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
@@ -153,6 +153,7 @@ function CheckoutForm({ userEmail, cartTotal }) {
         options={{
           layout: "tabs",
           fields: { billingDetails: { email: "never" } },
+          wallets: { link: "never" },
         }}
       />
 
@@ -195,6 +196,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const [clientSecret, setClientSecret] = useState("");
   const [isDark, setIsDark] = useState(false);
+  const sessionCreated = useRef(false);
 
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains("dark"));
@@ -209,6 +211,8 @@ export default function CheckoutPage() {
     if (isPending) return;
     if (!session?.user) { router.replace("/login"); return; }
     if (!cartItems.length) { router.replace("/cart"); return; }
+    if (sessionCreated.current) return;
+    sessionCreated.current = true;
 
     fetch("/api/checkout_sessions", {
       method: "POST",
@@ -225,7 +229,7 @@ export default function CheckoutPage() {
     })
       .then((r) => r.json())
       .then(({ clientSecret }) => setClientSecret(clientSecret));
-  }, [isPending, session?.user, cartItems.length]);
+  }, [isPending, session?.user?.id, cartItems.length]);
 
   if (isPending || !session?.user || !clientSecret) {
     return <PageLoader label="Preparing checkout…" />;

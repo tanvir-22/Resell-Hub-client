@@ -39,7 +39,12 @@ export function FeaturedListings() {
     getProducts()
       .then((data) => {
         const list = Array.isArray(data) ? data : [];
-        setProducts(list.slice(0, 6).map(toCardShape));
+        setProducts(
+          list
+            .filter(p => !p.status || p.status === "approved")
+            .slice(0, 6)
+            .map(toCardShape)
+        );
       })
       .catch(() => setProducts([]))
       .finally(() => setLoading(false));

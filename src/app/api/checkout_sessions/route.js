@@ -43,7 +43,7 @@ export async function POST(request) {
       amount: Math.round(totalAmount * 100),
       currency: "usd",
       receipt_email: userEmail,
-      automatic_payment_methods: { enabled: true },
+      payment_method_types: ["card"],
       metadata: {
         userEmail,
         totalAmount:  String(totalAmount),

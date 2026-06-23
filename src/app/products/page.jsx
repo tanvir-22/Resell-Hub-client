@@ -58,7 +58,8 @@ function ProductsPageInner() {
   useEffect(() => {
     setLoadingProducts(true);
     getProducts().then((data) => {
-      setProducts(Array.isArray(data) ? data : (data.products ?? []));
+      const all = Array.isArray(data) ? data : (data.products ?? []);
+      setProducts(all.filter(p => !p.status || p.status === "approved"));
       setLoadingProducts(false);
     });
   }, []);

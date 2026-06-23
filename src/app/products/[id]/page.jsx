@@ -11,7 +11,7 @@ import {
 } from "react-icons/fi";
 import { MdVerified } from "react-icons/md";
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
-import { Chip, Spinner } from "@heroui/react";
+import { Chip } from "@heroui/react";
 import { Navbar } from "@/components/Navbar";
 import { getProduct, getProducts } from "@/lib/api/products";
 import { getWishlist, addToWishlist, removeFromWishlist } from "@/lib/api/wishlist";
@@ -191,7 +191,7 @@ function ReviewsSection({ productId, session }) {
             className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition shadow-lg shadow-emerald-600/20"
           >
             {submitting
-              ? <><Spinner size="sm" classNames={{ circle1: "border-b-white", circle2: "border-b-white/60" }} /> Submitting…</>
+              ? <><div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" /> Submitting…</>
               : <><FiSend size={14} /> Submit Review</>}
           </button>
         </form>
@@ -200,7 +200,7 @@ function ReviewsSection({ productId, session }) {
       {/* list */}
       {loading ? (
         <div className="flex items-center gap-3 py-8 justify-center">
-          <Spinner size="sm" classNames={{ circle1: "border-b-emerald-600", circle2: "border-b-emerald-400" }} />
+          <div className="w-5 h-5 rounded-full border-2 border-emerald-200 border-t-emerald-600 animate-spin" />
           <span className="text-sm text-gray-400">Loading reviews…</span>
         </div>
       ) : reviews.length === 0 ? (

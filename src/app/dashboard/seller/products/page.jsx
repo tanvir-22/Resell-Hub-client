@@ -13,7 +13,7 @@ import {
   FiPackage,
   FiChevronDown,
 } from "react-icons/fi";
-import { getProducts, updateProduct, deleteProduct } from "@/lib/api/products";
+import { getSellerProducts, updateProduct, deleteProduct } from "@/lib/api/products";
 import { uploadImage } from "@/lib/api/upload";
 
 const CATEGORIES = [
@@ -229,15 +229,15 @@ export default function SellerProducts() {
   const [deleting, setDeleting] = useState(null);
 
   const load = () => {
+    if (!user?.id) return;
     setLoading(true);
-    if (!user) return;
-    getProducts({ sellerId: user.id }).then((d) => {
+    getSellerProducts(user.id, user.email).then((d) => {
       setProducts(Array.isArray(d) ? d : []);
       setLoading(false);
     });
   };
 
-  useEffect(load, [user]);
+  useEffect(load, [user?.id]);
 
   const handleDelete = async (id) => {
     if (!confirm("Delete this product?")) return;

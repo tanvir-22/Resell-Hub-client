@@ -9,6 +9,16 @@ import { getOrders } from "@/lib/api/orders";
 import { StatCard } from "@/components/ui/StatCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 
+function normalizeOrder(o) {
+  return {
+    ...o,
+    productTitle: o.productTitle || o.title || "—",
+    price:        o.price ?? o.totalAmount ?? 0,
+    status:       o.status || o.orderStatus || "Pending",
+    buyerName:    o.buyerName || o.buyerInfo?.name || "—",
+  };
+}
+
 export default function SellerOverview() {
   const user = useUser();
   const [analytics, setAnalytics] = useState(null);
@@ -16,15 +26,16 @@ export default function SellerOverview() {
   const [loading, setLoading]     = useState(true);
 
   useEffect(() => {
+    if (!user?.id) return;
     Promise.all([
-      getSellerAnalytics(),
-      getOrders({ role: "seller" }),
+      getSellerAnalytics(user.id),
+      getOrders({ email: user.email, role: "seller" }),
     ]).then(([a, o]) => {
       setAnalytics(a);
-      setOrders(Array.isArray(o) ? o : []);
+      setOrders(Array.isArray(o) ? o.map(normalizeOrder) : []);
       setLoading(false);
     });
-  }, []);
+  }, [user?.id]);
 
   return (
     <div>

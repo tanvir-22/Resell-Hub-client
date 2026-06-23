@@ -1,7 +1,12 @@
 export async function getProducts() {
-  console.log(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/products`);
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/products`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/products?status=approved`);
+  return res.json();
+}
 
+export async function getSellerProducts(sellerId, email) {
+  const params = new URLSearchParams({ sellerId });
+  if (email) params.set("email", email);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/seller/products?${params}`);
   return res.json();
 }
 
