@@ -3,49 +3,49 @@
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
-import { TbLeaf, TbDroplet, TbRecycle, TbSun } from "react-icons/tb";
+import { TbLeaf, TbDroplet, TbSun } from "react-icons/tb";
 import { Reveal } from "./Reveal";
 
 const impacts = [
   {
-    icon: TbLeaf,
+    // seedling/plant — CO2 absorbed by new growth
+    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=500&q=80&fit=crop",
+    imageAlt: "Green seedling representing CO₂ prevention",
     value: "2,400",
     unit: "tonnes",
     label: "CO₂ Emissions Prevented",
     sub: "Every resale avoids the carbon cost of manufacturing new goods.",
     color: "from-emerald-500 to-green-600",
-    bg: "bg-emerald-50 dark:bg-emerald-900/20",
-    text: "text-emerald-600 dark:text-emerald-400",
   },
   {
-    icon: TbRecycle,
+    // pile of second-hand clothes — directly represents items saved from landfill
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80&fit=crop",
+    imageAlt: "Second-hand clothing diverted from landfill",
     value: "850K",
     unit: "items",
     label: "Diverted from Landfill",
     sub: "Products that found a second home instead of the trash.",
     color: "from-violet-500 to-fuchsia-600",
-    bg: "bg-violet-50 dark:bg-violet-900/20",
-    text: "text-violet-600 dark:text-violet-400",
   },
   {
-    icon: TbDroplet,
+    // clear flowing water — water conservation
+    image: "https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=500&q=80&fit=crop",
+    imageAlt: "Clean water saved",
     value: "18M",
     unit: "litres",
     label: "Water Saved",
     sub: "Reusing clothes alone saves thousands of litres per item.",
     color: "from-blue-500 to-cyan-600",
-    bg: "bg-blue-50 dark:bg-blue-900/20",
-    text: "text-blue-600 dark:text-blue-400",
   },
   {
-    icon: TbSun,
+    // wind turbines — clean energy / energy conservation
+    image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=500&q=80&fit=crop",
+    imageAlt: "Wind turbines representing energy conservation",
     value: "3.2M",
     unit: "kWh",
     label: "Energy Conserved",
     sub: "Skipping production = skipping its enormous energy footprint.",
     color: "from-amber-500 to-orange-500",
-    bg: "bg-amber-50 dark:bg-amber-900/20",
-    text: "text-amber-600 dark:text-amber-400",
   },
 ];
 
@@ -144,25 +144,32 @@ export function SustainabilitySection() {
 
         {/* Impact stats grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
-          {impacts.map(({ icon: Icon, value, unit, label, sub, color, bg, text }, i) => (
+          {impacts.map(({ image, imageAlt, value, unit, label, sub, color }, i) => (
             <Reveal key={label} delay={i * 90}>
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 h-full flex flex-col">
-                {/* Icon */}
-                <div className={`w-11 h-11 rounded-xl ${bg} flex items-center justify-center mb-4 flex-shrink-0`}>
-                  <Icon size={22} className={text} />
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 h-full flex flex-col group">
+                {/* Image */}
+                <div className="relative h-32 overflow-hidden flex-shrink-0">
+                  <img
+                    src={image}
+                    alt={imageAlt}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
                 </div>
 
-                {/* Animated counter */}
-                <p className={`text-3xl sm:text-4xl font-extrabold bg-gradient-to-r ${color} bg-clip-text text-transparent leading-none`}>
-                  <CountUp target={value} />
-                </p>
-                <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1 mb-2">
-                  {unit}
-                </p>
-                <p className="text-sm font-bold text-white mb-1">{label}</p>
-                <p className="text-xs text-gray-400 leading-relaxed mt-auto pt-2">
-                  {sub}
-                </p>
+                {/* Stats */}
+                <div className="p-5 flex flex-col flex-1">
+                  <p className={`text-3xl sm:text-4xl font-extrabold bg-gradient-to-r ${color} bg-clip-text text-transparent leading-none`}>
+                    <CountUp target={value} />
+                  </p>
+                  <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1 mb-2">
+                    {unit}
+                  </p>
+                  <p className="text-sm font-bold text-white mb-1">{label}</p>
+                  <p className="text-xs text-gray-400 leading-relaxed mt-auto pt-2">
+                    {sub}
+                  </p>
+                </div>
               </div>
             </Reveal>
           ))}
