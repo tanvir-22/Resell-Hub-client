@@ -69,6 +69,37 @@
   animation: shimmer 5s linear infinite;
 }
 
+/* ── Swiper hero overrides ── */
+.hero-swiper .swiper-button-next,
+.hero-swiper .swiper-button-prev {
+  color: #fff;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+.hero-swiper .swiper-button-next:hover,
+.hero-swiper .swiper-button-prev:hover {
+  background: rgba(0,0,0,0.65);
+}
+.hero-swiper .swiper-button-next::after,
+.hero-swiper .swiper-button-prev::after {
+  font-size: 14px;
+  font-weight: 900;
+}
+.hero-swiper .swiper-pagination-bullet {
+  background: rgba(255,255,255,0.5);
+  opacity: 1;
+  transition: all 0.3s;
+}
+.hero-swiper .swiper-pagination-bullet-active {
+  background: #fff;
+  width: 24px;
+  border-radius: 4px;
+}
+
 /* shine sweep on hover */
 .shine-btn {
   position: relative;

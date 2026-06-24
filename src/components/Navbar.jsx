@@ -4,16 +4,25 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { BsTagFill } from "react-icons/bs";
-import { FiMenu, FiX, FiSun, FiMoon, FiUser, FiGrid, FiLogOut, FiShoppingCart } from "react-icons/fi";
+import {
+  FiMenu,
+  FiX,
+  FiSun,
+  FiMoon,
+  FiUser,
+  FiGrid,
+  FiLogOut,
+  FiShoppingCart,
+} from "react-icons/fi";
 import { useSession, signOut } from "@/lib/auth-client";
 import { useCart } from "@/context/CartContext";
 
 const navLinks = [
-  { label: "Home",       href: "/"           },
-  { label: "Products",   href: "/products"   },
+  { label: "Home", href: "/" },
+  { label: "Products", href: "/products" },
   { label: "Categories", href: "/categories" },
-  { label: "About",      href: "/about"      },
-  { label: "Contact",    href: "/contact"    },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 function ThemeToggle() {
@@ -35,10 +44,14 @@ function ThemeToggle() {
       aria-label="Toggle dark mode"
       className="relative w-9 h-9 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 border border-gray-200 dark:border-slate-700 transition-all hover:scale-105"
     >
-      <span className={`absolute transition-all duration-300 ${isDark ? "opacity-100 rotate-0 scale-100" : "opacity-0 rotate-90 scale-75"}`}>
+      <span
+        className={`absolute transition-all duration-300 ${isDark ? "opacity-100 rotate-0 scale-100" : "opacity-0 rotate-90 scale-75"}`}
+      >
         <FiSun size={16} className="text-amber-400" />
       </span>
-      <span className={`absolute transition-all duration-300 ${isDark ? "opacity-0 -rotate-90 scale-75" : "opacity-100 rotate-0 scale-100"}`}>
+      <span
+        className={`absolute transition-all duration-300 ${isDark ? "opacity-0 -rotate-90 scale-75" : "opacity-100 rotate-0 scale-100"}`}
+      >
         <FiMoon size={16} />
       </span>
     </button>
@@ -47,7 +60,12 @@ function ThemeToggle() {
 
 function UserAvatar({ user, className = "w-9 h-9 text-sm" }) {
   const initials = user.name
-    ? user.name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase()
+    ? user.name
+        .split(" ")
+        .map((w) => w[0])
+        .slice(0, 2)
+        .join("")
+        .toUpperCase()
     : user.email[0].toUpperCase();
 
   if (user.image) {
@@ -61,7 +79,9 @@ function UserAvatar({ user, className = "w-9 h-9 text-sm" }) {
   }
 
   return (
-    <div className={`${className} rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold flex-shrink-0`}>
+    <div
+      className={`${className} rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold flex-shrink-0`}
+    >
       {initials}
     </div>
   );
@@ -74,7 +94,8 @@ function UserMenu({ user }) {
 
   useEffect(() => {
     const handler = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) setOpen(false);
+      if (menuRef.current && !menuRef.current.contains(e.target))
+        setOpen(false);
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
@@ -108,8 +129,12 @@ function UserMenu({ user }) {
           <div className="px-4 py-3.5 border-b border-gray-100 dark:border-slate-700 flex items-center gap-3">
             <UserAvatar user={user} className="w-9 h-9 text-sm" />
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">{user.name}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user.email}</p>
+              <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">
+                {user.name}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                {user.email}
+              </p>
             </div>
           </div>
 
@@ -120,13 +145,16 @@ function UserMenu({ user }) {
                 user?.role === "seller"
                   ? "/dashboard/seller"
                   : user?.role === "admin"
-                  ? "/dashboard/admin"
-                  : "/dashboard/buyer/profile"
+                    ? "/dashboard/admin"
+                    : "/dashboard/buyer/profile"
               }
               onClick={() => setOpen(false)}
               className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-700/60 transition-colors"
             >
-              <FiUser size={15} className="text-gray-400 dark:text-gray-500 flex-shrink-0" />
+              <FiUser
+                size={15}
+                className="text-gray-400 dark:text-gray-500 flex-shrink-0"
+              />
               Profile
             </Link>
             <Link
@@ -134,7 +162,10 @@ function UserMenu({ user }) {
               onClick={() => setOpen(false)}
               className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-700/60 transition-colors"
             >
-              <FiGrid size={15} className="text-gray-400 dark:text-gray-500 flex-shrink-0" />
+              <FiGrid
+                size={15}
+                className="text-gray-400 dark:text-gray-500 flex-shrink-0"
+              />
               Dashboard
             </Link>
           </div>
@@ -164,9 +195,11 @@ export function Navbar() {
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-gray-100 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link
+            href="/"
+            className="flex items-center gap-2 group animate__animated animate__backInLeft animate__faster"
+          >
             <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
               <BsTagFill className="text-white" size={14} />
             </div>
@@ -177,11 +210,12 @@ export function Navbar() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((l) => (
+            {navLinks.map((l, i) => (
               <Link
                 key={l.label}
                 href={l.href}
-                className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                style={{ animationDelay: `${i * 80}ms` }}
+                className="animate__animated animate__fadeInDown text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
               >
                 {l.label}
               </Link>
@@ -189,7 +223,7 @@ export function Navbar() {
           </nav>
 
           {/* Desktop actions */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3 animate__animated animate__backInRight animate__faster">
             <ThemeToggle />
             {user && (
               <Link
@@ -204,8 +238,8 @@ export function Navbar() {
                 )}
               </Link>
             )}
-            {!isPending && (
-              user ? (
+            {!isPending &&
+              (user ? (
                 <UserMenu user={user} />
               ) : (
                 <>
@@ -222,8 +256,7 @@ export function Navbar() {
                     Sign up free
                   </Link>
                 </>
-              )
-            )}
+              ))}
           </div>
 
           {/* Mobile actions */}
@@ -243,7 +276,7 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4 space-y-1 animate-fade-in-up">
+        <div className="md:hidden border-t border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4 space-y-1 animate__animated animate__slideInDown animate__faster">
           {navLinks.map((l) => (
             <Link
               key={l.label}
