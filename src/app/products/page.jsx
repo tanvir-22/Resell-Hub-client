@@ -12,6 +12,8 @@ import {
   FiGrid,
   FiList,
   FiColumns,
+  FiChevronLeft,
+  FiChevronRight,
 } from "react-icons/fi";
 import { useCompare } from "@/context/CompareContext";
 import { Navbar } from "@/components/Navbar";
@@ -58,6 +60,8 @@ function ProductsPageInner() {
   const [wishlistMap, setWishlistMap] = useState({});
   const [toggling, setToggling] = useState(new Set());
   const { addToCompare, isInCompare } = useCompare();
+  const [page, setPage] = useState(1);
+  const PER_PAGE = 12;
 
   useEffect(() => {
     setLoadingProducts(true);
@@ -124,6 +128,12 @@ function ProductsPageInner() {
     if (sortKey === "saves") list.sort((a, b) => b.saves - a.saves);
     return list;
   }, [search, category, condition, sortKey, products]);
+
+  // reset to page 1 whenever filters change
+  useEffect(() => { setPage(1); }, [search, category, condition, sortKey]);
+
+  const totalPages = Math.ceil(filtered.length / PER_PAGE);
+  const paginated  = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
   const activeFilters = [
     category !== "All" && { label: category, clear: () => setCategory("All") },
@@ -215,7 +225,7 @@ function ProductsPageInner() {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              {filtered.length} results
+              {filtered.length} result{filtered.length !== 1 ? "s" : ""}
             </span>
             <div className="flex bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-xl overflow-hidden">
               <button
@@ -278,7 +288,7 @@ function ProductsPageInner() {
           </div>
         ) : view === "grid" ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filtered.map((p) => (
+            {paginated.map((p) => (
               <Link
                 key={p._id}
                 href={`/products/${p._id}`}
@@ -355,7 +365,7 @@ function ProductsPageInner() {
           </div>
         ) : (
           <div className="space-y-3">
-            {filtered.map((p) => (
+            {paginated.map((p) => (
               <Link
                 key={p._id}
                 href={`/products/${p._id}`}
@@ -433,6 +443,59 @@ function ProductsPageInner() {
                 </div>
               </Link>
             ))}
+          </div>
+        )}
+
+        {/* Pagination */}
+        {!loadingProducts && totalPages > 1 && (
+          <div className="flex items-center justify-center gap-1.5 mt-10 flex-wrap">
+            {/* Prev */}
+            <button
+              onClick={() => { setPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              disabled={page === 1}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:border-emerald-400 hover:text-emerald-600 dark:hover:border-emerald-600 dark:hover:text-emerald-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              <FiChevronLeft size={15} /> Prev
+            </button>
+
+            {/* Page numbers */}
+            {Array.from({ length: totalPages }, (_, i) => i + 1)
+              .filter(n => n === 1 || n === totalPages || Math.abs(n - page) <= 1)
+              .reduce((acc, n, idx, arr) => {
+                if (idx > 0 && n - arr[idx - 1] > 1) acc.push("…");
+                acc.push(n);
+                return acc;
+              }, [])
+              .map((n, i) =>
+                n === "…" ? (
+                  <span key={`ellipsis-${i}`} className="px-2 text-gray-400 dark:text-slate-500 text-sm select-none">…</span>
+                ) : (
+                  <button
+                    key={n}
+                    onClick={() => { setPage(n); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                    className={`min-w-[38px] h-9 px-2 rounded-xl text-sm font-semibold transition-colors ${
+                      page === n
+                        ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/25"
+                        : "border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:border-emerald-400 hover:text-emerald-600 dark:hover:border-emerald-600 dark:hover:text-emerald-400"
+                    }`}
+                  >
+                    {n}
+                  </button>
+                )
+              )}
+
+            {/* Next */}
+            <button
+              onClick={() => { setPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              disabled={page === totalPages}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:border-emerald-400 hover:text-emerald-600 dark:hover:border-emerald-600 dark:hover:text-emerald-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              Next <FiChevronRight size={15} />
+            </button>
+
+            <span className="w-full text-center text-xs text-gray-400 dark:text-slate-500 mt-1">
+              Page {page} of {totalPages} · {filtered.length} results
+            </span>
           </div>
         )}
       </div>

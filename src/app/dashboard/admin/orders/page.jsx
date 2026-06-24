@@ -7,16 +7,26 @@ import toast from "react-hot-toast";
 import { getAdminOrders, updateAdminOrder } from "@/lib/api/admin";
 
 const STATUS_TABS = ["all", "Pending", "Accepted", "Processing", "Shipped", "Delivered", "Cancelled"];
-const ALL_STATUSES = ["Pending", "Accepted", "Processing", "Shipped", "Delivered", "Cancelled"];
+
+// only valid forward transitions — terminal states have empty arrays
+const STATUS_FLOW = {
+  Pending:    ["Accepted", "Cancelled"],
+  Accepted:   ["Processing", "Cancelled"],
+  Processing: ["Shipped", "Cancelled"],
+  Shipped:    ["Delivered"],
+  Delivered:  [],
+  Cancelled:  [],
+};
 
 function normalize(o) {
   return {
     ...o,
-    productTitle: o.productTitle || o.title || "—",
-    price:        o.price ?? o.totalAmount ?? 0,
-    status:       o.status || o.orderStatus || "Pending",
-    buyerName:    o.buyerName || o.buyerInfo?.name || "—",
-    sellerName:   o.sellerName || o.sellerInfo?.name || "—",
+    productTitle:  o.productTitle || o.title || "—",
+    price:         o.price ?? o.totalAmount ?? 0,
+    status:        o.status || o.orderStatus || "Pending",
+    buyerName:     o.buyerName || o.buyerInfo?.name || "—",
+    sellerName:    o.sellerName || o.sellerInfo?.name || "—",
+    transactionId: o.transactionId || "—",
   };
 }
 
@@ -113,7 +123,7 @@ export default function AdminOrders() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100 dark:border-slate-700">
-                  {["Product", "Buyer", "Seller", "Qty", "Amount", "Status", "Date", "Update Status"].map(h => (
+                  {["Product", "Buyer", "Seller", "Qty", "Amount", "Transaction ID", "Status", "Date", "Update Status"].map(h => (
                     <th key={h} className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
@@ -126,35 +136,44 @@ export default function AdminOrders() {
                     <td className="px-5 py-3 text-gray-600 dark:text-gray-400 whitespace-nowrap">{o.sellerName}</td>
                     <td className="px-5 py-3 text-gray-700 dark:text-gray-300">{o.quantity ?? 1}</td>
                     <td className="px-5 py-3 font-semibold text-gray-900 dark:text-white whitespace-nowrap">${o.price}</td>
+                    <td className="px-5 py-3 whitespace-nowrap">
+                      {o.transactionId !== "—" ? (
+                        <span className="font-mono text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-lg">
+                          {o.transactionId}
+                        </span>
+                      ) : (
+                        <span className="text-xs text-gray-400 dark:text-slate-500">—</span>
+                      )}
+                    </td>
                     <td className="px-5 py-3 whitespace-nowrap"><StatusBadge status={o.status} /></td>
                     <td className="px-5 py-3 text-gray-500 dark:text-gray-400 whitespace-nowrap">{new Date(o.createdAt).toLocaleDateString()}</td>
                     <td className="px-5 py-3">
-                      <div className="relative">
-                        <button
-                          onClick={() => setOpenRow(openRow === o._id ? null : o._id)}
-                          disabled={updating === o._id}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-slate-600 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
-                        >
-                          {updating === o._id ? "Updating…" : "Set status"} <FiChevronDown size={12} />
-                        </button>
-                        {openRow === o._id && (
-                          <div className="absolute right-0 top-full mt-1 z-20 w-40 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-xl shadow-xl overflow-hidden">
-                            {ALL_STATUSES.map(s => (
-                              <button
-                                key={s}
-                                onClick={() => updateStatus(o._id, s)}
-                                className={`w-full text-left px-3 py-2 text-xs font-medium transition-colors ${
-                                  o.status === s
-                                    ? "bg-emerald-600 text-white"
-                                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700"
-                                }`}
-                              >
-                                {s}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
+                      {STATUS_FLOW[o.status]?.length > 0 ? (
+                        <div className="relative">
+                          <button
+                            onClick={() => setOpenRow(openRow === o._id ? null : o._id)}
+                            disabled={updating === o._id}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-slate-600 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
+                          >
+                            {updating === o._id ? "Updating…" : "Set status"} <FiChevronDown size={12} />
+                          </button>
+                          {openRow === o._id && (
+                            <div className="absolute right-0 top-full mt-1 z-20 w-40 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-xl shadow-xl overflow-hidden">
+                              {STATUS_FLOW[o.status].map(s => (
+                                <button
+                                  key={s}
+                                  onClick={() => updateStatus(o._id, s)}
+                                  className="w-full text-left px-3 py-2 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
+                                >
+                                  {s}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <span className="text-xs text-gray-400 dark:text-slate-500 italic">—</span>
+                      )}
                     </td>
                   </tr>
                 ))}
