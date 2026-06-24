@@ -5,6 +5,11 @@ export async function getReviews(productId) {
   return res.json();
 }
 
+export async function getSellerReviews(email) {
+  const res = await fetch(`${BASE}/api/seller/reviews?email=${encodeURIComponent(email)}`);
+  return res.json();
+}
+
 export async function createReview({ reviewerInfo, productId, rating, comment }) {
   const res = await fetch(`${BASE}/api/reviews`, {
     method: "POST",

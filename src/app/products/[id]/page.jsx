@@ -608,9 +608,13 @@ export default function ProductDetail() {
                 </div>
               )}
 
-              <button className="w-full py-2.5 border border-emerald-200 dark:border-emerald-800 text-emerald-600 dark:text-emerald-400 rounded-2xl text-sm font-semibold hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors">
+              <Link
+                href={product.sellerInfo?.email ? `/sellers/${encodeURIComponent(product.sellerInfo.email)}` : "#"}
+                className="w-full py-2.5 border border-emerald-200 dark:border-emerald-800 text-emerald-600 dark:text-emerald-400 rounded-2xl text-sm font-semibold hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors flex items-center justify-center gap-2"
+              >
+                <FiUser size={14} />
                 View Seller Profile
-              </button>
+              </Link>
 
               {/* Shipping info */}
               <div className="mt-5 pt-5 border-t border-gray-100 dark:border-slate-700 space-y-3">
