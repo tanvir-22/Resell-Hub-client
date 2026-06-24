@@ -148,7 +148,7 @@ export default function BuyerOrders() {
                   )}
                 </div>
               </div>
-              {o.status === "Pending" && (
+              {["Pending", "Accepted", "Processing"].includes(o.status) && (
                 <div className="mt-3 pt-3 border-t border-gray-100 dark:border-slate-700 flex justify-end">
                   <button
                     onClick={e => { e.stopPropagation(); cancel(o._id); }}
@@ -196,6 +196,21 @@ export default function BuyerOrders() {
                     ))}
                   </div>
                 </div>
+              )}
+              {["Pending", "Accepted", "Processing"].includes(selected.status) && (
+                <button
+                  onClick={() => cancel(selected._id)}
+                  disabled={cancelling === selected._id}
+                  className="mt-4 w-full flex items-center justify-center gap-1.5 text-xs font-semibold text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800 hover:bg-red-50 dark:hover:bg-red-900/20 px-3 py-2 rounded-xl transition-colors disabled:opacity-60"
+                >
+                  {cancelling === selected._id ? <FiRefreshCw size={13} className="animate-spin" /> : <FiX size={13} />}
+                  Cancel Order
+                </button>
+              )}
+              {selected.status === "Shipped" && (
+                <p className="mt-4 text-xs text-center text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-slate-700/50 rounded-xl px-3 py-2">
+                  Order has been shipped — cancellation is no longer available.
+                </p>
               )}
             </div>
           ) : (

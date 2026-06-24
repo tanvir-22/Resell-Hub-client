@@ -27,6 +27,7 @@ function toCardShape(p) {
     verified:       Boolean(p.verified),
     rating:         p.rating != null ? String(p.rating) : null,
     saves:          p.saves ?? 0,
+    stock:          Number(p.stock ?? 0),
   };
 }
 

@@ -285,8 +285,16 @@ function ProductsPageInner() {
                   <img
                     src={p.images?.[0]}
                     alt={p.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className={`w-full h-full object-cover transition-transform duration-300 ${Number(p.stock) > 0 ? "group-hover:scale-105" : "grayscale-[30%]"}`}
                   />
+                  {/* Out-of-stock overlay */}
+                  {Number(p.stock) === 0 && (
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                      <span className="bg-white/90 text-gray-800 text-xs font-bold px-3 py-1 rounded-full">
+                        Out of Stock
+                      </span>
+                    </div>
+                  )}
                   <div className="absolute top-2 left-2">
                     <span
                       className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
@@ -375,7 +383,7 @@ function ProductsPageInner() {
                       </button>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 mt-2">
+                  <div className="flex items-center gap-3 mt-2 flex-wrap">
                     <span
                       className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                         p.condition === "Like New"
@@ -385,14 +393,18 @@ function ProductsPageInner() {
                     >
                       {p.condition}
                     </span>
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                      Number(p.stock) > 0
+                        ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                        : "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400"
+                    }`}>
+                      {Number(p.stock) > 0 ? `${p.stock} in stock` : "Out of stock"}
+                    </span>
                     <span className="flex items-center gap-0.5 text-xs text-amber-500 font-medium">
                       <FiStar size={11} fill="currentColor" /> {p.rating}
                     </span>
                     <span className="text-xs text-gray-400 dark:text-gray-500">
                       by {p.sellerInfo?.name}
-                    </span>
-                    <span className="text-xs text-gray-400 dark:text-gray-500">
-                      {p.saves} saves
                     </span>
                   </div>
                 </div>

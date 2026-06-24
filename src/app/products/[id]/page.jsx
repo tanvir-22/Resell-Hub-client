@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   FiStar, FiHeart, FiShoppingBag, FiArrowLeft, FiShare2,
@@ -225,10 +225,12 @@ function ReviewsSection({ productId, session }) {
 /* ── Main page ───────────────────────────────────── */
 export default function ProductDetail() {
   const { id } = useParams();
+  const router = useRouter();
 
   const { data: session }   = useSession();
   const { addToCart }       = useCart();
   const [product, setProduct]   = useState(null);
+  const [loading, setLoading]   = useState(true);
   const [relatedp, setRelated]  = useState([]);
   const [slide, setSlide]       = useState(0);
   const [wishlistDocId, setWishlistDocId] = useState(null);
@@ -237,7 +239,10 @@ export default function ProductDetail() {
   const [addedMsg, setAddedMsg] = useState(false);
 
   useEffect(() => {
-    getProduct(id).then(data => setProduct(data || null));
+    setLoading(true);
+    getProduct(id)
+      .then(data => setProduct(data?._id ? data : null))
+      .finally(() => setLoading(false));
     getProducts().then(data => setRelated(Array.isArray(data) ? data : []));
   }, []);
 
@@ -266,14 +271,27 @@ export default function ProductDetail() {
     setWishlistLoading(false);
   };
 
-  /* ─── loading / not found ─── */
+  /* ─── loading ─── */
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
+        <Navbar />
+        <div className="flex flex-col items-center justify-center py-40 gap-4">
+          <div className="w-12 h-12 rounded-full border-4 border-emerald-200 dark:border-slate-700 border-t-emerald-600 dark:border-t-emerald-500 animate-spin" />
+          <p className="text-sm text-gray-400 dark:text-gray-500">Loading product…</p>
+        </div>
+      </div>
+    );
+  }
+
+  /* ─── not found ─── */
   if (!product) {
     return (
-      <div className="min-h-screen bg-white dark:bg-slate-950">
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
         <Navbar />
         <div className="flex flex-col items-center justify-center py-40 text-center px-4">
           <div className="w-20 h-20 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center mb-6">
-            <FiPackage size={32} className="text-gray-300 dark:text-slate-500" />
+            <FiPackage size={32} className="text-gray-300 dark:text-slate-600" />
           </div>
           <h1 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-2">Product not found</h1>
           <p className="text-gray-500 dark:text-gray-400 mb-8">This listing may have been removed.</p>
@@ -287,6 +305,11 @@ export default function ProductDetail() {
 
   /* ─── product is guaranteed non-null below this line ─── */
   const handleAddToCart = () => {
+    if (!session?.user) {
+      toast.error("Please sign in to add items to your cart");
+      router.push("/login");
+      return;
+    }
     if (!(Number(product.stock) > 0)) {
       toast.error("This item is out of stock");
       return;
@@ -474,7 +497,7 @@ export default function ProductDetail() {
                   className="w-full flex items-center justify-center gap-2 py-3.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold rounded-2xl transition-all shadow-lg shadow-emerald-600/30 text-sm active:scale-[0.98]"
                 >
                   <FiShoppingBag size={18} />
-                  {addedMsg ? "Added to Cart!" : "Add to Cart"}
+                  {addedMsg ? "Added to Cart!" : session?.user ? "Add to Cart" : "Sign in to Add"}
                 </button>
 
                 <div className="flex gap-3">

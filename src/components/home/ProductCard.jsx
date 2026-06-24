@@ -6,24 +6,39 @@ import { MdVerified } from "react-icons/md";
 import { FiPackage } from "react-icons/fi";
 
 export function ProductCard({ item, saved, onToggleSave }) {
+  const inStock = item.stock == null || item.stock > 0;
+
   const handleSave = (e) => {
-    e.preventDefault(); // prevent the parent <Link> from firing
+    e.preventDefault();
     onToggleSave(item.id);
   };
 
   return (
-    <Card className="group rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-700 hover:shadow-xl dark:hover:shadow-emerald-900/20 transition-all cursor-pointer bg-white dark:bg-slate-800 hover:-translate-y-1 h-full">
+    <Card className={`group rounded-2xl overflow-hidden border transition-all cursor-pointer bg-white dark:bg-slate-800 h-full ${
+      inStock
+        ? "border-gray-100 dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-700 hover:shadow-xl dark:hover:shadow-emerald-900/20 hover:-translate-y-1"
+        : "border-gray-200 dark:border-slate-700 opacity-75"
+    }`}>
       {/* Image */}
       <div className="relative overflow-hidden bg-gray-100 dark:bg-slate-700">
         {item.image ? (
           <img
             src={item.image}
             alt={item.title}
-            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+            className={`w-full h-48 object-cover transition-transform duration-500 ${inStock ? "group-hover:scale-105" : "grayscale-[30%]"}`}
           />
         ) : (
           <div className="w-full h-48 flex items-center justify-center">
             <FiPackage size={40} className="text-gray-300 dark:text-slate-500" />
+          </div>
+        )}
+
+        {/* Out-of-stock overlay */}
+        {!inStock && (
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+            <span className="bg-white/90 text-gray-800 text-xs font-bold px-3 py-1 rounded-full tracking-wide">
+              Out of Stock
+            </span>
           </div>
         )}
 

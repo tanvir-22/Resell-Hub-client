@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useUser } from "@/components/dashboard/DashboardShell";
 import { updateUser, changePassword } from "@/lib/auth-client";
@@ -10,15 +11,25 @@ import { uploadImage } from "@/lib/api/upload";
 const inputCls = "w-full px-4 py-3 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all";
 
 export default function BuyerProfile() {
-  const user = useUser();
+  const user   = useUser();
+  const router = useRouter();
 
-  const [name, setName]         = useState(user?.name || "");
-  const [phone, setPhone]       = useState(user?.phone || "");
-  const [address, setAddress]   = useState(user?.address || "");
-  const [profileImg, setProfileImg]     = useState(null);
-  const [profileImgUrl, setProfileImgUrl] = useState(user?.image || "");
+  const [name, setName]               = useState("");
+  const [phone, setPhone]             = useState("");
+  const [address, setAddress]         = useState("");
+  const [profileImg, setProfileImg]   = useState(null);
+  const [profileImgUrl, setProfileImgUrl] = useState("");
   const [imgUploading, setImgUploading]   = useState(false);
-  const [saving, setSaving]     = useState(false);
+  const [saving, setSaving]           = useState(false);
+
+  // Populate fields once user is loaded — avoids server/client hydration mismatch
+  useEffect(() => {
+    if (!user) return;
+    setName(user.name || "");
+    setPhone(user.phone || "");
+    setAddress(user.address || "");
+    setProfileImgUrl(user.image || "");
+  }, [user]);
 
   const [curPw, setCurPw]   = useState("");
   const [newPw, setNewPw]   = useState("");
@@ -47,10 +58,14 @@ export default function BuyerProfile() {
   const handleSave = async (e) => {
     e.preventDefault();
     setSaving(true);
-    const { error } = await updateUser({ name, image: profileImgUrl || undefined, phone });
+    const { error } = await updateUser({ name, image: profileImgUrl || undefined, phone, address });
     setSaving(false);
-    if (error) toast.error(error.message || "Update failed");
-    else toast.success("Profile saved!");
+    if (error) {
+      toast.error(error.message || "Update failed");
+    } else {
+      toast.success("Profile saved!");
+      router.refresh();
+    }
   };
 
   const handlePasswordChange = async (e) => {
