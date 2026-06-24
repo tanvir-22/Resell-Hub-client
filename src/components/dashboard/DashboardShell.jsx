@@ -143,7 +143,11 @@ export default function DashboardShell({ user, children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const router   = useRouter();
-  const nav = user.role === "seller" ? SELLER_NAV : user.role === "admin" ? ADMIN_NAV : BUYER_NAV;
+  const isBlocked = user.status === "blocked";
+  const baseNav   = user.role === "seller" ? SELLER_NAV : user.role === "admin" ? ADMIN_NAV : BUYER_NAV;
+  const nav       = isBlocked
+    ? baseNav.filter(item => item.href !== "/dashboard/seller/add-product")
+    : baseNav;
 
   // Redirect to the correct role section if the URL segment doesn't match
   useEffect(() => {

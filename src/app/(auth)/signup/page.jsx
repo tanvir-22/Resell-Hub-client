@@ -8,7 +8,7 @@ import gsap from "gsap";
 import { signUp, signInWithGoogle } from "@/lib/auth-client";
 import { FcGoogle } from "react-icons/fc";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
-import { FiMail, FiLock, FiArrowRight, FiCheck, FiUser, FiShoppingBag, FiCamera } from "react-icons/fi";
+import { FiMail, FiLock, FiArrowRight, FiCheck, FiUser, FiShoppingBag, FiCamera, FiPhone, FiMapPin } from "react-icons/fi";
 import { MdSell } from "react-icons/md";
 import { uploadImage } from "@/lib/api/upload";
 import { AuthPanelWrapper } from "@/components/auth/AuthPanelWrapper";
@@ -30,7 +30,7 @@ const LEFT_FEATURES = [
 export default function SignupPage() {
   const router = useRouter();
   const [form, setForm] = useState({
-    name: "", email: "", password: "", confirmPassword: "", role: "buyer",
+    name: "", email: "", password: "", confirmPassword: "", role: "buyer", phone: "", location: "",
   });
   const [showPw, setShowPw]               = useState(false);
   const [showCfm, setShowCfm]             = useState(false);
@@ -99,6 +99,9 @@ export default function SignupPage() {
       password: form.password,
       name: form.name,
       role: form.role,
+      phone: form.phone,
+      location: form.location,
+      status: "active",
       ...(profileImgUrl ? { image: profileImgUrl } : {}),
     });
 
@@ -302,6 +305,28 @@ export default function SignupPage() {
               onChange={set("email")}
               placeholder="you@example.com"
               leftIcon={FiMail}
+            />
+
+            <FormInput
+              wrapperClassName="form-el"
+              label="Phone number"
+              type="tel"
+              autoComplete="tel"
+              value={form.phone}
+              onChange={set("phone")}
+              placeholder="+1 (555) 000-0000"
+              leftIcon={FiPhone}
+            />
+
+            <FormInput
+              wrapperClassName="form-el"
+              label="Location"
+              type="text"
+              autoComplete="address-level2"
+              value={form.location}
+              onChange={set("location")}
+              placeholder="City, Country"
+              leftIcon={FiMapPin}
             />
 
             <FormInput

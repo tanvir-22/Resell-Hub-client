@@ -225,7 +225,7 @@ export function Navbar() {
           {/* Desktop actions */}
           <div className="hidden md:flex items-center gap-3 animate__animated animate__backInRight animate__faster">
             <ThemeToggle />
-            {user && (
+            {user && user.status !== "blocked" && (
               <Link
                 href="/cart"
                 className="relative w-9 h-9 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 border border-gray-200 dark:border-slate-700 transition-all"
