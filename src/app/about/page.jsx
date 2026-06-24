@@ -42,10 +42,10 @@ const values = [
 ];
 
 const team = [
-  { name: "Tanvir Ahmed",    role: "Founder & CEO",         initials: "TA", color: "from-emerald-500 to-teal-600" },
-  { name: "Sara Rahman",     role: "Head of Product",       initials: "SR", color: "from-blue-500 to-cyan-600"      },
-  { name: "Karim Hossain",  role: "Lead Engineer",         initials: "KH", color: "from-green-500 to-teal-600"    },
-  { name: "Nadia Islam",     role: "Head of Operations",   initials: "NI", color: "from-rose-500 to-pink-600"     },
+  { name: "Tanvir Ahmed",   role: "Founder & CEO",      avatar: "https://randomuser.me/api/portraits/men/32.jpg"   },
+  { name: "Sara Rahman",    role: "Head of Product",    avatar: "https://randomuser.me/api/portraits/women/44.jpg" },
+  { name: "Karim Hossain", role: "Lead Engineer",       avatar: "https://randomuser.me/api/portraits/men/67.jpg"   },
+  { name: "Nadia Islam",    role: "Head of Operations", avatar: "https://randomuser.me/api/portraits/women/68.jpg" },
 ];
 
 export default function AboutPage() {
@@ -54,9 +54,13 @@ export default function AboutPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-600 to-teal-600 py-20 px-4">
-        <div className="absolute top-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
+      <section className="relative overflow-hidden py-20 px-4">
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-700 dark:from-slate-900 dark:via-emerald-950 dark:to-teal-950" />
+        <div className="absolute -top-24 left-1/4 w-96 h-96 bg-emerald-500/0 dark:bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 right-1/4 w-80 h-80 bg-teal-500/0 dark:bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 -left-20 w-64 h-64 bg-cyan-600/0 dark:bg-cyan-600/10 rounded-full blur-2xl -translate-y-1/2 pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
         <div className="relative max-w-3xl mx-auto text-center">
           <Reveal>
             <span className="inline-block text-xs font-bold bg-white/20 text-white/90 px-3 py-1 rounded-full uppercase tracking-widest mb-4">
@@ -191,11 +195,15 @@ export default function AboutPage() {
           </Reveal>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-            {team.map(({ name, role, initials, color }, i) => (
+            {team.map(({ name, role, avatar }, i) => (
               <Reveal key={name} delay={i * 80}>
                 <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-6 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center text-white font-extrabold text-xl mx-auto mb-4 shadow-lg`}>
-                    {initials}
+                  <div className="w-20 h-20 rounded-2xl mx-auto mb-4 overflow-hidden ring-2 ring-emerald-500/30 shadow-lg">
+                    <img
+                      src={avatar}
+                      alt={name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <p className="font-bold text-gray-900 dark:text-white text-sm">{name}</p>
                   <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{role}</p>
@@ -207,10 +215,11 @@ export default function AboutPage() {
 
         {/* CTA */}
         <Reveal>
-          <div className="text-center bg-gradient-to-br from-emerald-600 to-teal-600 rounded-3xl p-12 text-white relative overflow-hidden">
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl" />
-            </div>
+          <div className="text-center rounded-3xl p-12 text-white relative overflow-hidden">
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-700 dark:from-slate-900 dark:via-emerald-950 dark:to-teal-950" />
+            <div className="absolute -top-12 left-1/3 w-64 h-64 bg-emerald-500/0 dark:bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-12 right-1/3 w-64 h-64 bg-teal-500/0 dark:bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute inset-0 rounded-3xl opacity-[0.05] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
             <div className="relative">
               <h3 className="text-2xl sm:text-3xl font-extrabold mb-3">
                 Ready to join ResellHub?

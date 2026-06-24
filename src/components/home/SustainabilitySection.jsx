@@ -117,25 +117,25 @@ function CountUp({ target, duration = 1800 }) {
 
 export function SustainabilitySection() {
   return (
-    <section className="bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 py-24 overflow-hidden relative">
-      {/* Decorative blobs */}
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-violet-500/8 rounded-full blur-3xl pointer-events-none" />
+    <section className="bg-gradient-to-br from-white via-gray-50 to-emerald-50 dark:from-slate-900 dark:via-emerald-950 dark:to-slate-900 py-24 overflow-hidden relative">
+      {/* Decorative blobs — subtle in light, visible in dark */}
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-emerald-500/5 dark:bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-violet-500/5 dark:bg-violet-500/8 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <Reveal className="text-center mb-16">
-          <span className="inline-block text-xs font-bold bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full uppercase tracking-widest mb-4 border border-emerald-500/30">
+          <span className="inline-block text-xs font-bold bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-3 py-1 rounded-full uppercase tracking-widest mb-4 border border-emerald-200 dark:border-emerald-500/30">
             Sustainability Impact
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
             Every Purchase Makes
-            <span className="block bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-emerald-500 to-teal-500 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
               a Real Difference
             </span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-base leading-relaxed">
+          <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-base leading-relaxed">
             Buying second-hand isn&apos;t just smart for your wallet — it&apos;s one
             of the most effective ways to reduce your environmental footprint.
             Here&apos;s what the ResellHub community has achieved together.
@@ -146,7 +146,7 @@ export function SustainabilitySection() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
           {impacts.map(({ image, imageAlt, value, unit, label, sub, color }, i) => (
             <Reveal key={label} delay={i * 90}>
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 h-full flex flex-col group">
+              <div className="bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-2xl overflow-hidden hover:shadow-lg dark:hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 h-full flex flex-col group shadow-sm">
                 {/* Image */}
                 <div className="relative h-32 overflow-hidden flex-shrink-0">
                   <img
@@ -154,7 +154,7 @@ export function SustainabilitySection() {
                     alt={imageAlt}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 dark:from-slate-900/60 to-transparent" />
                 </div>
 
                 {/* Stats */}
@@ -162,11 +162,11 @@ export function SustainabilitySection() {
                   <p className={`text-3xl sm:text-4xl font-extrabold bg-gradient-to-r ${color} bg-clip-text text-transparent leading-none`}>
                     <CountUp target={value} />
                   </p>
-                  <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1 mb-2">
+                  <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider font-semibold mt-1 mb-2">
                     {unit}
                   </p>
-                  <p className="text-sm font-bold text-white mb-1">{label}</p>
-                  <p className="text-xs text-gray-400 leading-relaxed mt-auto pt-2">
+                  <p className="text-sm font-bold text-gray-900 dark:text-white mb-1">{label}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mt-auto pt-2">
                     {sub}
                   </p>
                 </div>
@@ -176,7 +176,7 @@ export function SustainabilitySection() {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-white/10 mb-16" />
+        <div className="border-t border-gray-200 dark:border-white/10 mb-16" />
 
         {/* Pillars + visual */}
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -184,19 +184,19 @@ export function SustainabilitySection() {
           {/* Left: pillars */}
           <div className="space-y-5">
             <Reveal>
-              <h3 className="text-2xl font-extrabold text-white mb-6">
+              <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-6">
                 How buying second-hand helps the planet
               </h3>
             </Reveal>
             {pillars.map(({ icon: Icon, title, desc, color, bg }, i) => (
               <Reveal key={title} delay={i * 100}>
-                <div className="flex gap-4 bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/8 transition-colors">
+                <div className="flex gap-4 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-2xl p-5 hover:shadow-md dark:hover:bg-white/8 transition-all shadow-sm">
                   <div className={`w-11 h-11 rounded-xl ${bg} flex items-center justify-center flex-shrink-0`}>
                     <Icon size={20} className={color} />
                   </div>
                   <div>
-                    <p className="font-bold text-white text-sm mb-1">{title}</p>
-                    <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
+                    <p className="font-bold text-gray-900 dark:text-white text-sm mb-1">{title}</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">{desc}</p>
                   </div>
                 </div>
               </Reveal>

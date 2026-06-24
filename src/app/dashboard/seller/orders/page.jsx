@@ -10,6 +10,9 @@ import {
 import toast from "react-hot-toast";
 import { getOrders, updateOrder } from "@/lib/api/orders";
 import { useUser } from "@/components/dashboard/DashboardShell";
+import { normalizeOrder } from "@/lib/utils/orderUtils";
+import SearchInput from "@/components/ui/SearchInput";
+import SkeletonList from "@/components/ui/SkeletonList";
 
 const DELIVERY_STATUSES = ["Processing", "Shipped", "Delivered"];
 
@@ -20,20 +23,6 @@ function getDeliveryOptions(current) {
   return DELIVERY_STATUSES.slice(idx + 1 < 0 ? 0 : idx + 1);
 }
 
-function normalize(o) {
-  return {
-    ...o,
-    productTitle: o.productTitle || o.title || "—",
-    price:        o.price ?? o.totalAmount ?? 0,
-    status:       o.status || o.orderStatus || "Pending",
-    productImage: o.productImage || o.images?.[0] || null,
-    buyerName:    o.buyerName    || o.buyerInfo?.name     || "—",
-    buyerEmail:   o.buyerEmail   || o.buyerInfo?.email    || "—",
-    buyerPhone:   o.buyerPhone   || o.buyerInfo?.phone    || "—",
-    buyerAddress: o.buyerAddress || o.buyerInfo?.address  || "—",
-    buyerLocation:o.buyerLocation|| o.buyerInfo?.location || "—",
-  };
-}
 
 export default function SellerOrders() {
   const user = useUser();
@@ -50,7 +39,7 @@ export default function SellerOrders() {
     if (!user?.email) return;
     setLoading(true);
     getOrders({ email: user.email, role: "seller" })
-      .then(d => { setOrders(Array.isArray(d) ? d.map(normalize) : []); setLoading(false); });
+      .then(d => { setOrders(Array.isArray(d) ? d.map(normalizeOrder) : []); setLoading(false); });
   };
 
   useEffect(load, [user?.email]);

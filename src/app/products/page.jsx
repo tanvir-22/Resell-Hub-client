@@ -14,6 +14,7 @@ import {
   FiColumns,
   FiChevronLeft,
   FiChevronRight,
+  FiTag,
 } from "react-icons/fi";
 import { useCompare } from "@/context/CompareContext";
 import { Navbar } from "@/components/Navbar";
@@ -148,15 +149,48 @@ function ProductsPageInner() {
       <Navbar />
 
       {/* Hero search */}
-      <div className="bg-gradient-to-br from-emerald-600 to-teal-600 py-12 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2">
-            Browse Listings
+      <div className="relative overflow-hidden py-16 sm:py-20 px-4">
+        {/* Background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/bg-products.jpg')" }}
+        />
+
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/90 to-teal-700/90 dark:from-slate-900/90 dark:via-emerald-950/85 dark:to-teal-950/90" />
+
+        {/* Glow blobs — dark mode only */}
+        <div className="absolute -top-24 left-1/4 w-96 h-96 bg-emerald-500/0 dark:bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 right-1/4 w-80 h-80 bg-teal-500/0 dark:bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
+
+        {/* Dot-grid texture */}
+        <div
+          className="absolute inset-0 opacity-[0.05] pointer-events-none"
+          style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "28px 28px" }}
+        />
+
+        {/* Top shimmer line */}
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
+
+        <div className="relative max-w-3xl mx-auto text-center">
+          {/* Badge */}
+          <span className="inline-flex items-center gap-1.5 bg-white/20 border border-white/25 text-white/90 text-xs font-semibold px-4 py-1.5 rounded-full mb-5 backdrop-blur-sm">
+            <FiTag size={11} />
+            {products.length > 0 ? `${products.length.toLocaleString()} listings available` : "Marketplace"}
+          </span>
+
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-3 tracking-tight leading-tight">
+            Browse{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
+              Listings
+            </span>
           </h1>
-          <p className="text-white/70 mb-6">
+          <p className="text-white/50 mb-8 text-base sm:text-lg max-w-xl mx-auto">
             Thousands of quality pre-owned items, curated for you
           </p>
-          <div className="relative">
+
+          {/* Search bar */}
+          <div className="relative shadow-2xl shadow-black/40">
             <FiSearch
               size={18}
               className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
@@ -165,7 +199,7 @@ function ProductsPageInner() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search for anything…"
-              className="w-full pl-12 pr-4 py-3.5 rounded-2xl bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 text-base focus:outline-none shadow-xl"
+              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 text-base focus:outline-none focus:ring-2 focus:ring-emerald-400/50"
             />
             {search && (
               <button
@@ -175,6 +209,23 @@ function ProductsPageInner() {
                 <FiX size={16} />
               </button>
             )}
+          </div>
+
+          {/* Quick category chips */}
+          <div className="flex flex-wrap justify-center gap-2 mt-5">
+            {CATEGORIES.slice(1).map((cat) => (
+              <button
+                key={cat}
+                onClick={() => { setCategory(cat); }}
+                className={`text-xs font-medium px-3.5 py-1.5 rounded-full border transition-all backdrop-blur-sm ${
+                  category === cat
+                    ? "bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-500/30"
+                    : "bg-white/10 border-white/15 text-white/65 hover:bg-white/20 hover:text-white hover:border-white/30"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
       </div>

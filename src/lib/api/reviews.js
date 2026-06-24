@@ -1,17 +1,17 @@
-const BASE = process.env.NEXT_PUBLIC_SERVER_URL;
+import { apiFetch } from "./apiFetch";
 
 export async function getReviews(productId) {
-  const res = await fetch(`${BASE}/api/reviews?productId=${productId}`);
+  const res = await apiFetch(`api/reviews?productId=${productId}`);
   return res.json();
 }
 
 export async function getSellerReviews(email) {
-  const res = await fetch(`${BASE}/api/seller/reviews?email=${encodeURIComponent(email)}`);
+  const res = await apiFetch(`api/seller/reviews?email=${encodeURIComponent(email)}`);
   return res.json();
 }
 
 export async function createReview({ reviewerInfo, productId, rating, comment }) {
-  const res = await fetch(`${BASE}/api/reviews`, {
+  const res = await apiFetch("api/reviews", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ reviewerInfo, productId, rating, comment }),

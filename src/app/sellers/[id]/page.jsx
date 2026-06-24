@@ -234,13 +234,13 @@ export default function SellerProfilePage() {
         {/* ── Hero / seller info ────────────────────────── */}
         <div className="bg-white dark:bg-slate-800 rounded-3xl border border-gray-100 dark:border-slate-700">
           {/* Banner */}
-          <div className="h-32 sm:h-44 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-600 relative rounded-t-3xl overflow-hidden">
-            <div className="absolute inset-0 opacity-20"
-              style={{
-                backgroundImage: "radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 1px, transparent 1px)",
-                backgroundSize: "40px 40px",
-              }}
-            />
+          <div className="h-32 sm:h-44 relative rounded-t-3xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-700 dark:from-slate-900 dark:via-emerald-950 dark:to-teal-950" />
+            <div className="absolute -top-12 left-1/4 w-64 h-64 bg-emerald-500/0 dark:bg-emerald-500/25 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-12 right-1/4 w-64 h-64 bg-teal-500/0 dark:bg-teal-500/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-1/2 -right-10 w-48 h-48 bg-cyan-600/0 dark:bg-cyan-600/15 rounded-full blur-2xl -translate-y-1/2 pointer-events-none" />
+            <div className="absolute inset-0 opacity-[0.07] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
+            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
           </div>
 
           <div className="px-6 pb-6">

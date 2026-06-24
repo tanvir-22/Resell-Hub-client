@@ -1,10 +1,13 @@
 ﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { FiSearch, FiShoppingBag, FiChevronDown } from "react-icons/fi";
+import { FiShoppingBag, FiChevronDown } from "react-icons/fi";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import toast from "react-hot-toast";
 import { getAdminOrders, updateAdminOrder } from "@/lib/api/admin";
+import { normalizeOrder } from "@/lib/utils/orderUtils";
+import SearchInput from "@/components/ui/SearchInput";
+import SkeletonList from "@/components/ui/SkeletonList";
 
 const STATUS_TABS = ["all", "Pending", "Accepted", "Processing", "Shipped", "Delivered", "Cancelled"];
 
@@ -18,17 +21,6 @@ const STATUS_FLOW = {
   Cancelled:  [],
 };
 
-function normalize(o) {
-  return {
-    ...o,
-    productTitle:  o.productTitle || o.title || "—",
-    price:         o.price ?? o.totalAmount ?? 0,
-    status:        o.status || o.orderStatus || "Pending",
-    buyerName:     o.buyerName || o.buyerInfo?.name || "—",
-    sellerName:    o.sellerName || o.sellerInfo?.name || "—",
-    transactionId: o.transactionId || "—",
-  };
-}
 
 export default function AdminOrders() {
   const [orders, setOrders]   = useState([]);
@@ -54,7 +46,7 @@ export default function AdminOrders() {
   const updateStatus = async (id, status) => {
     setUpdating(id);
     await updateAdminOrder(id, { status });
-    setOrders(prev => prev.map(o => o._id === id ? normalize({ ...o, orderStatus: status }) : o));
+    setOrders(prev => prev.map(o => o._id === id ? normalizeOrder({ ...o, orderStatus: status }) : o));
     toast.success(`Order marked as ${status}`);
     setUpdating(null);
     setOpenRow(null);

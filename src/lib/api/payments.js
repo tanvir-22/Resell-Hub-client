@@ -1,14 +1,12 @@
-const BASE = process.env.NEXT_PUBLIC_SERVER_URL;
+import { apiFetch } from "./apiFetch";
 
 export async function getPayments(userEmail) {
-  const res = await fetch(
-    `${BASE}/api/getpayments?email=${encodeURIComponent(userEmail)}`
-  );
+  const res = await apiFetch(`api/getpayments?email=${encodeURIComponent(userEmail)}`);
   return res.json();
 }
 
 export async function createCheckoutSession(data) {
-  const res = await fetch(`${BASE}/api/create-checkout-session`, {
+  const res = await apiFetch("api/create-checkout-session", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -17,7 +15,7 @@ export async function createCheckoutSession(data) {
 }
 
 export async function createPayment(data) {
-  const res = await fetch(`${BASE}/api/createpayment`, {
+  const res = await apiFetch("api/createpayment", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

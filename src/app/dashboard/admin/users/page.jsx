@@ -1,9 +1,12 @@
 ﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { FiSearch, FiTrash2, FiSlash, FiCheckCircle, FiUser, FiUsers, FiShield } from "react-icons/fi";
+import { FiTrash2, FiSlash, FiCheckCircle, FiUser, FiUsers, FiShield } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { getAdminUsers, updateAdminUser, deleteAdminUser } from "@/lib/api/admin";
+import ConfirmModal from "@/components/dashboard/ConfirmModal";
+import SearchInput from "@/components/ui/SearchInput";
+import SkeletonList from "@/components/ui/SkeletonList";
 
 const ROLE_COLORS = {
   buyer:  "bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300",
@@ -24,20 +27,6 @@ function Avatar({ user }) {
   );
 }
 
-function ConfirmModal({ msg, onConfirm, onCancel }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
-        <p className="text-gray-900 dark:text-white font-semibold mb-1">Are you sure?</p>
-        <p className="text-gray-500 dark:text-gray-400 text-sm mb-5">{msg}</p>
-        <div className="flex gap-3">
-          <button onClick={onCancel} className="flex-1 px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors text-sm">Cancel</button>
-          <button onClick={onConfirm} className="flex-1 px-4 py-2 rounded-xl bg-red-600 text-white font-medium hover:bg-red-700 transition-colors text-sm">Confirm</button>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function AdminUsers() {
   const [users, setUsers]     = useState([]);

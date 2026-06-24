@@ -6,6 +6,9 @@ import { FiShoppingBag, FiX, FiRefreshCw, FiSearch } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { getOrders, updateOrder } from "@/lib/api/orders";
 import { useUser } from "@/components/dashboard/DashboardShell";
+import { normalizeOrder } from "@/lib/utils/orderUtils";
+import SearchInput from "@/components/ui/SearchInput";
+import SkeletonList from "@/components/ui/SkeletonList";
 
 const STATUS_FLOW = ["Pending", "Accepted", "Processing", "Shipped", "Delivered"];
 
@@ -30,17 +33,6 @@ function TrackProgress({ status }) {
   );
 }
 
-// Normalize order fields to handle both old and new schema
-function normalize(o) {
-  return {
-    ...o,
-    productTitle: o.productTitle || o.title || "—",
-    price:        o.price ?? o.totalAmount ?? 0,
-    status:       o.status || o.orderStatus || "Pending",
-    productImage: o.productImage || o.images?.[0] || null,
-    sellerName:   o.sellerName || o.sellerInfo?.name || "—",
-  };
-}
 
 export default function BuyerOrders() {
   const user = useUser();
@@ -56,7 +48,7 @@ export default function BuyerOrders() {
     setLoading(true);
     getOrders({ email: user.email, role: "buyer" })
       .then(d => {
-        setOrders(Array.isArray(d) ? d.map(normalize) : []);
+        setOrders(Array.isArray(d) ? d.map(normalizeOrder) : []);
         setLoading(false);
       });
   };

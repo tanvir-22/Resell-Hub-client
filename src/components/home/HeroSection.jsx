@@ -26,8 +26,8 @@ const SLIDER_IMAGES = [
     label: "Marketplace Shopping",
   },
   {
-    url: "https://images.unsplash.com/photo-1607082349566-187342175e2f?w=700&q=80&fit=crop",
-    label: "Quick Deliveries",
+    url: "https://media.istockphoto.com/id/1158834822/photo/young-girl-choosing-clothes-in-a-second-hand-market-in-summer-zero-waste-concept.jpg?s=612x612&w=0&k=20&c=ew7VOkkCGihacDETTsh7pr1q9QM--0dC8cpgrFFrMqc=",
+    label: "Choice you make",
   },
   {
     url: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=700&q=80&fit=crop",
@@ -47,12 +47,12 @@ export function HeroSection() {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 text-white pt-24 pb-20">
-      {/* Background blobs */}
+    <section className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 dark:from-slate-900 dark:via-emerald-950 dark:to-slate-900 text-white pt-24 pb-20">
+      {/* Background blobs — dark mode only */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="animate-blob absolute -top-48 -right-48 w-96 h-96 bg-emerald-600/25 rounded-full blur-3xl" />
-        <div className="animate-blob animation-delay-2s absolute top-1/2 -left-48 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl" />
-        <div className="animate-blob animation-delay-4s absolute bottom-0 right-1/4 w-72 h-72 bg-teal-600/20 rounded-full blur-3xl" />
+        <div className="animate-blob absolute -top-48 -right-48 w-96 h-96 bg-emerald-600/0 dark:bg-emerald-600/25 rounded-full blur-3xl" />
+        <div className="animate-blob animation-delay-2s absolute top-1/2 -left-48 w-80 h-80 bg-blue-600/0 dark:bg-blue-600/20 rounded-full blur-3xl" />
+        <div className="animate-blob animation-delay-4s absolute bottom-0 right-1/4 w-72 h-72 bg-teal-600/0 dark:bg-teal-600/20 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -87,8 +87,8 @@ export function HeroSection() {
                     "Trade Your Treasures",
                     2000,
                   ]}
-                  speed={55}
-                  deletionSpeed={75}
+                  speed={40}
+                  deletionSpeed={55}
                   repeat={Infinity}
                   cursor={true}
                 />

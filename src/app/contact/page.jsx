@@ -85,11 +85,13 @@ export default function ContactPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-emerald-600 to-teal-600 py-16 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-white rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-60 h-60 bg-white rounded-full blur-3xl" />
-        </div>
+      <section className="relative overflow-hidden py-16 px-4">
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-700 dark:from-slate-900 dark:via-emerald-950 dark:to-teal-950" />
+        <div className="absolute -top-24 left-1/4 w-96 h-96 bg-emerald-500/0 dark:bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 right-1/4 w-80 h-80 bg-teal-500/0 dark:bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 -right-20 w-64 h-64 bg-cyan-600/0 dark:bg-cyan-600/10 rounded-full blur-2xl -translate-y-1/2 pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
         <div className="relative max-w-2xl mx-auto text-center">
           <Reveal>
             <span className="inline-block text-xs font-bold bg-white/20 text-white/90 px-3 py-1 rounded-full uppercase tracking-widest mb-4">

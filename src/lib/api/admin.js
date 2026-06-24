@@ -1,28 +1,28 @@
-const BASE = process.env.NEXT_PUBLIC_SERVER_URL;
+import { apiFetch } from "./apiFetch";
 
-function buildUrl(base, params = {}) {
+function qs(params = {}) {
   const p = new URLSearchParams();
   Object.entries(params).forEach(([k, v]) => {
     if (v !== undefined && v !== null && v !== "") p.set(k, String(v));
   });
-  const qs = p.toString();
-  return qs ? `${base}?${qs}` : base;
+  const s = p.toString();
+  return s ? `?${s}` : "";
 }
 
 // ── Stats ──────────────────────────────────────────────────────────────────
 export async function getAdminStats() {
-  const res = await fetch(`${BASE}/api/admin/stats`);
+  const res = await apiFetch("api/admin/stats");
   return res.json();
 }
 
 // ── Users ──────────────────────────────────────────────────────────────────
 export async function getAdminUsers(params = {}) {
-  const res = await fetch(buildUrl(`${BASE}/api/admin/users`, params));
+  const res = await apiFetch(`api/admin/users${qs(params)}`);
   return res.json();
 }
 
 export async function updateAdminUser(id, data) {
-  const res = await fetch(`${BASE}/api/admin/users/${id}`, {
+  const res = await apiFetch(`api/admin/users/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -31,18 +31,18 @@ export async function updateAdminUser(id, data) {
 }
 
 export async function deleteAdminUser(id) {
-  const res = await fetch(`${BASE}/api/admin/users/${id}`, { method: "DELETE" });
+  const res = await apiFetch(`api/admin/users/${id}`, { method: "DELETE" });
   return res.json();
 }
 
 // ── Products ───────────────────────────────────────────────────────────────
 export async function getAdminProducts(params = {}) {
-  const res = await fetch(buildUrl(`${BASE}/api/admin/products`, params));
+  const res = await apiFetch(`api/admin/products${qs(params)}`);
   return res.json();
 }
 
 export async function updateAdminProduct(id, data) {
-  const res = await fetch(`${BASE}/api/admin/products/${id}`, {
+  const res = await apiFetch(`api/admin/products/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -51,18 +51,18 @@ export async function updateAdminProduct(id, data) {
 }
 
 export async function deleteAdminProduct(id) {
-  const res = await fetch(`${BASE}/api/admin/products/${id}`, { method: "DELETE" });
+  const res = await apiFetch(`api/admin/products/${id}`, { method: "DELETE" });
   return res.json();
 }
 
 // ── Orders ─────────────────────────────────────────────────────────────────
 export async function getAdminOrders(params = {}) {
-  const res = await fetch(buildUrl(`${BASE}/api/admin/orders`, params));
+  const res = await apiFetch(`api/admin/orders${qs(params)}`);
   return res.json();
 }
 
 export async function updateAdminOrder(id, data) {
-  const res = await fetch(`${BASE}/api/admin/orders/${id}`, {
+  const res = await apiFetch(`api/admin/orders/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

@@ -4,16 +4,19 @@ import { Reveal } from "./Reveal";
 
 export function CTASection() {
   return (
-    <section className="bg-emerald-600 py-24 relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="animate-blob absolute -top-32 -right-32 w-64 h-64 bg-white/10 rounded-full blur-2xl" />
-        <div className="animate-blob animation-delay-2s absolute -bottom-32 -left-32 w-64 h-64 bg-white/10 rounded-full blur-2xl" />
-      </div>
+    <section className="relative overflow-hidden py-24">
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-700 dark:from-slate-900 dark:via-emerald-950 dark:to-teal-950" />
+      <div className="absolute -top-24 left-1/4 w-96 h-96 bg-emerald-500/0 dark:bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-24 right-1/4 w-80 h-80 bg-teal-500/0 dark:bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 -left-20 w-64 h-64 bg-cyan-600/0 dark:bg-cyan-600/10 rounded-full blur-2xl -translate-y-1/2 pointer-events-none" />
+      <div className="absolute top-1/2 -right-20 w-64 h-64 bg-emerald-700/0 dark:bg-emerald-700/10 rounded-full blur-2xl -translate-y-1/2 pointer-events-none" />
+      <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
       <Reveal className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
           Ready to Start Selling?
         </h2>
-        <p className="text-emerald-100 text-lg mb-10 max-w-xl mx-auto">
+        <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto">
           Join 120,000+ sellers who turned their unwanted items into cash. Free to list — just 2
           minutes to start.
         </p>
@@ -25,7 +28,7 @@ export function CTASection() {
             Browse Listings First
           </Button>
         </div>
-        <p className="text-emerald-200/80 text-xs mt-6">
+        <p className="text-white/40 text-xs mt-6">
           No credit card required · Free to list · Cancel anytime
         </p>
       </Reveal>

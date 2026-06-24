@@ -5,19 +5,10 @@ import Link from "next/link";
 import { FiUsers, FiPackage, FiShoppingBag, FiDollarSign, FiArrowRight, FiAlertTriangle } from "react-icons/fi";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import { getAdminStats, getAdminOrders } from "@/lib/api/admin";
+import { normalizeOrder } from "@/lib/utils/orderUtils";
 import { StatCard } from "@/components/ui/StatCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 
-function normalize(o) {
-  return {
-    ...o,
-    productTitle: o.productTitle || o.title || "—",
-    price:        o.price ?? o.totalAmount ?? 0,
-    status:       o.status || o.orderStatus || "Pending",
-    buyerName:    o.buyerName || o.buyerInfo?.name || "—",
-    sellerName:   o.sellerName || o.sellerInfo?.name || "—",
-  };
-}
 
 export default function AdminOverview() {
   const [stats, setStats]     = useState(null);
@@ -27,7 +18,7 @@ export default function AdminOverview() {
   useEffect(() => {
     Promise.all([getAdminStats(), getAdminOrders()]).then(([s, o]) => {
       setStats(s);
-      setOrders(Array.isArray(o) ? o.slice(0, 6).map(normalize) : []);
+      setOrders(Array.isArray(o) ? o.slice(0, 6).map(normalizeOrder) : []);
       setLoading(false);
     });
   }, []);
