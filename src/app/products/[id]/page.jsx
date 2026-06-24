@@ -8,7 +8,7 @@ import {
   FiStar, FiHeart, FiShoppingBag, FiArrowLeft, FiShare2,
   FiChevronLeft, FiChevronRight, FiMapPin, FiShield,
   FiPackage, FiTruck, FiMessageSquare, FiUser, FiSend,
-  FiTag,
+  FiTag, FiFlag, FiColumns, FiX, FiAlertTriangle,
 } from "react-icons/fi";
 import { MdVerified } from "react-icons/md";
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
@@ -17,8 +17,19 @@ import { Navbar } from "@/components/Navbar";
 import { getProduct, getProducts } from "@/lib/api/products";
 import { getWishlist, addToWishlist, removeFromWishlist } from "@/lib/api/wishlist";
 import { getReviews, createReview } from "@/lib/api/reviews";
+import { createReport } from "@/lib/api/reports";
 import { useSession } from "@/lib/auth-client";
 import { useCart } from "@/context/CartContext";
+import { useCompare } from "@/context/CompareContext";
+
+const REPORT_REASONS = [
+  { value: "counterfeit",    label: "Counterfeit / Fake item" },
+  { value: "misleading",     label: "Misleading description" },
+  { value: "prohibited",     label: "Prohibited item" },
+  { value: "spam",           label: "Spam / Duplicate listing" },
+  { value: "wrong_category", label: "Wrong category" },
+  { value: "other",          label: "Other" },
+];
 
 const RELATED_COUNT = 4;
 
@@ -229,6 +240,7 @@ export default function ProductDetail() {
 
   const { data: session }   = useSession();
   const { addToCart }       = useCart();
+  const { addToCompare, isInCompare } = useCompare();
   const [product, setProduct]   = useState(null);
   const [loading, setLoading]   = useState(true);
   const [relatedp, setRelated]  = useState([]);
@@ -237,6 +249,10 @@ export default function ProductDetail() {
   const [wishlistLoading, setWishlistLoading] = useState(false);
   const [qty, setQty]       = useState(1);
   const [addedMsg, setAddedMsg] = useState(false);
+  const [reportOpen, setReportOpen]   = useState(false);
+  const [reportReason, setReportReason] = useState("");
+  const [reportDetails, setReportDetails] = useState("");
+  const [reportSubmitting, setReportSubmitting] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -317,6 +333,28 @@ export default function ProductDetail() {
     addToCart({ ...product, quantity: qty });
     setAddedMsg(true);
     setTimeout(() => setAddedMsg(false), 2000);
+  };
+
+  const handleReport = async () => {
+    if (!session?.user) { toast.error("Please sign in to report a listing"); return; }
+    if (!reportReason)  { toast.error("Please select a reason"); return; }
+    setReportSubmitting(true);
+    const { ok } = await createReport({
+      productId:    product._id,
+      productTitle: product.title,
+      reporterInfo: { userId: session.user.id, name: session.user.name, email: session.user.email },
+      reason:   reportReason,
+      details:  reportDetails,
+    });
+    setReportSubmitting(false);
+    if (ok) {
+      toast.success("Report submitted. Thank you for keeping ResellHub safe.");
+      setReportOpen(false);
+      setReportReason("");
+      setReportDetails("");
+    } else {
+      toast.error("Failed to submit report. Please try again.");
+    }
   };
 
   const images  = Array.isArray(product.images) ? product.images : [];
@@ -616,6 +654,28 @@ export default function ProductDetail() {
                 View Seller Profile
               </Link>
 
+              {/* Compare + Report */}
+              <div className="flex gap-2 mt-2">
+                <button
+                  onClick={() => addToCompare(product)}
+                  className={`flex-1 py-2.5 rounded-2xl text-sm font-semibold flex items-center justify-center gap-1.5 transition-colors border ${
+                    isInCompare(product._id)
+                      ? "border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400"
+                      : "border-gray-200 dark:border-slate-600 text-gray-600 dark:text-gray-300 hover:border-emerald-300 dark:hover:border-emerald-700"
+                  }`}
+                >
+                  <FiColumns size={14} />
+                  {isInCompare(product._id) ? "In Compare" : "Compare"}
+                </button>
+                <button
+                  onClick={() => setReportOpen(true)}
+                  className="flex-1 py-2.5 rounded-2xl text-sm font-semibold flex items-center justify-center gap-1.5 border border-gray-200 dark:border-slate-600 text-gray-500 dark:text-gray-400 hover:border-red-300 hover:text-red-500 dark:hover:border-red-700 dark:hover:text-red-400 transition-colors"
+                >
+                  <FiFlag size={14} />
+                  Report
+                </button>
+              </div>
+
               {/* Shipping info */}
               <div className="mt-5 pt-5 border-t border-gray-100 dark:border-slate-700 space-y-3">
                 {[
@@ -670,6 +730,86 @@ export default function ProductDetail() {
           </div>
         )}
       </div>
+
+      {/* ── Report modal ─────────────────────────────── */}
+      {reportOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white dark:bg-slate-800 rounded-3xl border border-gray-100 dark:border-slate-700 shadow-2xl w-full max-w-md p-6">
+            <div className="flex items-start justify-between mb-5">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                  <FiAlertTriangle className="text-red-500" size={18} /> Report Listing
+                </h2>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                  Help us keep ResellHub safe and trustworthy
+                </p>
+              </div>
+              <button
+                onClick={() => setReportOpen(false)}
+                className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+              >
+                <FiX size={18} />
+              </button>
+            </div>
+
+            <div className="space-y-3 mb-5">
+              <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Select a reason <span className="text-red-500">*</span>
+              </p>
+              {REPORT_REASONS.map(r => (
+                <label
+                  key={r.value}
+                  className={`flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all ${
+                    reportReason === r.value
+                      ? "border-red-400 bg-red-50 dark:bg-red-900/20"
+                      : "border-gray-200 dark:border-slate-600 hover:border-gray-300 dark:hover:border-slate-500"
+                  }`}
+                >
+                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
+                    reportReason === r.value ? "border-red-500 bg-red-500" : "border-gray-300 dark:border-slate-500"
+                  }`}>
+                    {reportReason === r.value && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
+                  </div>
+                  <input type="radio" className="hidden" value={r.value} checked={reportReason === r.value} onChange={() => setReportReason(r.value)} />
+                  <span className="text-sm text-gray-700 dark:text-gray-300">{r.label}</span>
+                </label>
+              ))}
+            </div>
+
+            <div className="mb-5">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                Additional details <span className="text-gray-400 font-normal">(optional)</span>
+              </label>
+              <textarea
+                value={reportDetails}
+                onChange={e => setReportDetails(e.target.value)}
+                placeholder="Describe the issue in more detail..."
+                rows={3}
+                className="w-full px-4 py-3 text-sm rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-400 resize-none"
+              />
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setReportOpen(false)}
+                className="flex-1 py-3 border border-gray-200 dark:border-slate-600 rounded-xl text-sm font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleReport}
+                disabled={!reportReason || reportSubmitting}
+                className="flex-1 py-3 bg-red-500 hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl text-sm font-semibold flex items-center justify-center gap-2 transition-colors"
+              >
+                {reportSubmitting
+                  ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  : <FiFlag size={14} />}
+                Submit Report
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

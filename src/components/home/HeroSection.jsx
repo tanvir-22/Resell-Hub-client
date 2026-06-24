@@ -10,8 +10,15 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade";
+import Link from "next/link";
 
-const POPULAR_TAGS = ["iPhone 15", "MacBook Pro", "AirPods", "Nike Shoes", "PS5"];
+const POPULAR_TAGS = [
+  "iPhone 15",
+  "MacBook Pro",
+  "AirPods",
+  "Nike Shoes",
+  "PS5",
+];
 
 const SLIDER_IMAGES = [
   {
@@ -50,7 +57,6 @@ export function HeroSection() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-
           {/* ── Left: text ── */}
           <div className="flex-1 text-center lg:text-left">
             <div className="animate-fade-in-up delay-100 inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-8 text-sm">
@@ -58,7 +64,9 @@ export function HeroSection() {
                 <span className="animate-ping-slow absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
               </span>
-              <span className="text-gray-300">500,000+ items listed this month</span>
+              <span className="text-gray-300">
+                500,000+ items listed this month
+              </span>
             </div>
 
             <h1
@@ -70,10 +78,14 @@ export function HeroSection() {
               <span className="hero-gradient-text">
                 <TypeAnimation
                   sequence={[
-                    "Buy & Sell Preloved Items", 2000,
-                    "Turn Clutter into Cash",    2000,
-                    "Find Amazing Deals",        2000,
-                    "Trade Your Treasures",      2000,
+                    "Buy & Sell Preloved Items",
+                    2000,
+                    "Turn Clutter into Cash",
+                    2000,
+                    "Find Amazing Deals",
+                    2000,
+                    "Trade Your Treasures",
+                    2000,
                   ]}
                   speed={55}
                   deletionSpeed={75}
@@ -84,13 +96,16 @@ export function HeroSection() {
             </h1>
 
             <p className="animate-fade-in-up delay-300 text-lg text-gray-300 max-w-xl mb-10 mx-auto lg:mx-0">
-              Join millions of people buying and selling preloved items. Turn your unwanted stuff
-              into cash — or find amazing deals near you.
+              Join millions of people buying and selling preloved items. Turn
+              your unwanted stuff into cash — or find amazing deals near you.
             </p>
 
             <div className="animate-fade-in-up delay-400 max-w-xl mb-8 mx-auto lg:mx-0">
               <div className="flex items-center bg-white rounded-2xl p-1.5 gap-2 shadow-2xl shadow-emerald-900/20">
-                <FiSearch className="text-gray-400 ml-3 flex-shrink-0" size={20} />
+                <FiSearch
+                  className="text-gray-400 ml-3 flex-shrink-0"
+                  size={20}
+                />
                 <input
                   type="text"
                   placeholder="Search for anything... iPhone, Nike shoes, MacBook..."
@@ -117,12 +132,16 @@ export function HeroSection() {
             </div>
 
             <div className="animate-fade-in-up delay-600 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <Button className="flex items-center justify-center gap-2 bg-white text-emerald-700 font-semibold px-8 py-4 rounded-xl hover:bg-gray-50 transition-all shadow-lg w-full sm:w-auto hover:scale-105">
-                Browse Listings <FiArrowRight size={18} />
-              </Button>
-              <Button className="flex items-center justify-center gap-2 bg-transparent border-2 border-white/30 hover:border-white/70 text-white font-semibold px-8 py-4 rounded-xl transition-all w-full sm:w-auto hover:scale-105 hover:bg-white/5">
-                <MdSell size={18} /> Start Selling Free
-              </Button>
+              <Link href="/products">
+                <Button className="flex items-center justify-center gap-2 bg-white text-emerald-700 font-semibold px-8 py-4 rounded-xl hover:bg-gray-50 transition-all shadow-lg w-full sm:w-auto hover:scale-105">
+                  Browse Listings <FiArrowRight size={18} />
+                </Button>
+              </Link>
+              <Link href="/signup">
+                <Button className="flex items-center justify-center gap-2 bg-transparent border-2 border-white/30 hover:border-white/70 text-white font-semibold px-8 py-4 rounded-xl transition-all w-full sm:w-auto hover:scale-105 hover:bg-white/5">
+                  <MdSell size={18} /> Start Selling Free
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -155,7 +174,6 @@ export function HeroSection() {
               ))}
             </Swiper>
           </div>
-
         </div>
       </div>
     </section>

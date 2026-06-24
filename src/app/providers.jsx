@@ -3,6 +3,8 @@
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { CartProvider } from "@/context/CartContext";
+import { CompareProvider } from "@/context/CompareContext";
+import { CompareBar } from "@/components/compare/CompareBar";
 
 export function ThemeProvider({ children }) {
   useEffect(() => {
@@ -17,7 +19,10 @@ export function ThemeProvider({ children }) {
 
   return (
     <CartProvider>
-      {children}
+      <CompareProvider>
+        {children}
+        <CompareBar />
+      </CompareProvider>
       <Toaster
         position="top-right"
         toastOptions={{

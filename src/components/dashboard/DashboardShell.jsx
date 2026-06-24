@@ -8,7 +8,7 @@ import { BsTagFill } from "react-icons/bs";
 import {
   FiHome, FiShoppingBag, FiHeart, FiCreditCard, FiUser,
   FiGrid, FiPlusSquare, FiPackage, FiTrendingUp,
-  FiMenu, FiX, FiLogOut, FiChevronRight, FiUsers, FiShield, FiShoppingCart,
+  FiMenu, FiX, FiLogOut, FiChevronRight, FiUsers, FiShield, FiShoppingCart, FiFlag,
 } from "react-icons/fi";
 
 /* ── user context ── */
@@ -37,6 +37,7 @@ const ADMIN_NAV = [
   { href: "/dashboard/admin/users",      icon: FiUsers,      label: "Manage Users" },
   { href: "/dashboard/admin/products",   icon: FiPackage,    label: "Manage Products" },
   { href: "/dashboard/admin/orders",     icon: FiShoppingBag,label: "Manage Orders" },
+  { href: "/dashboard/admin/reports",    icon: FiFlag,       label: "Reports" },
   { href: "/dashboard/admin/analytics",  icon: FiTrendingUp, label: "Analytics" },
 ];
 

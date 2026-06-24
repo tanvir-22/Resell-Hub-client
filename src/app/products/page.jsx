@@ -11,7 +11,9 @@ import {
   FiX,
   FiGrid,
   FiList,
+  FiColumns,
 } from "react-icons/fi";
+import { useCompare } from "@/context/CompareContext";
 import { Navbar } from "@/components/Navbar";
 import toast from "react-hot-toast";
 import { getProducts } from "@/lib/api/products";
@@ -55,6 +57,7 @@ function ProductsPageInner() {
   const [showFilters, setShowFilters] = useState(false);
   const [wishlistMap, setWishlistMap] = useState({});
   const [toggling, setToggling] = useState(new Set());
+  const { addToCompare, isInCompare } = useCompare();
 
   useEffect(() => {
     setLoadingProducts(true);
@@ -308,16 +311,25 @@ function ProductsPageInner() {
                       {p.condition}
                     </span>
                   </div>
-                  <button
-                    onClick={(e) => toggleWishlist(e, p)}
-                    className={`absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 dark:bg-slate-800/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow ${toggling.has(p._id) ? "opacity-60" : ""}`}
-                  >
-                    <FiHeart
-                      size={14}
-                      fill={wishlistMap[p._id] ? "currentColor" : "none"}
-                      className={wishlistMap[p._id] ? "text-rose-500" : "text-gray-600 dark:text-gray-300"}
-                    />
-                  </button>
+                  <div className="absolute top-2 right-2 flex flex-col gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={(e) => toggleWishlist(e, p)}
+                      className={`w-8 h-8 rounded-full bg-white/90 dark:bg-slate-800/90 flex items-center justify-center shadow ${toggling.has(p._id) ? "opacity-60" : ""}`}
+                    >
+                      <FiHeart
+                        size={14}
+                        fill={wishlistMap[p._id] ? "currentColor" : "none"}
+                        className={wishlistMap[p._id] ? "text-rose-500" : "text-gray-600 dark:text-gray-300"}
+                      />
+                    </button>
+                    <button
+                      onClick={(e) => { e.preventDefault(); addToCompare(p); }}
+                      title="Add to compare"
+                      className={`w-8 h-8 rounded-full bg-white/90 dark:bg-slate-800/90 flex items-center justify-center shadow ${isInCompare(p._id) ? "text-emerald-600" : "text-gray-600 dark:text-gray-300"}`}
+                    >
+                      <FiColumns size={13} />
+                    </button>
+                  </div>
                 </div>
                 <div className="p-3">
                   <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium mb-0.5">
@@ -380,6 +392,17 @@ function ProductsPageInner() {
                           fill={wishlistMap[p._id] ? "currentColor" : "none"}
                           className={wishlistMap[p._id] ? "text-rose-500" : "text-gray-400"}
                         />
+                      </button>
+                      <button
+                        onClick={(e) => { e.preventDefault(); addToCompare(p); }}
+                        title="Add to compare"
+                        className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors ${
+                          isInCompare(p._id)
+                            ? "border-emerald-400 text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20"
+                            : "border-gray-200 dark:border-slate-600 text-gray-400 hover:border-emerald-300"
+                        }`}
+                      >
+                        <FiColumns size={13} />
                       </button>
                     </div>
                   </div>
