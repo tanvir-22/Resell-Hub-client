@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { FiCheckCircle, FiXCircle, FiTrash2, FiPackage, FiAlertTriangle, FiFilter } from "react-icons/fi";
+import { FiCheckCircle, FiXCircle, FiTrash2, FiPackage, FiAlertTriangle, FiFilter, FiSearch } from "react-icons/fi";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import toast from "react-hot-toast";
 import { getAdminProducts, updateAdminProduct, deleteAdminProduct } from "@/lib/api/admin";

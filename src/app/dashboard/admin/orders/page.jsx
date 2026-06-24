@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { FiShoppingBag, FiChevronDown } from "react-icons/fi";
+import { FiShoppingBag, FiChevronDown, FiSearch } from "react-icons/fi";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import toast from "react-hot-toast";
 import { getAdminOrders, updateAdminOrder } from "@/lib/api/admin";
@@ -35,7 +35,7 @@ export default function AdminOrders() {
     getAdminOrders({
       ...(status && status !== "all" ? { status } : {}),
       ...(q ? { search: q } : {}),
-    }).then(d => { setOrders(Array.isArray(d) ? d.map(normalize) : []); setLoading(false); });
+    }).then(d => { setOrders(Array.isArray(d) ? d.map(normalizeOrder) : []); setLoading(false); });
   }, []);
 
   useEffect(() => {

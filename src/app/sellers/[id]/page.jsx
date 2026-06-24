@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
-import { getSellerProducts } from "@/lib/api/products";
-import { getSellerReviews } from "@/lib/api/reviews";
+import { getPublicSellerProducts } from "@/lib/api/products";
+import { getPublicSellerReviews } from "@/lib/api/reviews";
 import {
   FiArrowLeft, FiMapPin, FiPackage, FiStar, FiMessageSquare,
   FiCalendar, FiShoppingBag, FiUser,
@@ -126,8 +126,8 @@ export default function SellerProfilePage() {
         const decoded = decodeURIComponent(id);
         const isEmail = decoded.includes("@");
         const prods   = isEmail
-          ? await getSellerProducts("", decoded)   // query by email
-          : await getSellerProducts(decoded);       // query by userId
+          ? await getPublicSellerProducts(decoded)
+          : await getPublicSellerProducts(null, decoded);
         const list  = Array.isArray(prods) ? prods : [];
         setProducts(list);
 
@@ -151,7 +151,7 @@ export default function SellerProfilePage() {
 
         // single API call for all seller reviews
         if (sellerEmail) {
-          const rv = await getSellerReviews(sellerEmail).catch(() => []);
+          const rv = await getPublicSellerReviews(sellerEmail).catch(() => []);
           setReviews(Array.isArray(rv) ? rv : []);
         }
       } catch (e) {

@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { FiTrash2, FiSlash, FiCheckCircle, FiUser, FiUsers, FiShield } from "react-icons/fi";
+import { FiTrash2, FiSlash, FiCheckCircle, FiUser, FiUsers, FiShield, FiSearch } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { getAdminUsers, updateAdminUser, deleteAdminUser } from "@/lib/api/admin";
 import ConfirmModal from "@/components/dashboard/ConfirmModal";
@@ -143,25 +143,27 @@ export default function AdminUsers() {
                       {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : "—"}
                     </td>
                     <td className="px-5 py-3">
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => toggleBlock(u)}
-                          title={u.blocked ? "Unblock" : "Block"}
-                          className={`p-2 rounded-lg transition-colors ${
-                            u.blocked
-                              ? "text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20"
-                              : "text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20"
-                          }`}
-                        >
-                          {u.blocked ? <FiCheckCircle size={16} /> : <FiSlash size={16} />}
-                        </button>
-                        <button
-                          onClick={() => setConfirm({ id: u._id, name: u.name || u.email })}
-                          className="p-2 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-                        >
-                          <FiTrash2 size={16} />
-                        </button>
-                      </div>
+                      {u.role !== "admin" && (
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => toggleBlock(u)}
+                            title={u.blocked ? "Unblock" : "Block"}
+                            className={`p-2 rounded-lg transition-colors ${
+                              u.blocked
+                                ? "text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20"
+                                : "text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20"
+                            }`}
+                          >
+                            {u.blocked ? <FiCheckCircle size={16} /> : <FiSlash size={16} />}
+                          </button>
+                          <button
+                            onClick={() => setConfirm({ id: u._id, name: u.name || u.email })}
+                            className="p-2 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                          >
+                            <FiTrash2 size={16} />
+                          </button>
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))}

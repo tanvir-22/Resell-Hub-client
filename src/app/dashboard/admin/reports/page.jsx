@@ -229,7 +229,7 @@ export default function AdminReportsPage() {
                             {updating === r._id ? <FiRefreshCw size={11} className="animate-spin" /> : <FiCheck size={11} />}
                           </button>
                         )}
-                        {r.status !== "dismissed" && (
+                        {r.status !== "dismissed" && r.status !== "resolved" && (
                           <button
                             onClick={() => doUpdate(r._id, "dismissed")}
                             disabled={updating === r._id}

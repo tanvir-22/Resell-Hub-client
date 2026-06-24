@@ -10,6 +10,11 @@ export async function getSellerReviews(email) {
   return res.json();
 }
 
+export async function getPublicSellerReviews(email) {
+  const res = await apiFetch(`api/public/seller/reviews?email=${encodeURIComponent(email)}`);
+  return res.json();
+}
+
 export async function createReview({ reviewerInfo, productId, rating, comment }) {
   const res = await apiFetch("api/reviews", {
     method: "POST",

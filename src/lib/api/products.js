@@ -12,6 +12,14 @@ export async function getSellerProducts(sellerId, email) {
   return res.json();
 }
 
+export async function getPublicSellerProducts(email, sellerId) {
+  const params = new URLSearchParams();
+  if (email) params.set("email", email);
+  if (sellerId) params.set("sellerId", sellerId);
+  const res = await apiFetch(`api/public/seller/products?${params}`);
+  return res.json();
+}
+
 export async function getProduct(id) {
   const res = await apiFetch(`api/products/${id}`);
   return res.json();
