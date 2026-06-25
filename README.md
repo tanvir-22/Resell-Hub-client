@@ -102,7 +102,7 @@ and a modern responsive UI powered by Tailwind CSS and HeroUI.
 
 **External Services**
 - MongoDB Atlas
-- Cloudinary
+- ImageBB
 - Stripe
 - Google OAuth
 ## Project Structure
