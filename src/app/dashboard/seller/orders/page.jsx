@@ -53,6 +53,7 @@ export default function SellerOrders() {
     } else {
       setOrders(prev => prev.map(o => o._id === id ? updated : o));
       if (selected?._id === id) setSelected(updated);
+      setDeliveryNext(p => { const n = { ...p }; delete n[id]; return n; });
       toast.success(`Order ${status === "Cancelled" ? "rejected" : `marked as ${status}`}`);
     }
     setUpdating(null);
@@ -114,7 +115,7 @@ export default function SellerOrders() {
           <button
             onClick={e => { e.stopPropagation(); doUpdate(key, nextVal); }}
             disabled={updating === key}
-            className={`flex items-center gap-1.5 font-semibold rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-all disabled:opacity-60 ${compact ? "text-xs px-3 py-1.5" : "text-sm px-4 py-2.5"}`}
+            className={`flex items-center gap-1.5 font-semibold rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition-all disabled:opacity-60 ${compact ? "text-xs px-3 py-1.5" : "text-sm px-4 py-2.5"}`}
           >
             {updating === key ? <FiRefreshCw size={12} className="animate-spin" /> : <FiTruck size={12} />}
             {compact ? "Update" : "Update Status"}
