@@ -1,16 +1,25 @@
 # ResellHub
 
-A full-stack marketplace platform for buying and selling pre-owned items. Built with Next.js 16, Express, and MongoDB.
-
+🎉ResellHub is a full-stack second-hand marketplace platform that enables users 
+to buy and sell pre-owned items seamlessly. Built with Next.js, Express.js, 
+and MongoDB, it features secure authentication via Better Auth and Google OAuth, 
+real-time payment processing with Stripe, image hosting through imgBB, 
+and a modern responsive UI powered by Tailwind CSS and HeroUI.
 ---
 
-## Screenshots
+## Live Demo
 
-> Add your screenshots to `/public/screenshots/` and they'll appear here.
+> https://resell-hub-tawny.vercel.app/
+
+---
 
  Home                                 
  ------------------------------------ 
  ![Home](public//home.png) 
+
+ Home                                 
+ ------------------------------------ 
+ ![Home](public//admin.png) 
 
 
 
@@ -19,30 +28,30 @@ A full-stack marketplace platform for buying and selling pre-owned items. Built 
 ### Buyers
 
 - Browse and search listings with filters (category, condition, sort)
-- Paginated product grid and list view (12 per page)
+- Paginated product grid and list view
 - Product detail page with image carousel
 - Add to cart and checkout with Stripe
 - Wishlist / saved items
 - Order tracking with status updates
 - Cancel orders (Pending / Accepted / Processing only)
 - Write reviews on purchased products
-- Compare up to 3 products side by side (price, condition, category, stock, seller)
+- Compare up to 3 products side by side (price, condition, category, stock)
 - Report suspicious or misleading listings with reason selection
 - View public seller profiles with listings, ratings, and reviews
 
 ### Sellers
 
 - Dashboard overview with analytics charts
-- Add, edit, and delete product listings (up to 4 images via Cloudinary)
+- Add, edit, and delete product listings (up to 4 images via imgBB)
 - Manage incoming orders — Accept, Reject, update delivery status
 - View buyer contact info (name, email, phone, address, location) per order
 - Blocked accounts lose access to cart and add-product
 
 ### Admin
 
-- User management — view, update role / status, delete
+- User management — view, update status, delete
 - Product management — approve, reject, flag reported listings
-- Order management — view all orders with transaction IDs, forward-only status updates
+- Order management — view all orders with transaction IDs
 - Reports panel — review, resolve, or dismiss reported listings
 - Platform analytics — user growth, revenue, category performance
 
@@ -58,95 +67,32 @@ A full-stack marketplace platform for buying and selling pre-owned items. Built 
 
 ## Tech Stack
 
-### Core Framework
+**Frontend**
+- Next.js
+- React
+- Tailwind CSS
+- HeroUI
+- GSAP
+- Swiper
+- Recharts
+- Stripe.js
+- Better Auth
+- React Icons
+- Animate.css
+- React Type Animation
+- React Hot Toast
 
-| Package     | Version | Purpose                              |
-| ----------- | ------- | ------------------------------------ |
-| `next`      | 16.2.9  | App Router, SSR, routing, API routes |
-| `react`     | 19.2.4  | UI library                           |
-| `react-dom` | 19.2.4  | DOM rendering                        |
+**Backend**
+- Express.js
+- MongoDB
+- Stripe
+- CORS
 
-### Styling & UI
-
-| Package                | Version | Purpose                              |
-| ---------------------- | ------- | ------------------------------------ |
-| `tailwindcss`          | ^4      | Utility-first CSS framework          |
-| `@tailwindcss/postcss` | ^4      | PostCSS integration for Tailwind v4  |
-| `@heroui/react`        | ^3.2.1  | Pre-built UI component library       |
-| `@heroui/styles`       | ^3.2.1  | HeroUI base styles                   |
-| `animate.css`          | ^4.1.1  | CSS animation classes (navbar, hero) |
-
-### Icons
-
-| Package             | Version | Purpose                                                       |
-| ------------------- | ------- | ------------------------------------------------------------- |
-| `react-icons`       | ^5.6.0  | Icon sets — `fi` (Feather), `bs` (Bootstrap), `md` (Material) |
-| `@gravity-ui/icons` | ^2.18.0 | Additional icon set                                           |
-
-### Authentication
-
-| Package                      | Version | Purpose                                        |
-| ---------------------------- | ------- | ---------------------------------------------- |
-| `better-auth`                | ^1.6.20 | Auth framework — email/password + Google OAuth |
-| `@better-auth/mongo-adapter` | ^1.6.20 | MongoDB adapter for better-auth sessions       |
-
-### Payments
-
-| Package                   | Version | Purpose                               |
-| ------------------------- | ------- | ------------------------------------- |
-| `stripe`                  | ^22.2.2 | Stripe Node.js SDK (server-side)      |
-| `@stripe/stripe-js`       | ^9.8.0  | Stripe.js browser client              |
-| `@stripe/react-stripe-js` | ^6.6.0  | React hooks and components for Stripe |
-
-### Database
-
-| Package   | Version | Purpose                                          |
-| --------- | ------- | ------------------------------------------------ |
-| `mongodb` | ^7.3.0  | MongoDB Node.js driver (used in Express backend) |
-
-### Animations & Interaction
-
-| Package                | Version | Purpose                                 |
-| ---------------------- | ------- | --------------------------------------- |
-| `gsap`                 | ^3.15.0 | Advanced scroll and timeline animations |
-| `swiper`               | ^12.2.0 | Touch-friendly image carousel / slider  |
-| `react-type-animation` | ^3.2.0  | Typewriter effect on hero section       |
-
-### Data & Feedback
-
-| Package           | Version | Purpose                                          |
-| ----------------- | ------- | ------------------------------------------------ |
-| `recharts`        | ^3.8.1  | Charts for admin and seller analytics dashboards |
-| `react-hot-toast` | ^2.6.0  | Toast notifications                              |
-
-### Backend (Express server)
-
-| Package   | Purpose                                                   |
-| --------- | --------------------------------------------------------- |
-| `express` | REST API server                                           |
-| `cors`    | Cross-origin request handling between Next.js and Express |
-| `mongodb` | Direct Atlas connection for all DB operations             |
-| `stripe`  | Stripe webhook handling and payment intent creation       |
-
-### Dev Tools
-
-| Package                       | Version | Purpose                      |
-| ----------------------------- | ------- | ---------------------------- |
-| `eslint`                      | ^9      | Linting                      |
-| `eslint-config-next`          | 16.2.9  | Next.js ESLint ruleset       |
-| `babel-plugin-react-compiler` | 1.0.0   | React compiler optimizations |
-
-### External Services
-
-| Service       | Purpose                          |
-| ------------- | -------------------------------- |
-| MongoDB Atlas | Cloud database                   |
-| Cloudinary    | Product image hosting and upload |
-| Stripe        | Payment processing               |
-| Google OAuth  | Social login                     |
-
----
-
+**External Services**
+- MongoDB Atlas
+- Cloudinary
+- Stripe
+- Google OAuth
 ## Project Structure
 
 ```
@@ -184,11 +130,11 @@ resell_hub/
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 
 - MongoDB Atlas account
 - Stripe account
 - Google OAuth credentials (optional)
-- Cloudinary account (for image uploads)
+
 
 ### 1. Clone the repository
 
@@ -259,33 +205,6 @@ The app runs at `http://localhost:3000`.
 
 ---
 
-## Order Status Flow
 
-```
-Pending → Accepted → Processing → Shipped → Delivered
-   └─────────────────────────────────────→ Cancelled
-```
 
-- Buyers can cancel during: **Pending**, **Accepted**, **Processing**
-- Sellers move orders forward; can reject at **Pending**
-- Admin updates are forward-only — **Delivered** and **Cancelled** are locked
 
-## Report Flow
-
-```
-User submits report → Pending
-Admin reviews       → Reviewed
-Admin closes        → Resolved  or  Dismissed
-```
-
----
-
-## Live Demo
-
-> Add your deployed URL here.
-
----
-
-## Author
-
-**Tanvir** — [GitHub](https://github.com/tanvir-22)
