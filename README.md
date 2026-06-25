@@ -17,7 +17,7 @@ and a modern responsive UI powered by Tailwind CSS and HeroUI.
  ------------------------------------ 
  ![Home](public//home.png) 
 
- Home                                 
+ Admin Dashboard                                 
  ------------------------------------ 
  ![Home](public//admin.png) 
 
