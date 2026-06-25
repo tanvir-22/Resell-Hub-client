@@ -47,12 +47,12 @@ export function HeroSection() {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 dark:from-slate-900 dark:via-emerald-950 dark:to-slate-900 text-white pt-24 pb-20">
-      {/* Background blobs — dark mode only */}
+    <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 text-white pt-24 pb-20">
+      {/* Background blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="animate-blob absolute -top-48 -right-48 w-96 h-96 bg-emerald-600/0 dark:bg-emerald-600/25 rounded-full blur-3xl" />
-        <div className="animate-blob animation-delay-2s absolute top-1/2 -left-48 w-80 h-80 bg-blue-600/0 dark:bg-blue-600/20 rounded-full blur-3xl" />
-        <div className="animate-blob animation-delay-4s absolute bottom-0 right-1/4 w-72 h-72 bg-teal-600/0 dark:bg-teal-600/20 rounded-full blur-3xl" />
+        <div className="animate-blob absolute -top-48 -right-48 w-96 h-96 bg-emerald-600/25 rounded-full blur-3xl" />
+        <div className="animate-blob animation-delay-2s absolute top-1/2 -left-48 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl" />
+        <div className="animate-blob animation-delay-4s absolute bottom-0 right-1/4 w-72 h-72 bg-teal-600/20 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
