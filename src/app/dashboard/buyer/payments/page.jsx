@@ -35,8 +35,8 @@ export default function BuyerPayments() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         {[
           { label: "Total Transactions", value: payments.length,         color: "bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400" },
-          { label: "Total Spent",        value: `$${totalSpent.toFixed(2)}`,   color: "bg-green-100  dark:bg-green-900/40  text-green-600  dark:text-green-400"  },
-          { label: "Pending Amount",     value: `$${totalPending.toFixed(2)}`, color: "bg-amber-100  dark:bg-amber-900/40  text-amber-600  dark:text-amber-400"  },
+          { label: "Total Spent",        value: `৳${totalSpent.toFixed(2)}`,   color: "bg-green-100  dark:bg-green-900/40  text-green-600  dark:text-green-400"  },
+          { label: "Pending Amount",     value: `৳${totalPending.toFixed(2)}`, color: "bg-amber-100  dark:bg-amber-900/40  text-amber-600  dark:text-amber-400"  },
         ].map(({ label, value, color }) => (
           <div key={label} className={`rounded-2xl p-5 ${color}`}>
             <p className="text-sm font-medium opacity-80">{label}</p>
@@ -82,7 +82,7 @@ export default function BuyerPayments() {
                 {visible.map(p => (
                   <tr key={p._id} className="hover:bg-gray-50 dark:hover:bg-slate-700/30 transition-colors">
                     <td className="py-3 font-mono text-xs text-gray-500 dark:text-gray-400">{p._id.slice(-8).toUpperCase()}</td>
-                    <td className="py-3 font-bold text-gray-900 dark:text-white">${Number(p.amount).toFixed(2)}</td>
+                    <td className="py-3 font-bold text-gray-900 dark:text-white">৳{Number(p.amount).toFixed(2)}</td>
                     <td className="py-3 text-gray-500 dark:text-gray-400">{new Date(p.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</td>
                     <td className="py-3"><StatusBadge status={p.paymentStatus} /></td>
                     <td className="py-3">{p.orderStatus ? <StatusBadge status={p.orderStatus} /> : <span className="text-gray-300 dark:text-gray-600 text-xs">—</span>}</td>

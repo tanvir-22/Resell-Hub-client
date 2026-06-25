@@ -19,7 +19,7 @@ const CustomTooltip = ({ active, payload, label }) => {
       <p className="font-semibold text-gray-700 dark:text-gray-300 mb-1.5">{label}</p>
       {payload.map(({ name, value, color }) => (
         <p key={name} style={{ color }} className="font-medium">
-          {name === "revenue" ? `$${Number(value).toFixed(0)}` : value} {name}
+          {name === "revenue" ? `৳${Number(value).toFixed(0)}` : value} {name}
         </p>
       ))}
     </div>
@@ -32,7 +32,7 @@ const CustomPieTip = ({ active, payload }) => {
   return (
     <div className="bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-xl px-3 py-2 shadow-xl text-xs">
       <p className="font-semibold text-gray-700 dark:text-gray-300">{name}</p>
-      <p className="text-emerald-600 dark:text-emerald-400 font-bold">${Number(value).toFixed(0)} revenue</p>
+      <p className="text-emerald-600 dark:text-emerald-400 font-bold">৳{Number(value).toFixed(0)} revenue</p>
     </div>
   );
 };
@@ -161,7 +161,7 @@ export default function AdminAnalytics() {
                     <div key={c.name} className="flex items-center gap-2">
                       <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: PIE_COLORS[i % PIE_COLORS.length] }} />
                       <span className="text-xs text-gray-700 dark:text-gray-300 flex-1 truncate">{c.name}</span>
-                      <span className="text-xs font-semibold text-gray-900 dark:text-white">${c.revenue.toFixed(0)}</span>
+                      <span className="text-xs font-semibold text-gray-900 dark:text-white">৳{c.revenue.toFixed(0)}</span>
                     </div>
                   ))}
                 </div>

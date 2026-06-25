@@ -134,7 +134,7 @@ export default async function SuccessPage({ searchParams }) {
             <div>
               <p className="text-sm text-gray-500 dark:text-gray-400">Amount charged</p>
               <p className="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">
-                ${amountPaid}
+                ৳{amountPaid}
               </p>
             </div>
             <div className="text-right">

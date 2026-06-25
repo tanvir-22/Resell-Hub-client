@@ -204,7 +204,7 @@ export default function SellerOrders() {
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                     Buyer: <span className="text-gray-700 dark:text-gray-300 font-medium">{o.buyerName}</span>
                   </p>
-                  <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-1">${o.price}</p>
+                  <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-1">৳{o.price}</p>
                 </div>
               </div>
 
@@ -233,7 +233,7 @@ export default function SellerOrders() {
               <div className="space-y-2.5 text-sm">
                 {[
                   [FiShoppingBag, "Product", selected.productTitle],
-                  [FiDollarSign,  "Price",   `$${selected.price}`],
+                  [FiDollarSign,  "Price",   `৳${selected.price}`],
                   [FiCalendar,    "Ordered", new Date(selected.createdAt).toLocaleDateString()],
                 ].map(([Icon, k, v]) => (
                   <div key={k} className="flex items-center gap-2.5">

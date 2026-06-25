@@ -147,7 +147,7 @@ export default function AdminProducts() {
                 <h3 className="font-semibold text-gray-900 dark:text-white truncate">{p.title}</h3>
                 <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">by {p.sellerInfo?.name || p.sellerName} · {p.category}</p>
                 <div className="flex items-center justify-between mt-1">
-                  <span className="text-lg font-extrabold text-emerald-600 dark:text-emerald-400">${p.price}</span>
+                  <span className="text-lg font-extrabold text-emerald-600 dark:text-emerald-400">৳{p.price}</span>
                   <span className="text-xs text-gray-400 dark:text-gray-500">{p.condition}</span>
                 </div>
               </div>

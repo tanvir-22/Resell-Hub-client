@@ -496,7 +496,7 @@ export default function ProductDetail() {
               {/* Price + stock */}
               <div className="flex items-center justify-between">
                 <span className="text-4xl font-extrabold text-gray-900 dark:text-white">
-                  ${product.price.toLocaleString()}
+                  ৳{product.price.toLocaleString()}
                 </span>
                 <span className={`text-sm font-semibold px-3 py-1 rounded-full ${
                   product.stock > 0
@@ -722,7 +722,7 @@ export default function ProductDetail() {
                   </div>
                   <div className="p-3">
                     <h3 className="text-sm font-semibold text-gray-900 dark:text-white line-clamp-2 leading-snug mb-1">{p?.title}</h3>
-                    <p className="text-base font-extrabold text-emerald-600 dark:text-emerald-400">${p?.price?.toLocaleString?.() ?? p?.price}</p>
+                    <p className="text-base font-extrabold text-emerald-600 dark:text-emerald-400">৳{p?.price?.toLocaleString?.() ?? p?.price}</p>
                   </div>
                 </Link>
               ))}

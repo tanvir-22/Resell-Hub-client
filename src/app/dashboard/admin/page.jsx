@@ -43,7 +43,7 @@ export default function AdminOverview() {
           <StatCard icon={FiUsers}       label="Total Users"    value={stats?.users}    color="bg-gradient-to-br from-blue-500   to-blue-700"   href="/dashboard/admin/users"     variant="gradient" />
           <StatCard icon={FiPackage}     label="Total Products" value={stats?.products} color="bg-gradient-to-br from-emerald-500 to-emerald-700" href="/dashboard/admin/products"  variant="gradient" />
           <StatCard icon={FiShoppingBag} label="Total Orders"   value={stats?.orders}   color="bg-gradient-to-br from-amber-500  to-amber-700"  href="/dashboard/admin/orders"    variant="gradient" />
-          <StatCard icon={FiDollarSign}  label="Total Revenue"  value={`$${(stats?.revenue ?? 0).toFixed(2)}`} sub="Delivered orders" color="bg-gradient-to-br from-green-500 to-green-700" href="/dashboard/admin/analytics" variant="gradient" />
+          <StatCard icon={FiDollarSign}  label="Total Revenue"  value={`৳${(stats?.revenue ?? 0).toFixed(2)}`} sub="Delivered orders" color="bg-gradient-to-br from-green-500 to-green-700" href="/dashboard/admin/analytics" variant="gradient" />
         </div>
       )}
 
@@ -84,7 +84,7 @@ export default function AdminOverview() {
                     <td className="px-6 py-3 font-medium text-gray-900 dark:text-white truncate max-w-[140px]">{o.productTitle}</td>
                     <td className="px-6 py-3 text-gray-600 dark:text-gray-400">{o.buyerName}</td>
                     <td className="px-6 py-3 text-gray-600 dark:text-gray-400">{o.sellerName}</td>
-                    <td className="px-6 py-3 font-semibold text-gray-900 dark:text-white">${o.price}</td>
+                    <td className="px-6 py-3 font-semibold text-gray-900 dark:text-white">৳{o.price}</td>
                     <td className="px-6 py-3"><StatusBadge status={o.status} /></td>
                     <td className="px-6 py-3 text-gray-500 dark:text-gray-400">
                       {new Date(o.createdAt).toLocaleDateString()}

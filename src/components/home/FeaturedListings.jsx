@@ -19,7 +19,7 @@ function toCardShape(p) {
     id:             p._id,
     href:           `/products/${p._id}`,
     title:          p.title,
-    price:          `$${Number(p.price).toLocaleString()}`,
+    price:          `৳${Number(p.price).toLocaleString()}`,
     condition:      p.condition,
     conditionColor: CONDITION_COLOR[p.condition] ?? "default",
     image:          p.images?.[0] ?? null,

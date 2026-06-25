@@ -127,7 +127,7 @@ export default function AdminOrders() {
                     <td className="px-5 py-3 text-gray-600 dark:text-gray-400 whitespace-nowrap">{o.buyerName}</td>
                     <td className="px-5 py-3 text-gray-600 dark:text-gray-400 whitespace-nowrap">{o.sellerName}</td>
                     <td className="px-5 py-3 text-gray-700 dark:text-gray-300">{o.quantity ?? 1}</td>
-                    <td className="px-5 py-3 font-semibold text-gray-900 dark:text-white whitespace-nowrap">${o.price}</td>
+                    <td className="px-5 py-3 font-semibold text-gray-900 dark:text-white whitespace-nowrap">৳{o.price}</td>
                     <td className="px-5 py-3 whitespace-nowrap">
                       {o.transactionId !== "—" ? (
                         <span className="font-mono text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-lg">

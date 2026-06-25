@@ -39,7 +39,7 @@ const CustomTooltip = ({ active, payload, label }) => {
       <p className="font-semibold text-gray-700 dark:text-gray-300 mb-2">{label}</p>
       {payload.map(({ name, value, color }) => (
         <p key={name} style={{ color }} className="font-medium">
-          {name === "revenue" ? `$${Number(value).toFixed(2)}` : value} {name}
+          {name === "revenue" ? `৳${Number(value).toFixed(2)}` : value} {name}
         </p>
       ))}
     </div>
@@ -77,7 +77,7 @@ export default function SellerAnalytics() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <StatCard icon={FiPackage}    label="Total Products"  value={data?.totalProducts  ?? 0} color="bg-gradient-to-br from-emerald-500 to-emerald-700" />
           <StatCard icon={FiShoppingBag} label="Total Sales"   value={data?.totalSales     ?? 0} color="bg-gradient-to-br from-blue-500   to-blue-700"   />
-          <StatCard icon={FiDollarSign} label="Total Revenue"  value={`$${(data?.totalRevenue ?? 0).toFixed(2)}`} color="bg-gradient-to-br from-green-500  to-green-700"  />
+          <StatCard icon={FiDollarSign} label="Total Revenue"  value={`৳${(data?.totalRevenue ?? 0).toFixed(2)}`} color="bg-gradient-to-br from-green-500  to-green-700"  />
           <StatCard icon={FiClock}      label="Pending Orders" value={data?.pendingOrders  ?? 0} color="bg-gradient-to-br from-amber-500  to-amber-700"  />
         </div>
       )}
@@ -152,7 +152,7 @@ export default function SellerAnalytics() {
                         />
                       </div>
                     </div>
-                    <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 flex-shrink-0">${p.revenue.toFixed(0)}</span>
+                    <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 flex-shrink-0">৳{p.revenue.toFixed(0)}</span>
                   </div>
                 );
               })}

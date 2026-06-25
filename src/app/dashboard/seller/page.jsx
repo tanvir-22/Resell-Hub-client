@@ -66,7 +66,7 @@ export default function SellerOverview() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <StatCard icon={FiPackage}     label="Total Products" value={analytics?.totalProducts ?? 0}                           color="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400" href="/dashboard/seller/products" layout="col" />
           <StatCard icon={FiShoppingBag} label="Total Sales"    value={analytics?.totalSales ?? 0}                              color="bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400"       href="/dashboard/seller/orders"   layout="col" />
-          <StatCard icon={FiDollarSign}  label="Total Revenue"  value={`$${(analytics?.totalRevenue ?? 0).toFixed(2)}`}         color="bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400"   href="/dashboard/seller/analytics" layout="col" />
+          <StatCard icon={FiDollarSign}  label="Total Revenue"  value={`৳${(analytics?.totalRevenue ?? 0).toFixed(2)}`}         color="bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400"   href="/dashboard/seller/analytics" layout="col" />
           <StatCard icon={FiClock}       label="Pending Orders" value={analytics?.pendingOrders ?? 0}                           color="bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400"   href="/dashboard/seller/orders"   layout="col" />
         </div>
       )}
@@ -109,7 +109,7 @@ export default function SellerOverview() {
                   <tr key={o._id} className="hover:bg-gray-50 dark:hover:bg-slate-700/30 transition-colors">
                     <td className="py-3 font-medium text-gray-900 dark:text-white max-w-[140px] truncate">{o.productTitle}</td>
                     <td className="py-3 text-gray-500 dark:text-gray-400">{o.buyerName}</td>
-                    <td className="py-3 text-emerald-600 dark:text-emerald-400 font-semibold">${o.price}</td>
+                    <td className="py-3 text-emerald-600 dark:text-emerald-400 font-semibold">৳{o.price}</td>
                     <td className="py-3">
                       <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
                         o.status === "Delivered" ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300" :

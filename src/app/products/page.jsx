@@ -401,7 +401,7 @@ function ProductsPageInner() {
                   </h3>
                   <div className="flex items-center justify-between mt-2">
                     <span className="text-base font-extrabold text-gray-900 dark:text-white">
-                      ${p.price.toLocaleString()}
+                      ৳{p.price.toLocaleString()}
                     </span>
                     <span className="flex items-center gap-0.5 text-xs text-amber-500 font-medium">
                       <FiStar size={11} fill="currentColor" /> {p.rating}
@@ -441,7 +441,7 @@ function ProductsPageInner() {
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0">
                       <span className="text-xl font-extrabold text-gray-900 dark:text-white whitespace-nowrap">
-                        ${p.price.toLocaleString()}
+                        ৳{p.price.toLocaleString()}
                       </span>
                       <button
                         onClick={(e) => toggleWishlist(e, p)}

@@ -69,7 +69,7 @@ export default function BuyerOverview() {
           <StatCard icon={FiShoppingBag} label="Total Orders"   value={orders.length}              color="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400" href="/dashboard/buyer/orders" />
           <StatCard icon={FiPackage}     label="Active Orders"  value={pendingOrders}              color="bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400"   href="/dashboard/buyer/orders" />
           <StatCard icon={FiHeart}       label="Wishlist Items" value={wishlist.length}            color="bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400"       href="/dashboard/buyer/wishlist" />
-          <StatCard icon={FiCreditCard}  label="Total Spent"    value={`$${totalSpent.toFixed(2)}`} color="bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400"  href="/dashboard/buyer/payments" />
+          <StatCard icon={FiCreditCard}  label="Total Spent"    value={`৳${totalSpent.toFixed(2)}`} color="bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400"  href="/dashboard/buyer/payments" />
         </div>
       )}
 
@@ -110,7 +110,7 @@ export default function BuyerOverview() {
                 {orders.slice(0, 5).map((o) => (
                   <tr key={o._id} className="hover:bg-gray-50 dark:hover:bg-slate-700/30 transition-colors">
                     <td className="py-3 font-medium text-gray-900 dark:text-white max-w-[180px] truncate">{o.productTitle}</td>
-                    <td className="py-3 text-emerald-600 dark:text-emerald-400 font-semibold">${o.price}</td>
+                    <td className="py-3 text-emerald-600 dark:text-emerald-400 font-semibold">৳{o.price}</td>
                     <td className="py-3">
                       <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
                         o.status === "Delivered" ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300" :

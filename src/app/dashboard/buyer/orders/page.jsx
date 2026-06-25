@@ -133,7 +133,7 @@ export default function BuyerOrders() {
                     <p className="font-semibold text-gray-900 dark:text-white text-sm truncate">{o.productTitle}</p>
                     <StatusBadge status={o.status} />
                   </div>
-                  <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-1">${o.price}</p>
+                  <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-1">৳{o.price}</p>
                   <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{new Date(o.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</p>
                   {o.status !== "Cancelled" && o.status !== "Delivered" && (
                     <TrackProgress status={o.status} />
@@ -167,7 +167,7 @@ export default function BuyerOrders() {
               <div className="space-y-3 text-sm">
                 {[
                   ["Product", selected.productTitle],
-                  ["Price",   `$${selected.price}`],
+                  ["Price",   `৳${selected.price}`],
                   ["Seller",  selected.sellerName || "—"],
                   ["Status",  <StatusBadge key="s" status={selected.status} />],
                   ["Ordered", new Date(selected.createdAt).toLocaleDateString()],

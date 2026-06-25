@@ -46,7 +46,7 @@ export default function CartPage() {
               Your Cart
             </h1>
             <p className="text-gray-400 dark:text-gray-500 text-sm mt-1 ml-12">
-              {itemCount} {itemCount === 1 ? "item" : "items"} · ${cartTotal.toLocaleString()} total
+              {itemCount} {itemCount === 1 ? "item" : "items"} · ৳{cartTotal.toLocaleString()} total
             </p>
           </div>
           {cartItems.length > 0 && (
@@ -109,7 +109,7 @@ export default function CartPage() {
                       </p>
                     </div>
                     <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-2 text-sm">
-                      ${item.price.toLocaleString()} <span className="text-gray-400 dark:text-gray-500 font-normal">each</span>
+                      ৳{item.price.toLocaleString()} <span className="text-gray-400 dark:text-gray-500 font-normal">each</span>
                     </p>
 
                     {/* Quantity controls */}
@@ -145,11 +145,11 @@ export default function CartPage() {
                   {/* Line total */}
                   <div className="text-right flex-shrink-0 flex flex-col justify-between">
                     <p className="font-extrabold text-gray-900 dark:text-white text-base">
-                      ${(item.price * item.quantity).toLocaleString()}
+                      ৳{(item.price * item.quantity).toLocaleString()}
                     </p>
                     {item.quantity > 1 && (
                       <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-                        ${item.price.toLocaleString()} × {item.quantity}
+                        ৳{item.price.toLocaleString()} × {item.quantity}
                       </p>
                     )}
                   </div>
@@ -174,7 +174,7 @@ export default function CartPage() {
                         {item.title}{item.quantity > 1 ? ` ×${item.quantity}` : ""}
                       </span>
                       <span className="font-medium text-gray-900 dark:text-white flex-shrink-0 ml-3">
-                        ${(item.price * item.quantity).toLocaleString()}
+                        ৳{(item.price * item.quantity).toLocaleString()}
                       </span>
                     </div>
                   ))}
@@ -184,7 +184,7 @@ export default function CartPage() {
                 <div className="px-5 py-4 space-y-2">
                   <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
                     <span>Subtotal</span>
-                    <span>${cartTotal.toLocaleString()}</span>
+                    <span>৳{cartTotal.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-sm text-green-600 dark:text-green-400 font-medium">
                     <span className="flex items-center gap-1">
@@ -194,7 +194,7 @@ export default function CartPage() {
                   </div>
                   <div className="flex justify-between font-extrabold text-gray-900 dark:text-white text-lg pt-2 border-t border-gray-100 dark:border-slate-700 mt-2">
                     <span>Total</span>
-                    <span>${cartTotal.toLocaleString()}</span>
+                    <span>৳{cartTotal.toLocaleString()}</span>
                   </div>
                 </div>
 

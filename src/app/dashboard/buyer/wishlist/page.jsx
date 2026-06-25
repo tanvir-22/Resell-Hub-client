@@ -78,7 +78,7 @@ export default function BuyerWishlist() {
               </div>
               <div className="p-4">
                 <p className="font-semibold text-gray-900 dark:text-white text-sm truncate mb-1">{item.title}</p>
-                <p className="text-emerald-600 dark:text-emerald-400 font-bold text-lg">${item.price}</p>
+                <p className="text-emerald-600 dark:text-emerald-400 font-bold text-lg">৳{item.price}</p>
                 {item.seller && (
                   <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">By {item.seller}</p>
                 )}

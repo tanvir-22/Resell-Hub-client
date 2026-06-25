@@ -140,7 +140,7 @@ export default function ComparePage() {
             {compareItems.map(p => (
               <Cell key={p._id} highlight={p.price === bestPrice}>
                 <span className={`text-lg font-extrabold ${p.price === bestPrice ? "text-emerald-600 dark:text-emerald-400" : "text-gray-900 dark:text-white"}`}>
-                  ${p.price?.toLocaleString() ?? "—"}
+                  ৳{p.price?.toLocaleString() ?? "—"}
                 </span>
                 {p.price === bestPrice && compareItems.length > 1 && (
                   <span className="ml-1.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/40 px-1.5 py-0.5 rounded-full">BEST</span>

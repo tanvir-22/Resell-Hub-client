@@ -64,7 +64,7 @@ function ProductCard({ product }) {
       </div>
       <div className="p-3">
         <p className="font-semibold text-sm text-gray-900 dark:text-white line-clamp-2 leading-snug mb-1">{product.title}</p>
-        <p className="text-emerald-600 dark:text-emerald-400 font-bold text-sm">${product.price}</p>
+        <p className="text-emerald-600 dark:text-emerald-400 font-bold text-sm">৳{product.price}</p>
       </div>
     </Link>
   );

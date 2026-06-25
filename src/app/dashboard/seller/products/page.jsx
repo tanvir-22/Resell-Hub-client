@@ -146,7 +146,7 @@ function EditModal({ product, onClose, onSave }) {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-wide">
-                Price ($)
+                Price (৳)
               </label>
               <input
                 value={form.price}
@@ -378,7 +378,7 @@ export default function SellerProducts() {
                 </p>
                 <div className="flex items-center justify-between mt-1">
                   <span className="text-emerald-600 dark:text-emerald-400 font-bold">
-                    ${p.price}
+                    ৳{p.price}
                   </span>
                   <span className="text-xs text-gray-400 dark:text-gray-500">
                     Stock: {p.stock}
