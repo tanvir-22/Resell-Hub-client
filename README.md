@@ -172,9 +172,9 @@ GOOGLE_CLIENT_SECRET=your-google-client-secret
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
 STRIPE_SECRET_KEY=sk_test_...
 
-# Cloudinary
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloud-name
-NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your-preset
+# imageBB
+NEXT_PUBLIC_IMGBB_API_KEY=f6994a2ed853be9bf36124e87b24856d
+
 ```
 
 ### 4. Configure the Express backend
