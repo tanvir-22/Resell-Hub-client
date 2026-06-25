@@ -21,7 +21,19 @@ and a modern responsive UI powered by Tailwind CSS and HeroUI.
  ------------------------------------ 
  ![Home](public//admin.png) 
 
+## Demo Credentials
 
+### Admin
+- **Email:** admin123@gmail.com
+- **Password:** Admin123
+
+### Seller
+- **Email:** sakib123@gmail.com
+- **Password:** Sakib123
+
+### Buyer
+- **Email:** raju123@gmail.com
+- **Password:** Raju1234
 
 ## Features
 
