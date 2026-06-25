@@ -8,23 +8,11 @@ A full-stack marketplace platform for buying and selling pre-owned items. Built 
 
 > Add your screenshots to `/public/screenshots/` and they'll appear here.
 
-| Home                                 | Products                                     |
-| ------------------------------------ | -------------------------------------------- |
-| ![Home](public/screenshots/home.png) | ![Products](public/screenshots/products.png) |
+ Home                                 
+ ------------------------------------ 
+ ![Home](public//home.png) 
 
-| Product Detail                                           | Compare                                    |
-| -------------------------------------------------------- | ------------------------------------------ |
-| ![Product Detail](public/screenshots/product-detail.png) | ![Compare](public/screenshots/compare.png) |
 
-| Seller Profile                                           | Buyer Dashboard                                            |
-| -------------------------------------------------------- | ---------------------------------------------------------- |
-| ![Seller Profile](public/screenshots/seller-profile.png) | ![Buyer Dashboard](public/screenshots/buyer-dashboard.png) |
-
-| Seller Dashboard                                             | Admin Dashboard                                            |
-| ------------------------------------------------------------ | ---------------------------------------------------------- |
-| ![Seller Dashboard](public/screenshots/seller-dashboard.png) | ![Admin Dashboard](public/screenshots/admin-dashboard.png) |
-
----
 
 ## Features
 
