@@ -47,7 +47,7 @@ export default function SellerOrders() {
   const doUpdate = async (id, status) => {
     setUpdating(id);
     const raw = await updateOrder(id, { status, orderStatus: status });
-    const updated = normalize(raw);
+    const updated = normalizeOrder(raw);
     if (updated.error) {
       toast.error("Failed to update order");
     } else {
